@@ -39,6 +39,7 @@ end_of_line     = crlf
 indent_size     = 4
 indent_style    = space
 
+# Game Command Language
 [*.gcl]
 tab_width       = 4
 indent_size     = tab
