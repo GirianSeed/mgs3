@@ -1,0 +1,49 @@
+root = true
+
+[*]
+tab_width       = 8
+indent_size     = tab
+indent_style    = tab
+end_of_line     = lf
+max_line_length = off
+
+[{*.{c,h},*.{cc,hh,cxx,hxx,cpp,hpp,inl}]
+tab_width       = 4
+indent_size     = tab
+indent_style    = space
+
+[*.{s,S,sx}]
+tab_width       = 8
+indent_size     = tab
+indent_style    = tab
+
+[*.{dsm,vsm,vcl}]
+tab_width       = 8
+indent_size     = tab
+indent_style    = tab
+
+[{*{M,m}akefile*,*.{mk,mak,make}}]
+tab_width       = 8
+indent_size     = tab
+indent_style    = tab
+
+[*.{sh,bash}]
+indent_style    = space
+end_of_line     = lf
+
+[*.{bat,cmd}]
+indent_style    = space
+end_of_line     = crlf
+
+[*.py]
+indent_size     = 4
+indent_style    = space
+
+[*.gcl]
+tab_width       = 4
+indent_size     = tab
+indent_style    = tab
+
+# GCL should be EUC-JP, but it's not supported.
+# https://editorconfig.org/#supported-properties
+charset         = utf-8
