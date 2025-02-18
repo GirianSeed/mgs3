@@ -1,5 +1,5 @@
-#ifndef __MD5_H__
-#define __MD5_H__
+#ifndef __MGS3_MD5_H__
+#define __MGS3_MD5_H__
 
 /* GLOBAL.H - RSAREF types and constants
  */
@@ -77,4 +77,4 @@ void MD5Update PROTO_LIST
   ((MD5_CTX *, unsigned char *, unsigned int));
 void MD5Final PROTO_LIST ((unsigned char [16], MD5_CTX *));
 
-#endif // __MD5_H__
+#endif // __MGS3_MD5_H__
