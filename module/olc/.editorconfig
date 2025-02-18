@@ -1,0 +1,7 @@
+root = false
+
+[md5.{c,h}]
+tab_width       = 4
+indent_size     = 2
+indent_style    = space
+charset         = utf-8
