@@ -116,11 +116,12 @@ typedef u_long128       u_int128;       /* 128-bit unsigned integer */
 /*---------------------------------------------------------------------------*/
 // linear algebra typedefs (backported from MGS4's mgs_types.h)
 
-#if defined(__ee__) && !__GNUC_PREREQ(2, 96)
+#if defined(__GNUC__)
+#if defined(__R5900__) && !__GNUC_PREREQ(2, 95)
 // https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html
-// ee-gcc releases before 2.96-ee-001003-1 do not support unnamed fields.
-#error "Compiler does not support anonymous structs."
+#error "ee-gcc 2.95 or newer is required for unnamed fields."
 #endif
+#endif // __GNUC__
 
 typedef union CVECTOR {
     struct { unsigned char r, g, b, a; };
