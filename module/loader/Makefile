@@ -26,6 +26,10 @@ CFLAGS      = -G0 -O2 -Wall
 ASFLAGS     =
 CPPFLAGS    = -I$(IOP_INCDIR) -I$(SCE_ROOT)/common/include
 
+ifdef SUBSISTENCE
+CPPFLAGS += -DSUBSISTENCE
+endif
+
 PROGNAME    = pld
 
 SRCS        = pld.c

@@ -35,7 +35,7 @@ static void decode( u_long *dst, void *src, size_t size )
 static int iopLoadInit( void *src )
 {
     ipkModuleTag modtag;
-    ModuleStatus modstat;
+    //ModuleStatus modstat;
     int modid;
     int oldstat, res;
 
@@ -71,7 +71,7 @@ static int iopLoadInit( void *src )
         if (modid < 0) {
             continue;
         }
-        ReferModuleStatus( modid, &modstat );
+        //ReferModuleStatus( modid, &modstat );
         res = StartModule( modid, name, args, argp, &res );
     }
     return 0;
@@ -81,7 +81,13 @@ int start( int argc, char *argv[] )
 {
     long addr = strtol( argv[1], NULL, 16 );
 
+#ifdef SUBSISTENCE
+    if (argc < 3) {
+        sceSifInitRpc( 0 );
+    }
+#else
     sceSifInitRpc( 0 );
+#endif
 
     if (iopLoadInit( (void *)addr ) < 0) {
         return -1;
