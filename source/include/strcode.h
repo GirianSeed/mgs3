@@ -24,13 +24,10 @@
 
 /*---------------------------------------------------------------------------*/
 
-#if 0
-#define CHARA_SNAKE     0x00ffffff  // GV_StrCode("スネーク")
-#define CHARA_ITEM      0x00ffffff  // GV_StrCode("アイテム")
-#define CHARA_DOOR      0x00ffffff  // GV_StrCode("ドア")
-
-#define MSG_ENTER       0x00ffffff  // GV_StrCode("入る")
-#define MSG_EXIT        0x00ffffff  // GV_StrCode("出る")
-#endif
+//
+//
+//
+//
+//
 
 #endif // {{{ END OF FILE }}}
