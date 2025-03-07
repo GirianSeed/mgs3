@@ -1,0 +1,64 @@
+/* -*- mode: c; tab-width: 4; indent-tabs-mode: t; -*- */
+#ifndef __MGS3_FILE_CNF__
+#define __MGS3_FILE_CNF__
+
+/*
+ * CD/DVD から読み出すファイル
+ */
+
+FS_FILE_INFO fs_file_info[] = {
+#ifdef SUBSISTENCE
+	{ "stage.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "stage_2.dat",     0x00000000, 0, 0, 0, 0 },
+	{ "net/stage_n.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "stage_3.dat",     0x00000000, 0, 0, 0, 0 },
+	{ "codec.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "codec_2.dat",     0x00000000, 0, 0, 0, 0 },
+	{ "codec_3.dat",     0x00000000, 0, 0, 0, 0 },
+	{ "bgm.dat",         0x00000000, 0, 0, 0, 0 },
+	{ "bgm_2.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "bgm_3.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "movie.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "movie_2.dat",     0x00000000, 0, 0, 0, 0 },
+	{ "movie_3.dat",     0x00000000, 0, 0, 0, 0 },
+	{ "vox.dat",         0x00000000, 0, 0, 0, 0 },
+	{ "vox_2.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "vox_3.dat",       0x00000000, 0, 0, 0, 0 },
+	{ "demo.dat",        0x00000000, 0, 0, 0, 0 },
+	{ "demo_2.dat",      0x00000000, 0, 0, 0, 0 },
+	{ "demo_3.dat",      0x00000000, 0, 0, 0, 0 },
+	{ "slot.dat",        0x00000000, 0, 0, 0, 0 },
+	{ "net/slot_n.dat",  0x00000000, 0, 0, 0, 0 },
+	{ "slot_3.dat",      0x00000000, 0, 0, 0, 0 },
+	{ NULL,              0x00000000, 0, 0, 0, 0 }
+#else // SNAKE_EATER
+	{ "stage.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "codec.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "bgm.dat",   0x00000000, 0, 0, 0, 0 },
+	{ "movie.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "vox.dat",   0x00000000, 0, 0, 0, 0 },
+	{ "demo.dat",  0x00000000, 0, 0, 0, 0 },
+	{ "slot.dat",  0x00000000, 0, 0, 0, 0 },
+	{ NULL,        0x00000000, 0, 0, 0, 0 }
+#endif
+};
+
+#if 0 // 体験版
+FS_FILE_INFO fs_file_info[] = {
+	{ "stage.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "codec.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "face.dat",  0x00000000, 0, 0, 0, 0 },
+	{ "movie.dat", 0x00000000, 0, 0, 0, 0 },
+	{ "vox.dat",   0x00000000, 0, 0, 0, 0 },
+	{ "demo.dat",  0x00000000, 0, 0, 0, 0 },
+	{ "slot.dat",  0x00000000, 0, 0, 0, 0 },
+	{ NULL,        0x00000000, 0, 0, 0, 0 }
+};
+#endif
+
+#endif // {{{ END OF FILE }}}
+
+/* Local variables: */
+/* tab-width: 4 */
+/* End: */
+/* vi:set tabstop=4: */
