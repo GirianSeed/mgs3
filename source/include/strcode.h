@@ -31,8 +31,8 @@
 #define CHARA_00003d59          0x00003d59
 #define CHARA_000063ab          0x000063ab
 #define CHARA_00009c13          0x00009c13
-#define CHARA_00019a53          0x00019a53
-#define CHARA_0001d98e          0x0001d98e
+#define CHARA_cos               0x00019a53  // GV_StrCode("cos") NewGclCos
+#define CHARA_sin               0x0001d98e  // GV_StrCode("sin") NewGclSin
 #define CHARA_0002a797          0x0002a797
 #define CHARA_0002c078          0x0002c078
 #define CHARA_0002e075          0x0002e075
@@ -41,9 +41,9 @@
 #define CHARA_000406a2          0x000406a2
 #define CHARA_0004b093          0x0004b093
 #define CHARA_0004effa          0x0004effa
-#define CHARA_00053da0          0x00053da0
+#define CHARA_00053da0          0x00053da0  // NewGclVarClear
 #define CHARA_0005e0ab          0x0005e0ab
-#define CHARA_00061ade          0x00061ade
+#define CHARA_CAMERA            0x00061ade  // GV_StrCode("カメラ") NewCamera
 #define CHARA_00069104          0x00069104
 #define CHARA_0006b8cb          0x0006b8cb
 #define CHARA_0006bdf6          0x0006bdf6
@@ -58,7 +58,7 @@
 #define CHARA_0009c882          0x0009c882
 #define CHARA_000a06c7          0x000a06c7
 #define CHARA_000a3e0b          0x000a3e0b
-#define CHARA_000b17f8          0x000b17f8
+#define CHARA_000b17f8          0x000b17f8  // NewSphericalCamera
 #define CHARA_000b56f4          0x000b56f4
 #define CHARA_000bf5f2          0x000bf5f2
 #define CHARA_000c4faf          0x000c4faf
@@ -73,7 +73,7 @@
 #define CHARA_000dd485          0x000dd485
 #define CHARA_000e0767          0x000e0767
 #define CHARA_000e9f80          0x000e9f80
-#define CHARA_000f3d40          0x000f3d40
+#define CHARA_000f3d40          0x000f3d40  // ComGetCurrentStage
 #define CHARA_000f47ae          0x000f47ae
 #define CHARA_000f6a54          0x000f6a54
 #define CHARA_000fa91c          0x000fa91c
@@ -84,7 +84,7 @@
 #define CHARA_0011f61d          0x0011f61d
 #define CHARA_00123141          0x00123141
 #define CHARA_00127162          0x00127162
-#define CHARA_00128946          0x00128946
+#define CHARA_PLAYER            0x00128946  // GV_StrCode("プレイヤー") NewPlayer
 #define CHARA_0012bd53          0x0012bd53
 #define CHARA_0013010a          0x0013010a
 #define CHARA_00138004          0x00138004
@@ -112,13 +112,13 @@
 #define CHARA_0019dc5f          0x0019dc5f
 #define CHARA_001a273a          0x001a273a
 #define CHARA_001a7e08          0x001a7e08
-#define CHARA_001af92a          0x001af92a
+#define CHARA_RADAR             0x001af92a  // GV_StrCode("レーダー")
 #define CHARA_001ba50e          0x001ba50e
 #define CHARA_001c2370          0x001c2370
 #define CHARA_001c5d31          0x001c5d31
 #define CHARA_001d65f8          0x001d65f8
-#define CHARA_001e226c          0x001e226c
-#define CHARA_001f119a          0x001f119a
+#define CHARA_001e226c          0x001e226c  // ComGetCurrentRule
+#define CHARA_ENDING            0x001f119a  // GV_StrCode("エンディング")
 #define CHARA_001f1ae9          0x001f1ae9
 #define CHARA_0020377d          0x0020377d
 #define CHARA_002056f8          0x002056f8
@@ -159,26 +159,26 @@
 #define CHARA_00300842          0x00300842
 #define CHARA_0030aa8c          0x0030aa8c
 #define CHARA_0030ca36          0x0030ca36
-#define CHARA_0030ca90          0x0030ca90
+#define CHARA_0030ca90          0x0030ca90  // NewHQC
 #define CHARA_003120ee          0x003120ee
 #define CHARA_00316839          0x00316839
 #define CHARA_00317ba4          0x00317ba4
 #define CHARA_003190fc          0x003190fc
 #define CHARA_0031b090          0x0031b090
 #define CHARA_0031f1c3          0x0031f1c3
-#define CHARA_00325c8e          0x00325c8e
+#define CHARA_atan              0x00325c8e  // GV_StrCode("atan") NewGclAtan
 #define CHARA_00325ee3          0x00325ee3
 #define CHARA_0032977d          0x0032977d
 #define CHARA_0032fb70          0x0032fb70
 #define CHARA_00334080          0x00334080
 #define CHARA_00336e1b          0x00336e1b
 #define CHARA_00339bf8          0x00339bf8
-#define CHARA_0033a20f          0x0033a20f
+#define CHARA_demo              0x0033a20f  // GV_StrCode("demo") NewPolygonDemoStart
 #define CHARA_003465ae          0x003465ae
 #define CHARA_00349f5c          0x00349f5c
 #define CHARA_0035508a          0x0035508a
 #define CHARA_00355d54          0x00355d54
-#define CHARA_0035a2cf          0x0035a2cf
+#define CHARA_MAP               0x0035a2cf  // GV_StrCode("マップ")
 #define CHARA_00367d64          0x00367d64
 #define CHARA_0036b6b2          0x0036b6b2
 #define CHARA_00370e86          0x00370e86
@@ -193,7 +193,7 @@
 #define CHARA_0039e451          0x0039e451
 #define CHARA_0039e4eb          0x0039e4eb
 #define CHARA_003a3347          0x003a3347
-#define CHARA_003a9224          0x003a9224
+#define CHARA_rand              0x003a9224  // GV_StrCode("rand") NewRand
 #define CHARA_003b184b          0x003b184b
 #define CHARA_003b9ed6          0x003b9ed6
 #define CHARA_003baee1          0x003baee1
@@ -229,7 +229,7 @@
 #define CHARA_00437870          0x00437870
 #define CHARA_00439eb4          0x00439eb4
 #define CHARA_0043bc3e          0x0043bc3e
-#define CHARA_0043f718          0x0043f718
+#define CHARA_0043f718          0x0043f718  // COM_SetCamera
 #define CHARA_00447870          0x00447870
 #define CHARA_0044fda5          0x0044fda5
 #define CHARA_00456267          0x00456267
@@ -244,7 +244,7 @@
 #define CHARA_0047e5e1          0x0047e5e1
 #define CHARA_00480a35          0x00480a35
 #define CHARA_0048ef2f          0x0048ef2f
-#define CHARA_0048f40e          0x0048f40e
+#define CHARA_0048f40e          0x0048f40e  // NewOnlineErrorCheck
 #define CHARA_0048fea7          0x0048fea7
 #define CHARA_004953ff          0x004953ff
 #define CHARA_00495ef5          0x00495ef5
@@ -282,10 +282,10 @@
 #define CHARA_0053bd7a          0x0053bd7a
 #define CHARA_0053cf3a          0x0053cf3a
 #define CHARA_0053dc0a          0x0053dc0a
-#define CHARA_00542b2d          0x00542b2d
+#define CHARA_foreach           0x00542b2d  // GV_StrCode("foreach") NewForeach
 #define CHARA_00546382          0x00546382
 #define CHARA_005585fa          0x005585fa
-#define CHARA_0055b942          0x0055b942
+#define CHARA_DOOR              0x0055b942  // GV_StrCode("ドア")
 #define CHARA_0055e068          0x0055e068
 #define CHARA_00560808          0x00560808
 #define CHARA_00567092          0x00567092
@@ -304,8 +304,8 @@
 #define CHARA_005a8c59          0x005a8c59
 #define CHARA_005a92a4          0x005a92a4
 #define CHARA_005ae655          0x005ae655
-#define CHARA_005af36e          0x005af36e
-#define CHARA_005b316e          0x005b316e
+#define CHARA_005af36e          0x005af36e  // GM_COM_InventoryWeaponSet
+#define CHARA_varsave           0x005b316e  // GV_StrCode("varsave") NewSaveVariable
 #define CHARA_005b364b          0x005b364b
 #define CHARA_005b3d4e          0x005b3d4e
 #define CHARA_005b5e45          0x005b5e45
@@ -334,7 +334,7 @@
 #define CHARA_006239b1          0x006239b1
 #define CHARA_006263f9          0x006263f9
 #define CHARA_00626785          0x00626785
-#define CHARA_0062ff2e          0x0062ff2e
+#define CHARA_0062ff2e          0x0062ff2e  // NewGrassMng
 #define CHARA_006339b1          0x006339b1
 #define CHARA_00635875          0x00635875
 #define CHARA_0063c1d8          0x0063c1d8
@@ -345,7 +345,7 @@
 #define CHARA_00645113          0x00645113
 #define CHARA_00647dff          0x00647dff
 #define CHARA_0064b3f4          0x0064b3f4
-#define CHARA_006539fc          0x006539fc
+#define CHARA_006539fc          0x006539fc  // ENE_COM_AddMideastPMC (?)
 #define CHARA_00653bbf          0x00653bbf
 #define CHARA_0065b8b4          0x0065b8b4
 #define CHARA_00661b4a          0x00661b4a
@@ -358,17 +358,17 @@
 #define CHARA_00684209          0x00684209
 #define CHARA_00684bfa          0x00684bfa
 #define CHARA_006856c1          0x006856c1
-#define CHARA_00686853          0x00686853
+#define CHARA_00686853          0x00686853  // NewSCBoundTrapChara
 #define CHARA_00686b4d          0x00686b4d
 #define CHARA_0068cb9c          0x0068cb9c
 #define CHARA_00690245          0x00690245
 #define CHARA_00690610          0x00690610
-#define CHARA_0069b87e          0x0069b87e
+#define CHARA_0069b87e          0x0069b87e  // COM_PutStageModel_MeshControl
 #define CHARA_0069eb6c          0x0069eb6c
 #define CHARA_006a3940          0x006a3940
 #define CHARA_006a725a          0x006a725a
 #define CHARA_006aa0dc          0x006aa0dc
-#define CHARA_006b237d          0x006b237d
+#define CHARA_assert            0x006b237d  // GV_StrCode("assert") NewGclAssert
 #define CHARA_006b25fd          0x006b25fd
 #define CHARA_006bc9a5          0x006bc9a5
 #define CHARA_006bdb60          0x006bdb60
@@ -380,7 +380,7 @@
 #define CHARA_006e989e          0x006e989e
 #define CHARA_006e9c2c          0x006e9c2c
 #define CHARA_006ea2a8          0x006ea2a8
-#define CHARA_006f7d4d          0x006f7d4d
+#define CHARA_006f7d4d          0x006f7d4d  // NewGameInit
 #define CHARA_006f8307          0x006f8307
 #define CHARA_00706450          0x00706450
 #define CHARA_00708c6b          0x00708c6b
@@ -389,7 +389,7 @@
 #define CHARA_0070f3aa          0x0070f3aa
 #define CHARA_007128d0          0x007128d0
 #define CHARA_00712f17          0x00712f17
-#define CHARA_0071e7d6          0x0071e7d6
+#define CHARA_0071e7d6          0x0071e7d6  // NewSystemLightSet
 #define CHARA_0072007f          0x0072007f
 #define CHARA_00723f41          0x00723f41
 #define CHARA_007267b7          0x007267b7
@@ -397,9 +397,9 @@
 #define CHARA_00729f2d          0x00729f2d
 #define CHARA_0072f23c          0x0072f23c
 #define CHARA_00735ef7          0x00735ef7
-#define CHARA_00743c9f          0x00743c9f
-#define CHARA_0074cb83          0x0074cb83
-#define CHARA_0074e86b          0x0074e86b
+#define CHARA_delay             0x00743c9f  // GV_StrCode("delay") NewDelay
+#define CHARA_0074cb83          0x0074cb83  // NewDefeatedCameraGCL
+#define CHARA_0074e86b          0x0074e86b  // NewGclLangUpdate
 #define CHARA_007546ba          0x007546ba
 #define CHARA_007555e2          0x007555e2
 #define CHARA_007576da          0x007576da
@@ -433,7 +433,7 @@
 #define CHARA_007d7aec          0x007d7aec
 #define CHARA_007e2caf          0x007e2caf
 #define CHARA_007e5115          0x007e5115
-#define CHARA_007e641f          0x007e641f
+#define CHARA_007e641f          0x007e641f  // NewPutStageModelSet
 #define CHARA_007e750c          0x007e750c
 #define CHARA_007eedb2          0x007eedb2
 #define CHARA_007f3c88          0x007f3c88
@@ -449,7 +449,7 @@
 #define CHARA_0082a05e          0x0082a05e
 #define CHARA_0082b327          0x0082b327
 #define CHARA_0082bdc0          0x0082bdc0
-#define CHARA_0082cb3e          0x0082cb3e
+#define CHARA_reboot            0x0082cb3e  // GV_StrCode("reboot")
 #define CHARA_0083102f          0x0083102f
 #define CHARA_00831ee1          0x00831ee1
 #define CHARA_00843fea          0x00843fea
@@ -461,28 +461,28 @@
 #define CHARA_0086c63a          0x0086c63a
 #define CHARA_0086d1cf          0x0086d1cf
 #define CHARA_00870aac          0x00870aac
-#define CHARA_0087a1c0          0x0087a1c0
+#define CHARA_select            0x0087a1c0  // GV_StrCode("select") NewSelect
 #define CHARA_0088117d          0x0088117d
 #define CHARA_008855a7          0x008855a7
 #define CHARA_0088f9b0          0x0088f9b0
 #define CHARA_00890539          0x00890539
 #define CHARA_008961cd          0x008961cd
 #define CHARA_008961eb          0x008961eb
-#define CHARA_0089a17e          0x0089a17e
+#define CHARA_repeat            0x0089a17e  // GV_StrCode("repeat") NewRepeat
 #define CHARA_0089ab22          0x0089ab22
 #define CHARA_0089c7aa          0x0089c7aa
 #define CHARA_0089ed67          0x0089ed67
 #define CHARA_008a02c7          0x008a02c7
 #define CHARA_008a7b70          0x008a7b70
 #define CHARA_008a7b7a          0x008a7b7a
-#define CHARA_008aa572          0x008aa572
+#define CHARA_LOCKER            0x008aa572  // GV_StrCode("ロッカー")
 #define CHARA_008b0ce2          0x008b0ce2
 #define CHARA_008b19f0          0x008b19f0
 #define CHARA_008b1e74          0x008b1e74
 #define CHARA_008b3466          0x008b3466
 #define CHARA_008b4322          0x008b4322
 #define CHARA_008b5ace          0x008b5ace
-#define CHARA_008b6086          0x008b6086
+#define CHARA_008b6086          0x008b6086  // GM_COM_PadCheck
 #define CHARA_008b94e9          0x008b94e9
 #define CHARA_008b976d          0x008b976d
 #define CHARA_008ba20a          0x008ba20a
@@ -498,7 +498,7 @@
 #define CHARA_008fdada          0x008fdada
 #define CHARA_009027e9          0x009027e9
 #define CHARA_00909f7f          0x00909f7f
-#define CHARA_0091818c          0x0091818c
+#define CHARA_0091818c          0x0091818c  // NewBGColorSet
 #define CHARA_009197cf          0x009197cf
 #define CHARA_00919ade          0x00919ade
 #define CHARA_0092034e          0x0092034e
@@ -525,7 +525,7 @@
 #define CHARA_00985c58          0x00985c58
 #define CHARA_0098b109          0x0098b109
 #define CHARA_0099f754          0x0099f754
-#define CHARA_009a0d0a          0x009a0d0a
+#define CHARA_009a0d0a          0x009a0d0a  // UTL_EFT_Initialize
 #define CHARA_009a1040          0x009a1040
 #define CHARA_009af657          0x009af657
 #define CHARA_009b8923          0x009b8923
@@ -649,7 +649,7 @@
 #define CHARA_00c6fdfc          0x00c6fdfc
 #define CHARA_00c70c04          0x00c70c04
 #define CHARA_00c710c6          0x00c710c6
-#define CHARA_00c74f97          0x00c74f97
+#define CHARA_00c74f97          0x00c74f97  // NewArraySet
 #define CHARA_00c78563          0x00c78563
 #define CHARA_00c7f9ca          0x00c7f9ca
 #define CHARA_00c851b0          0x00c851b0
@@ -673,7 +673,7 @@
 #define CHARA_00cc9a2b          0x00cc9a2b
 #define CHARA_00ccbefe          0x00ccbefe
 #define CHARA_00ccd7f9          0x00ccd7f9
-#define CHARA_00cd646f          0x00cd646f
+#define CHARA_00cd646f          0x00cd646f  // GM_InventoryDaemonStart
 #define CHARA_00cda34c          0x00cda34c
 #define CHARA_00cda34e          0x00cda34e
 #define CHARA_00cdd822          0x00cdd822
@@ -697,7 +697,7 @@
 #define CHARA_00d46f76          0x00d46f76
 #define CHARA_00d4b51a          0x00d4b51a
 #define CHARA_00d4d8a5          0x00d4d8a5
-#define CHARA_00d4ea76          0x00d4ea76
+#define CHARA_00d4ea76          0x00d4ea76  // NewHeadUpDisplay
 #define CHARA_00d517fe          0x00d517fe
 #define CHARA_00d5545b          0x00d5545b
 #define CHARA_00d5cb81          0x00d5cb81
@@ -716,7 +716,7 @@
 #define CHARA_00d9b7de          0x00d9b7de
 #define CHARA_00da2917          0x00da2917
 #define CHARA_00da9244          0x00da9244
-#define CHARA_00da97fb          0x00da97fb
+#define CHARA_00da97fb          0x00da97fb  // GM_COM_TrapSwitchCommand
 #define CHARA_00daad6b          0x00daad6b
 #define CHARA_00dac400          0x00dac400
 #define CHARA_00daed21          0x00daed21
@@ -728,7 +728,7 @@
 #define CHARA_00dd173e          0x00dd173e
 #define CHARA_00dd5eb6          0x00dd5eb6
 #define CHARA_00dd5eb7          0x00dd5eb7
-#define CHARA_00dde914          0x00dde914
+#define CHARA_00dde914          0x00dde914  // NewFogSet
 #define CHARA_00de07c0          0x00de07c0
 #define CHARA_00de2c60          0x00de2c60
 #define CHARA_00de545a          0x00de545a
@@ -753,7 +753,7 @@
 #define CHARA_00e5dfd7          0x00e5dfd7
 #define CHARA_00e5fd50          0x00e5fd50
 #define CHARA_00e764b2          0x00e764b2
-#define CHARA_00e76d74          0x00e76d74
+#define CHARA_00e76d74          0x00e76d74  // NewGclVariableMove
 #define CHARA_00e78c6d          0x00e78c6d
 #define CHARA_00e7939b          0x00e7939b
 #define CHARA_00e79927          0x00e79927
@@ -832,6 +832,8 @@
 #define CHARA_00ffbe20          0x00ffbe20
 #define CHARA_00ffbece          0x00ffbece
 #define CHARA_00ffecfd          0x00ffecfd
+
+/*--- Polygon Demo Charas ---*/
 #define CHARA_01000000          0x01000000
 #define CHARA_01000001          0x01000001
 #define CHARA_01000002          0x01000002
@@ -996,7 +998,7 @@
 #define CHARA_0100180e          0x0100180e
 #define CHARA_0100180f          0x0100180f
 #define CHARA_01001811          0x01001811
-#define CHARA_01002000          0x01002000
+#define CHARA_01002000          0x01002000  // NewEffectCallEmit_TGS2005_2000Launch (?)
 #define CHARA_01002001          0x01002001
 #define CHARA_01002002          0x01002002
 #define CHARA_01002003          0x01002003
@@ -1020,7 +1022,7 @@
 #define CHARA_01002503          0x01002503
 #define CHARA_01002504          0x01002504
 #define CHARA_01002505          0x01002505
-#define CHARA_01002506          0x01002506
+#define CHARA_01002506          0x01002506  // NewCommonParticle_Demo_2506Launch
 #define CHARA_01002507          0x01002507
 #define CHARA_01002508          0x01002508
 #define CHARA_01002509          0x01002509
@@ -1088,28 +1090,30 @@
 #define CHARA_0100f505          0x0100f505
 #define CHARA_0100ff01          0x0100ff01
 #define CHARA_0100ff03          0x0100ff03
-#define CHARA_0100ff05          0x0100ff05
-#define CHARA_0100ff08          0x0100ff08
-#define CHARA_0100ff09          0x0100ff09
+#define CHARA_0100ff05          0x0100ff05  // NewDemoEffectInitialize_ff05Launch
+#define CHARA_0100ff08          0x0100ff08  // NewShadowRange_DemoWrap_ff08Launch
+#define CHARA_0100ff09          0x0100ff09  // NewFogAnimDemo_ff09Launch
 #define CHARA_0100ff0a          0x0100ff0a
 #define CHARA_0100ff0b          0x0100ff0b
 #define CHARA_0100ff0c          0x0100ff0c
-#define CHARA_0100ff0d          0x0100ff0d
-#define CHARA_0100ff0e          0x0100ff0e
-#define CHARA_0100ff0f          0x0100ff0f
+#define CHARA_0100ff0d          0x0100ff0d  // NewEffectMeshVisInv_ff0dLaunch
+#define CHARA_0100ff0e          0x0100ff0e  // NewExposureControl_DemoWrap_ff0eLaunch
+#define CHARA_0100ff0f          0x0100ff0f  // NewMGS3Glare_DemoWrap_ff0fLaunch
 #define CHARA_0100ff10          0x0100ff10
-#define CHARA_0100ff11          0x0100ff11
+#define CHARA_0100ff11          0x0100ff11  // NewDepthOfField_MGS3Compatible_ff11Launch
 #define CHARA_0100ff13          0x0100ff13
 #define CHARA_0100ff14          0x0100ff14
 #define CHARA_0100ff16          0x0100ff16
 #define CHARA_0100ff17          0x0100ff17
-#define CHARA_0100fff2          0x0100fff2
-#define CHARA_0100fff3          0x0100fff3
-#define CHARA_0100fff4          0x0100fff4
+#define CHARA_0100fff2          0x0100fff2  // GlobalEffect_SetEnvRange_fff2Launch
+#define CHARA_0100fff3          0x0100fff3  // DM_ChangeAmbient_fff3Launch
+#define CHARA_0100fff4          0x0100fff4  // DM_ChangeParallel_fff4Launch
 #define CHARA_0100fff5          0x0100fff5
 #define CHARA_0110ff12          0x0110ff12
 #define CHARA_0140ff04          0x0140ff04
 #define CHARA_01f0f506          0x01f0f506
+
+/*--- 0x02 Charas ---*/
 #define CHARA_0203737f          0x0203737f
 #define CHARA_0204443e          0x0204443e
 #define CHARA_022134b7          0x022134b7
