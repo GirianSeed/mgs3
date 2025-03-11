@@ -23,8 +23,11 @@
 #define CMD_rapid_mesg          0x00ccbde3  // GV_StrCode("rapid_mesg") RMesgCmd
 
 /*---------------------------------------------------------------------------*/
-
 // CHARA IDs for SUBSISTENCE
+// NOTE: Most function names were taken from MGS4 (2006.09.07 builds).
+// Additional NewChara function names exist in the MGS3 binary, but those
+// haven't been added yet.
+
 #define CHARA_00001846          0x00001846
 #define CHARA_000018e3          0x000018e3
 #define CHARA_00001933          0x00001933
@@ -58,7 +61,7 @@
 #define CHARA_0009c882          0x0009c882
 #define CHARA_000a06c7          0x000a06c7
 #define CHARA_000a3e0b          0x000a3e0b
-#define CHARA_000b17f8          0x000b17f8  // NewSphericalCamera
+#define CHARA_SPHERE_CAMERA     0x000b17f8  // GV_StrCode("平行カメラ") NewSphericalCamera
 #define CHARA_000b56f4          0x000b56f4
 #define CHARA_000bf5f2          0x000bf5f2
 #define CHARA_000c4faf          0x000c4faf
@@ -229,7 +232,7 @@
 #define CHARA_00437870          0x00437870
 #define CHARA_00439eb4          0x00439eb4
 #define CHARA_0043bc3e          0x0043bc3e
-#define CHARA_0043f718          0x0043f718  // COM_SetCamera
+#define CHARA_CAMERA_SET        0x0043f718  // GV_StrCode("カメラ設定") COM_SetCamera
 #define CHARA_00447870          0x00447870
 #define CHARA_0044fda5          0x0044fda5
 #define CHARA_00456267          0x00456267
@@ -253,7 +256,7 @@
 #define CHARA_004984cf          0x004984cf
 #define CHARA_0049b880          0x0049b880
 #define CHARA_0049e772          0x0049e772
-#define CHARA_004a243a          0x004a243a
+#define CHARA_CODEC_SET         0x004a243a  // GV_StrCode("無線設定")
 #define CHARA_004ab3b2          0x004ab3b2
 #define CHARA_004ac6dc          0x004ac6dc
 #define CHARA_004aeee6          0x004aeee6
@@ -290,9 +293,9 @@
 #define CHARA_00560808          0x00560808
 #define CHARA_00567092          0x00567092
 #define CHARA_0056ab3a          0x0056ab3a
-#define CHARA_0056e234          0x0056e234
+#define CHARA_MAP_JOIN          0x0056e234  // GV_StrCode("マップ接合")
 #define CHARA_0056e784          0x0056e784
-#define CHARA_0056ef97          0x0056ef97
+#define CHARA_MAP_SET           0x0056ef97  // GV_StrCode("マップ設定")
 #define CHARA_00573139          0x00573139
 #define CHARA_00573507          0x00573507
 #define CHARA_0058191a          0x0058191a
@@ -312,7 +315,7 @@
 #define CHARA_005b7832          0x005b7832
 #define CHARA_005bb791          0x005bb791
 #define CHARA_005bc599          0x005bc599
-#define CHARA_005c0bae          0x005c0bae
+#define CHARA_PAD_DEMO          0x005c0bae  // GV_StrCode("パッドデモ")
 #define CHARA_005c65b0          0x005c65b0
 #define CHARA_005cb38e          0x005cb38e
 #define CHARA_005d1667          0x005d1667
@@ -332,7 +335,7 @@
 #define CHARA_0061d13b          0x0061d13b
 #define CHARA_0061f0ba          0x0061f0ba
 #define CHARA_006239b1          0x006239b1
-#define CHARA_006263f9          0x006263f9
+#define CHARA_EFFECT_BOUND_INIT 0x006263f9  // GV_StrCode("エフェクトバウンド初期化")
 #define CHARA_00626785          0x00626785
 #define CHARA_0062ff2e          0x0062ff2e  // NewGrassMng
 #define CHARA_006339b1          0x006339b1
@@ -344,8 +347,8 @@
 #define CHARA_006439b1          0x006439b1
 #define CHARA_00645113          0x00645113
 #define CHARA_00647dff          0x00647dff
-#define CHARA_0064b3f4          0x0064b3f4
-#define CHARA_006539fc          0x006539fc  // ENE_COM_AddMideastPMC (?)
+#define CHARA_COLONEL           0x0064b3f4  // GV_StrCode("大佐")
+#define CHARA_ENEMY_SOLDIER     0x006539fc  // GV_StrCode("敵兵")
 #define CHARA_00653bbf          0x00653bbf
 #define CHARA_0065b8b4          0x0065b8b4
 #define CHARA_00661b4a          0x00661b4a
@@ -362,11 +365,11 @@
 #define CHARA_00686b4d          0x00686b4d
 #define CHARA_0068cb9c          0x0068cb9c
 #define CHARA_00690245          0x00690245
-#define CHARA_00690610          0x00690610
+#define CHARA_CINEMA_SCREEN     0x00690610  // GV_StrCode("シネマスクリーン")
 #define CHARA_0069b87e          0x0069b87e  // COM_PutStageModel_MeshControl
 #define CHARA_0069eb6c          0x0069eb6c
 #define CHARA_006a3940          0x006a3940
-#define CHARA_006a725a          0x006a725a
+#define CHARA_PAD_OPERATION     0x006a725a  // GV_StrCode("パッド操作")
 #define CHARA_006aa0dc          0x006aa0dc
 #define CHARA_assert            0x006b237d  // GV_StrCode("assert") NewGclAssert
 #define CHARA_006b25fd          0x006b25fd
@@ -421,14 +424,14 @@
 #define CHARA_007a5d76          0x007a5d76
 #define CHARA_007a8432          0x007a8432
 #define CHARA_007a86b8          0x007a86b8
-#define CHARA_007aa13a          0x007aa13a
+#define CHARA_Stream            0x007aa13a  // GV_StrCode("Stream")
 #define CHARA_007aee60          0x007aee60
 #define CHARA_007b2a7c          0x007b2a7c
 #define CHARA_007b4944          0x007b4944
 #define CHARA_007bc389          0x007bc389
 #define CHARA_007c4d11          0x007c4d11
 #define CHARA_007c6960          0x007c6960
-#define CHARA_007cbbcf          0x007cbbcf
+#define CHARA_SUBSCREEN         0x007cbbcf  // GV_StrCode("子画面")
 #define CHARA_007d55de          0x007d55de
 #define CHARA_007d7aec          0x007d7aec
 #define CHARA_007e2caf          0x007e2caf
@@ -448,7 +451,7 @@
 #define CHARA_00829346          0x00829346
 #define CHARA_0082a05e          0x0082a05e
 #define CHARA_0082b327          0x0082b327
-#define CHARA_0082bdc0          0x0082bdc0
+#define CHARA_VecLen            0x0082bdc0  // GV_StrCode("VecLen")
 #define CHARA_reboot            0x0082cb3e  // GV_StrCode("reboot")
 #define CHARA_0083102f          0x0083102f
 #define CHARA_00831ee1          0x00831ee1
@@ -484,8 +487,8 @@
 #define CHARA_008b5ace          0x008b5ace
 #define CHARA_008b6086          0x008b6086  // GM_COM_PadCheck
 #define CHARA_008b94e9          0x008b94e9
-#define CHARA_008b976d          0x008b976d
-#define CHARA_008ba20a          0x008ba20a
+#define CHARA_LOCKER_STATUS     0x008b976d  // GV_StrCode("ロッカー状態")
+#define CHARA_SOKOLOV           0x008ba20a  // GV_StrCode("ソコロフ")
 #define CHARA_008c301c          0x008c301c
 #define CHARA_008d06cc          0x008d06cc
 #define CHARA_008d4ec1          0x008d4ec1
@@ -525,7 +528,7 @@
 #define CHARA_00985c58          0x00985c58
 #define CHARA_0098b109          0x0098b109
 #define CHARA_0099f754          0x0099f754
-#define CHARA_009a0d0a          0x009a0d0a  // UTL_EFT_Initialize
+#define CHARA_EFFECT_INIT       0x009a0d0a  // GV_StrCode("エフェクト初期化") UTL_EFT_Initialize
 #define CHARA_009a1040          0x009a1040
 #define CHARA_009af657          0x009af657
 #define CHARA_009b8923          0x009b8923
@@ -579,7 +582,7 @@
 #define CHARA_00aaf706          0x00aaf706
 #define CHARA_00ab3f7c          0x00ab3f7c
 #define CHARA_00ab55dc          0x00ab55dc
-#define CHARA_00ab5a2a          0x00ab5a2a
+#define CHARA_RESIDENT_RES_SET  0x00ab5a2a  // GV_StrCode("常駐リソース設定")
 #define CHARA_00ab73fd          0x00ab73fd
 #define CHARA_00ab8ce6          0x00ab8ce6
 #define CHARA_00abab99          0x00abab99
@@ -625,7 +628,7 @@
 #define CHARA_00baf651          0x00baf651
 #define CHARA_00bce74e          0x00bce74e
 #define CHARA_00bcf6ff          0x00bcf6ff
-#define CHARA_00bd400b          0x00bd400b
+#define CHARA_SHADOW_MANAGER    0x00bd400b  // GV_StrCode("影管理")
 #define CHARA_00bd8d95          0x00bd8d95
 #define CHARA_00beb908          0x00beb908
 #define CHARA_00bf0504          0x00bf0504
@@ -649,7 +652,7 @@
 #define CHARA_00c6fdfc          0x00c6fdfc
 #define CHARA_00c70c04          0x00c70c04
 #define CHARA_00c710c6          0x00c710c6
-#define CHARA_00c74f97          0x00c74f97  // NewArraySet
+#define CHARA_ARRAY_SET         0x00c74f97  // GV_StrCode("配列セット") NewArraySet
 #define CHARA_00c78563          0x00c78563
 #define CHARA_00c7f9ca          0x00c7f9ca
 #define CHARA_00c851b0          0x00c851b0
@@ -665,7 +668,7 @@
 #define CHARA_00ca3e5b          0x00ca3e5b
 #define CHARA_00ca91c4          0x00ca91c4
 #define CHARA_00cafda9          0x00cafda9
-#define CHARA_00cb1834          0x00cb1834
+#define CHARA_JOHNNY            0x00cb1834  // GV_StrCode("ジョニー")
 #define CHARA_00cb3fd9          0x00cb3fd9
 #define CHARA_00cbfca6          0x00cbfca6
 #define CHARA_00cc2e24          0x00cc2e24
@@ -716,7 +719,7 @@
 #define CHARA_00d9b7de          0x00d9b7de
 #define CHARA_00da2917          0x00da2917
 #define CHARA_00da9244          0x00da9244
-#define CHARA_00da97fb          0x00da97fb  // GM_COM_TrapSwitchCommand
+#define CHARA_TRAP_SWITCH       0x00da97fb  // GV_StrCode("トラップ切り替え") GM_COM_TrapSwitchCommand
 #define CHARA_00daad6b          0x00daad6b
 #define CHARA_00dac400          0x00dac400
 #define CHARA_00daed21          0x00daed21
@@ -724,7 +727,7 @@
 #define CHARA_00db4ee7          0x00db4ee7
 #define CHARA_00dbb521          0x00dbb521
 #define CHARA_00dc2db5          0x00dc2db5
-#define CHARA_00dc83c5          0x00dc83c5
+#define CHARA_LOAD_SOUND_PACK   0x00dc83c5  // GV_StrCode("ロードサウンドパック")
 #define CHARA_00dd173e          0x00dd173e
 #define CHARA_00dd5eb6          0x00dd5eb6
 #define CHARA_00dd5eb7          0x00dd5eb7
@@ -737,14 +740,14 @@
 #define CHARA_00decc26          0x00decc26
 #define CHARA_00dee2e0          0x00dee2e0
 #define CHARA_00df1d9c          0x00df1d9c
-#define CHARA_00df4cae          0x00df4cae
+#define CHARA_ITEMBOX           0x00df4cae  // GV_StrCode("アイテムボックス")
 #define CHARA_00e002ea          0x00e002ea
 #define CHARA_00e08648          0x00e08648
 #define CHARA_00e0dbba          0x00e0dbba
 #define CHARA_00e0f9c7          0x00e0f9c7
 #define CHARA_00e22b51          0x00e22b51
 #define CHARA_00e2808c          0x00e2808c
-#define CHARA_00e29adb          0x00e29adb
+#define CHARA_SCN_DEMO_START    0x00e29adb  // GV_StrCode("シナリオデモ開始")
 #define CHARA_00e387af          0x00e387af
 #define CHARA_00e44f0c          0x00e44f0c
 #define CHARA_00e4750f          0x00e4750f
@@ -756,14 +759,14 @@
 #define CHARA_00e76d74          0x00e76d74  // NewGclVariableMove
 #define CHARA_00e78c6d          0x00e78c6d
 #define CHARA_00e7939b          0x00e7939b
-#define CHARA_00e79927          0x00e79927
+#define CHARA_SCN_DEMO_END      0x00e79927  // GV_StrCode("シナリオデモ終了")
 #define CHARA_00e7a1d7          0x00e7a1d7
 #define CHARA_00e81436          0x00e81436
 #define CHARA_00e82679          0x00e82679
 #define CHARA_00e84f76          0x00e84f76
 #define CHARA_00e923a5          0x00e923a5
 #define CHARA_00e93330          0x00e93330
-#define CHARA_00e96d82          0x00e96d82
+#define CHARA_CODEC_SYSTEM      0x00e96d82  // GV_StrCode("無線システム")
 #define CHARA_00e99d79          0x00e99d79
 #define CHARA_00e9cacf          0x00e9cacf
 #define CHARA_00e9fd79          0x00e9fd79
