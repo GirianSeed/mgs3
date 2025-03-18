@@ -7,26 +7,31 @@ indent_style    = tab
 end_of_line     = lf
 max_line_length = off
 
+# C/C++
 [{*.{c,h},*.{cc,hh,cxx,hxx,cpp,hpp,inl}}]
 tab_width       = 4
 indent_size     = tab
 indent_style    = space
 
+# assembler-with-cpp
 [*.{s,S,sx}]
 tab_width       = 8
 indent_size     = tab
 indent_style    = tab
 
+# dvp-gas assembly
 [*.{dsm,vsm,vcl}]
 tab_width       = 8
 indent_size     = tab
 indent_style    = tab
 
+# Makefile
 [{*{M,m}akefile*,*.{mk,mak,make}}]
 tab_width       = 8
 indent_size     = tab
 indent_style    = tab
 
+# Scripts
 [*.{sh,bash}]
 indent_style    = space
 end_of_line     = lf
@@ -35,6 +40,7 @@ end_of_line     = lf
 indent_style    = space
 end_of_line     = crlf
 
+# Python
 [*.py]
 indent_size     = 4
 indent_style    = space
