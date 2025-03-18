@@ -293,7 +293,7 @@
 #define CHARA_00560808          0x00560808
 #define CHARA_00567092          0x00567092
 #define CHARA_0056ab3a          0x0056ab3a
-#define CHARA_MAP_JOIN          0x0056e234  // GV_StrCode("マップ接合")
+#define CHARA_MAP_CONNECT       0x0056e234  // GV_StrCode("マップ接合")
 #define CHARA_0056e784          0x0056e784
 #define CHARA_MAP_SET           0x0056ef97  // GV_StrCode("マップ設定")
 #define CHARA_00573139          0x00573139
