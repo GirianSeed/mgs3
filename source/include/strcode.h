@@ -23,8 +23,6 @@
 #define CMD_rapid_mesg          0x00ccbde3  // GV_StrCode("rapid_mesg") RMesgCmd
 
 /*---------------------------------------------------------------------------*/
-// Master List of CHARA IDs
-//
 // Chara IDs unique to only one version of the game have been marked with
 // the following specmarks (in parentheses):
 //
