@@ -98,9 +98,9 @@
 #endif
 
 #define MAKE_RGBA(_r,_g,_b,_a)                                  \
-        ((unsigned int)((((_r) & 0xff) << RGBA_R_SHIFT)|        \
-                        (((_g) & 0xff) << RGBA_G_SHIFT)|        \
-                        (((_b) & 0xff) << RGBA_B_SHIFT)|        \
+        ((unsigned int)((((_r) & 0xff) << RGBA_R_SHIFT) |       \
+                        (((_g) & 0xff) << RGBA_G_SHIFT) |       \
+                        (((_b) & 0xff) << RGBA_B_SHIFT) |       \
                         (((_a) & 0xff) << RGBA_A_SHIFT)))
 
 #define MAKE_RGB0(_r,_g,_b)     MAKE_RGBA(_r,_g,_b,0x00)
@@ -126,10 +126,10 @@
 #endif
 
 #define MAKE_ARGB(_a,_r,_g,_b)                                  \
-        ((unsigned int)((((_a) & 0xff) << ARGB_A_SHIFT)|        \
-                        (((_r) & 0xff) << ARGB_R_SHIFT)|        \
-                        (((_g) & 0xff) << ARGB_G_SHIFT)|        \
-                        (((_b) & 0xff) << ARGB_B_SHIFT))
+        ((unsigned int)((((_a) & 0xff) << ARGB_A_SHIFT) |       \
+                        (((_r) & 0xff) << ARGB_R_SHIFT) |       \
+                        (((_g) & 0xff) << ARGB_G_SHIFT) |       \
+                        (((_b) & 0xff) << ARGB_B_SHIFT)))
 
 #define MAKE_0RGB(_r,_g,_b)     MAKE_ARGB(0x00,_r,_g,_b)
 #define MAKE_XRGB(_r,_g,_b)     MAKE_ARGB(0xff,_r,_g,_b)
