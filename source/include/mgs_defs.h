@@ -43,6 +43,7 @@
 #endif
 
 /*---------------------------------------------------------------------------*/
+// Common Macro #defines
 
 #ifndef MIN
 #define MIN(x, y)       (((x) < (y)) ? (x) : (y))
@@ -51,38 +52,77 @@
 #define MAX(x, y)       (((x) > (y)) ? (x) : (y))
 #endif
 #ifndef ABS
-#define ABS(x)          (((x) >= 0) ? (x) : -(x))
+#define ABS(x)          (((x) < 0) ? -(x) : (x))
 #endif
+
+#define SIGN(x)         (((x) > 0) - ((x) < 0))
+//#define SIGN(x)       (((x) < 0) ? -1 : ((x) > 0) ? 1 : 0)
+//#define SIGN(x)       (((x) < 0) ? -1 : !!(x))
 
 #ifndef CLAMP
 #define CLAMP(x, min, max) (MAX(MIN(x, max), min))
+//#define CLAMP(x, min, max) (((x) < (min)) ? (min) : ((x) > (max)) ? (max) : (x))
+//#define CLAMP(x, min, max) (((x) > (max)) ? (max) : ((x) < (min)) ? (min) : (x))
 #endif
 
-#define PACKED          __attribute__((packed))
+/*---------------------------------------------------------------------------*/
+// Compiler attribute #defines
+
+#if defined(__GNUC__)
 #define ALIGN(_x)       __attribute__((aligned(_x)))
+#define PACKED          __attribute__((packed))
+#elif defined(_MSC_VER)
+#define ALIGN(_x)       __declspec(align(_x))
+#define PACKED          /* discard */
+#else
+#define ALIGN(_x)       /* discard */
+#define PACKED          /* discard */
+#endif
+/* common alignments */
 #define ALIGN8          ALIGN(8)
 #define ALIGN16         ALIGN(16)
 #define ALIGN64         ALIGN(64)
 #define ALIGN128        ALIGN(128)
 
+// You can also just use ((void)foo) to suppress warnings.
+#if defined(__GNUC__)
+#define UNUSED          __attribute__((unused))
+#else
+#define UNUSED          /* discard */
+#endif
+
 /*---------------------------------------------------------------------------*/
 
+// This will crash the program with the intention of invoking
+// the MTS exception handler screen (which was compiled out).
+//
+// I guess KCEJ chose to dereference 1 instead of 0 to distinguish
+// exceptions raised intentionally from actual NULL-pointer dereferences.
+// Notice that it's also writing to an unaligned memory address.
+//
 #define HANGUP()        (*(int *)1 = 0)
 
+// TODO: Should these be wrapped with 'do {} while (0)'?
+#ifdef DEBUG
 #define ASSERT(cond)                                            \
     if (!(cond)) {                                              \
         /* todo: decompile */                                   \
         HANGUP();                                               \
     }
 
-#define XASSERT(cond, mesg ...)                                 \
+#define XASSERT(cond, mesg...)                                  \
     if (!(cond)) {                                              \
         /* todo: decompile */                                   \
         printf( mesg );                                         \
         HANGUP();                                               \
     }
+#else // DEBUG
+#define ASSERT(cond)            ((void)0)   // do {} while (0)
+#define XASSERT(cond, mesg...)  ((void)0)   // do {} while (0)
+#endif // DEBUG
 
 /*---------------------------------------------------------------------------*/
+// Color Format #defines
 
 /* RGBA8888 format */
 #ifdef WORDS_BIGENDIAN
