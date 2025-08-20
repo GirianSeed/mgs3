@@ -1,7 +1,7 @@
 #ifndef __MGS3_LIBGV_H__
 #define __MGS3_LIBGV_H__
 
-#include <libpad.h>
+#include <libpad.h>     // for SCE_PAD*
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,22 +9,22 @@ extern "C" {
 
 /*---------------------------------------------------------------------------*/
 
-#define PAD_U           SCE_PADLup      // ↑   (0x1000)
-#define PAD_D           SCE_PADLdown    // ↓   (0x4000)
-#define PAD_L           SCE_PADLleft    // ←   (0x8000)
-#define PAD_R           SCE_PADLright   // →   (0x2000)
-#define PAD_A           SCE_PADRright   // ○   (0x0020)
-#define PAD_B           SCE_PADRdown    // ×   (0x0040)
-#define PAD_X           SCE_PADRup      // △   (0x0010)
-#define PAD_Y           SCE_PADRleft    // □   (0x0080)
-#define PAD_L1          SCE_PADL1       // L1   (0x0004)
-#define PAD_R1          SCE_PADR1       // R1   (0x0008)
-#define PAD_L2          SCE_PADL2       // L2   (0x0001)
-#define PAD_R2          SCE_PADR2       // R2   (0x0002)
-#define PAD_STA         SCE_PADstart    // STA  (0x0800)
-#define PAD_SEL         SCE_PADselect   // SEL  (0x0100)
-#define PAD_AL          SCE_PADi        // L3   (0x0200)
-#define PAD_AR          SCE_PADj        // R3   (0x0400)
+#define PAD_U           SCE_PADLup      // 0x1000 ↑
+#define PAD_D           SCE_PADLdown    // 0x4000 ↓
+#define PAD_L           SCE_PADLleft    // 0x8000 ←
+#define PAD_R           SCE_PADLright   // 0x2000 →
+#define PAD_A           SCE_PADRright   // 0x0020 ○
+#define PAD_B           SCE_PADRdown    // 0x0040 ×
+#define PAD_X           SCE_PADRup      // 0x0010 △
+#define PAD_Y           SCE_PADRleft    // 0x0080 □
+#define PAD_L1          SCE_PADL1       // 0x0004 L1
+#define PAD_R1          SCE_PADR1       // 0x0008 R1
+#define PAD_L2          SCE_PADL2       // 0x0001 L2
+#define PAD_R2          SCE_PADR2       // 0x0002 R2
+#define PAD_STA         SCE_PADstart    // 0x0800 STA
+#define PAD_SEL         SCE_PADselect   // 0x0100 SEL
+#define PAD_AL          SCE_PADi        // 0x0200 L3
+#define PAD_AR          SCE_PADj        // 0x0400 R3
 
 /* button masks */
 #define PAD_UDLR        (PAD_U  | PAD_D  | PAD_L  | PAD_R)
