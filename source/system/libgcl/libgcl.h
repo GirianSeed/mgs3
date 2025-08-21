@@ -36,6 +36,27 @@ static inline int GCL_GetLong( char *ptr )
     return (p[0] << 24) | (p[1] << 16) | (p[2] << 8) | (p[3]);
 }
 
+static inline unsigned int GCL_GetULong( char *ptr )
+{
+    unsigned char *p;
+    p = (unsigned char *)ptr;
+    return (p[0] << 24) | (p[1] << 16) | (p[2] << 8) | (p[3]);
+}
+
+static inline unsigned int GCL_GetVarCode( char *ptr )
+{
+    unsigned char *p;
+    p = (unsigned char *)ptr;
+    return (p[0] << 24) | (p[1] << 16) | (p[2] << 8) | (p[3]);
+}
+
+static inline int GCL_Get3Bytes( char *ptr )
+{
+    unsigned char *p;
+    p = (unsigned char *)ptr;
+    return (p[0] << 16) | (p[1] << 8) | (p[2] << 0);
+}
+
 static inline int GCL_GetShort( char *ptr )
 {
     unsigned char *p;
@@ -43,9 +64,23 @@ static inline int GCL_GetShort( char *ptr )
     return (signed short)((p[0] << 8) | (p[1]));
 }
 
-static inline char GCL_GetByte( char *ptr )
+static inline unsigned int GCL_GetUShort( char *ptr )
 {
-    return *ptr;
+    unsigned char *p;
+    p = (unsigned char *)ptr;
+    return (unsigned short)((p[0] << 8) | (p[1]));
+}
+
+static inline unsigned char GCL_GetByte( char *ptr )
+{
+    return (unsigned char)*ptr;
+}
+
+static inline int GCL_GetStrCode( char *ptr )
+{
+    unsigned char *p;
+    p = (unsigned char *)ptr;
+    return (p[0] << 16) | (p[1] << 8) | (p[2] << 0);
 }
 
 /*---------------------------------------------------------------------------*/
