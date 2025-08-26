@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 typedef struct _GV_MEMTAG {
-    /* +0x00 */ void *next;
+    /* +0x00 */ struct _GV_MEMTAG *next;
     /* +0x04 */ int size;
     /* +0x08 */ int res1;
     /* +0x0C */ int res2;
