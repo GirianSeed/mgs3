@@ -32,6 +32,7 @@
 #  define GCC_VERSION 0
 #endif // __GNUC__
 
+// Stolen from <features.h>
 /* Macro to test version of GCC.  Returns 0 for non-GCC or too old GCC. */
 #ifndef __GNUC_PREREQ
 #  if defined(__GNUC__) && defined(__GNUC_MINOR__)
