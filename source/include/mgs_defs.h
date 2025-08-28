@@ -1,7 +1,7 @@
 #ifndef __MGS3_MGS_DEFS_H__
 #define __MGS3_MGS_DEFS_H__
 
-#include <stddef.h>
+#include <stddef.h>     // for NULL
 #include <limits.h>
 
 /* MSVC defines _countof as an extension to stdlib.h */
@@ -89,6 +89,13 @@
 #define UNUSED          __attribute__((unused))
 #else
 #define UNUSED          /* discard */
+#endif
+
+// #define USE_STATIC_KEYWORD
+#ifdef USE_STATIC_KEYWORD
+#define STATIC          static
+#else
+#define STATIC          /* fake keyword for documentation */
 #endif
 
 /*---------------------------------------------------------------------------*/

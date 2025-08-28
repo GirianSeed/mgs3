@@ -1,8 +1,10 @@
 #ifndef __MGS3_MGS_TYPES_H__
 #define __MGS3_MGS_TYPES_H__
 
+#include <stddef.h>     // for size_t
+#include <limits.h>     // for MIN/MAX
 #include <sys/types.h>
-#include <eetypes.h>
+#include <eetypes.h>    // for u_long128
 #include "mgs_defs.h"
 
 /*---------------------------------------------------------------------------*/
@@ -27,8 +29,8 @@ typedef signed int      int32;          /* 32-bit signed integer    */
 typedef unsigned int    u_int32;        /* 32-bit unsigned integer  */
 typedef signed long     int64;          /* 64-bit signed integer    */
 typedef unsigned long   u_int64;        /* 64-bit unsigned integer  */
-typedef signed long     long64;         /* 64-bit signed integer    */
-typedef unsigned long   u_long64;       /* 64-bit unsigned integer  */
+typedef signed long     long64;         /* 64-bit signed long       */
+typedef unsigned long   u_long64;       /* 64-bit unsigned long     */
 
 // https://gcc.gnu.org/onlinedocs/gcc/_005f_005fint128.html
 // https://gcc.gnu.org/onlinedocs/gccint/Machine-Modes.html
