@@ -1,0 +1,9 @@
+root = false
+
+# I didn't want to have this here but it seems .editorconfig
+# can take precedence over modelines in certain editors.
+
+[*.cnf]
+tab_width       = 4
+indent_size     = tab
+indent_style    = space
