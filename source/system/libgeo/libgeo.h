@@ -6,7 +6,10 @@ extern "C" {
 #endif
 
 /* geod.c */
-void GEO_StartDaemon( void );
+void *GEO_DaemonStart( void );
+
+/* geo_load.c */
+void GEO_Initialize( void );
 
 #ifdef __cplusplus
 }

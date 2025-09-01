@@ -5,11 +5,8 @@
 extern "C" {
 #endif
 
-//
-//
-//
-//
-//
+/* mtar_ld.c */
+void MT_Initialize( void );
 
 #ifdef __cplusplus
 }

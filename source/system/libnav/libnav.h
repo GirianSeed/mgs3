@@ -5,11 +5,7 @@
 extern "C" {
 #endif
 
-//
-//
-//
-//
-//
+void NAV_Initialize( void );
 
 #ifdef __cplusplus
 }

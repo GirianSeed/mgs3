@@ -5,11 +5,7 @@
 extern "C" {
 #endif
 
-//
-//
-//
-//
-//
+void ZN_Initialize( void );
 
 #ifdef __cplusplus
 }
