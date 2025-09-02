@@ -70,6 +70,28 @@
 //#define CLAMP(x, min, max) (((x) > (max)) ? (max) : ((x) < (min)) ? (min) : (x))
 #endif
 
+/* Macros for counting and rounding. */
+#ifndef HOWMANY
+#define HOWMANY(x,y)    (((x) + ((y) - 1)) / (y))
+#endif
+#ifndef POWEROF2
+#define POWEROF2(x)     ((((x) - 1) & (x)) == 0)
+#endif
+/* rounds to any y */
+#ifndef ROUNDUP
+#define ROUNDUP(x,y)    ((((x) + ((y) - 1)) / (y)) * (y))
+#endif
+#ifndef ROUNDDOWN
+#define ROUNDDOWN(x,y)  (((x) / (y)) * (y))
+#endif
+/* if y is a power of two */
+#ifndef ROUNDUP2
+#define ROUNDUP2(x,y)   (((x) + ((y) - 1)) & ~((y) - 1))
+#endif
+#ifndef ROUNDDOWN2
+#define ROUNDDOWN2(x,y) ((x) & ~((y) - 1))
+#endif
+
 /*---------------------------------------------------------------------------*/
 // Compiler attribute #defines
 
