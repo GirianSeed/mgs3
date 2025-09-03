@@ -8,6 +8,9 @@ extern "C" {
 /* gamed.c */
 void GM_StartDaemon( void );
 
+/* script.c */
+void GM_InitScript( void );
+
 #ifdef __cplusplus
 }
 #endif
