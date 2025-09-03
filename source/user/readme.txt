@@ -7,6 +7,7 @@ user/fujiwara   : Hiroki Fujiwara
 user/hatsu      : Kazuhide Hatsuyama
 user/katagai    : Tahei Katagai
 user/kawabata   : Yasuhiro Kawabata
+user/korekado   : Yuji Korekado
 user/kunibe     : Yuta Kunibe
 user/morita     : Tomonori Morita
 user/nishida    : Yusuke Nishida
