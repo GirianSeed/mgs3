@@ -1,0 +1,59 @@
+/* -*- mode: c; tab-width: 4; indent-tabs-mode: nil; -*- */
+#ifndef __MGS3_EXT_TABLE_CNF__
+#define __MGS3_EXT_TABLE_CNF__
+
+// NOTE: MGS4's config was located under 'mgs4/defs/include/ext_table.cnf'
+// suggesting that it was probably auto-generated. I've put this decompiled
+// version inside libfs since that's where it's needed.
+
+#include <stddef.h> // for NULL
+
+typedef struct {
+    char *name; /* +0x00 */
+    int id;     /* +0x04 */
+} EXT_TABLE;
+
+// NOTE: MGS3's Trial Version has two more IDs (0x1f, 0x21) with unknown names.
+// It seems ext_table was compiled out of CD-ROM builds, so I had to decompile
+// this table from the HD Edition.
+
+EXT_TABLE ext_table[] = {
+    { "mdh", 0x04 },
+    { "bin", 0x01 },
+    { "mdc", 0x0d },    // Shared ID 0x0D
+    { "img", 0x69 },
+    { "far", 0x0a },    // Shared ID 0x0A
+    { "zon", 0x12 },
+    { "mds", 0x05 },
+    { "vib", 0x6a },
+    { "row", 0x6e },    // Shared ID 0x6E
+    { "nav", 0x0f },
+    { "rat", 0x6b },
+    { "mtfa", 0x0a },   // Shared ID 0x0A
+    { "psq", 0xff },
+    { "gcx", 0x02 },
+    { "mtra", 0x6f },
+    { "cvd", 0x10 },
+    { "ico", 0x5e },
+    { "geom", 0x0c },
+    { "tri", 0x03 },
+    { "cv2", 0x07 },
+    { "rpd", 0x13 },
+    { "mtar", 0x08 },
+    { "var", 0x68 },
+    { "eft", 0x11 },
+    { "slot", 0x60 },
+    { "la2", 0x5f },
+    { "mdl", 0x0d },    // Shared ID 0x0D
+    { "ola", 0x6d },
+    { "rcm", 0x6c },
+    { "mtcm", 0x0b },
+    { "lt2", 0x06 },
+    { "mtsq", 0x09 },
+    { "mdb", 0x0d },    // Shared ID 0x0D
+    { "raw", 0x6e },    // Shared ID 0x6E
+    { NULL, 0x00 }
+};
+
+#endif // {{{ END OF FILE }}}
+/* vim:set ts=4 sw=4 sts=4 et ft=c: */
