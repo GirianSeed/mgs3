@@ -11,7 +11,7 @@
 //
 // MGS4's game.h defines CHARA.class_id as 'u_long', hinting that the typedefs
 // were either modified or added to the header after the PS3's ABI was changed
-// from LP64 to IPL32 with SDK 080.000 in early 2006.
+// from LP64 to ILP32 with SDK 080.000 in early 2006.
 
 // XXX The empty parameter list is widely regarded as one of old C's
 // XXX anti-features. C++ and C23 have changed its meaning to (void).
