@@ -1,8 +1,25 @@
+# -*- mode: gitattributes; -*-
 * -text
 
 # C/C++
-*.c             linguist-language=C
-*.h             linguist-language=C
+*.c             diff=cpp
+*.h             diff=cpp
+*.cc            diff=cpp
+*.hh            diff=cpp
+*.cxx           diff=cpp
+*.hxx           diff=cpp
+*.cpp           diff=cpp
+*.hpp           diff=cpp
+*.c++           diff=cpp
+*.h++           diff=cpp
+*.inl           diff=cpp
+
+# Makefile
+*.mkf           linguist-language=Makefile
+Makefile.*      linguist-language=Makefile
+MakeDefs        linguist-language=Makefile
+MakeRules       linguist-language=Makefile
+PathDefs        linguist-language=Makefile
 
 # assembler-with-cpp
 *.S             linguist-language=Assembly
@@ -13,14 +30,7 @@
 *.vsm           linguist-language=Assembly
 *.vcl           linguist-language=Assembly
 
-# Makefile
-*.mkf           linguist-language=Makefile
-Makefile.*      linguist-language=Makefile
-MakeDefs        linguist-language=Makefile
-MakeRules       linguist-language=Makefile
-PathDefs        linguist-language=Makefile
-
-# Scripts
+# Shell Scripts
 *.sh            text eol=lf
 *.bash          text eol=lf
 *.fish          text eol=lf
@@ -29,9 +39,16 @@ PathDefs        linguist-language=Makefile
 *.ksh           text eol=lf
 *.zsh           text eol=lf
 
+# Batch, PowerShell
 *.bat           text eol=crlf
 *.cmd           text eol=crlf
 *.ps1           text eol=crlf
+*.psm1          text eol=crlf
+*.psd1          text eol=crlf
+
+# Perl
+*.pl            diff=perl
+*.pm            diff=perl
 
 # Vim
 *.vim           text eol=lf

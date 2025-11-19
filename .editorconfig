@@ -1,3 +1,4 @@
+# https://editorconfig.org
 root = true
 
 [*]
@@ -8,7 +9,7 @@ end_of_line     = lf
 max_line_length = off
 
 # C/C++
-[{*.{c,h},*.{cc,hh,cxx,hxx,cpp,hpp,inl}}]
+[*.{c,h,cc,hh,cxx,hxx,cpp,hpp,inl}]
 tab_width       = 4
 indent_size     = tab
 indent_style    = space
@@ -31,14 +32,22 @@ tab_width       = 8
 indent_size     = tab
 indent_style    = tab
 
-# Scripts
-[*.{sh,bash}]
+# Shell Scripts
+[*.{sh,bash,ksh,zsh,csh,tcsh}]
+indent_size     = 4
 indent_style    = space
 end_of_line     = lf
 
-[*.{bat,cmd}]
+# Batch, PowerShell
+[*.{bat,cmd,ps1}]
+indent_size     = 4
 indent_style    = space
 end_of_line     = crlf
+
+# Perl
+[*.{pl,pm}]
+indent_size     = 4
+indent_style    = space
 
 # Python
 [*.py]
