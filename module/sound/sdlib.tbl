@@ -1,0 +1,7 @@
+Libname sdlib
+Version 0.0
+
+Entry/5	sdlibInit
+Entry	-
+Entry	-
+Entry	-
