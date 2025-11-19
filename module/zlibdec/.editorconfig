@@ -10,9 +10,13 @@ root = false
 tab_width       = 8
 indent_size     = 4
 indent_style    = unset
-end_of_line     = unset
-charset         = unset
+end_of_line     = lf
 
 max_line_length = off
-trim_trailing_whitespace = false
 insert_final_newline = unset
+trim_trailing_whitespace = false
+
+[{*.txt,ChangeLog,README}]
+tab_width       = 8
+indent_style    = unset
+end_of_line     = lf

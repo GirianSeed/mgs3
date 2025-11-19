@@ -1,5 +1,9 @@
 root = false
 
 [*]
+# Should be less than 80, but it's a soft limit.
+max_line_length = off
+
+# Turn these off for vendored sources.
 insert_final_newline = true
 trim_trailing_whitespace = true
