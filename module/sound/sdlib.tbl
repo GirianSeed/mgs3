@@ -1,7 +1,33 @@
 Libname sdlib
-Version 0.0
+Version 2.11
 
 Entry/5	sdlibInit
 Entry	-
 Entry	-
 Entry	-
+
+Entry	SdInitSdlib
+Entry	SdQuitSdlib
+Entry	SdIsEmptyQueue
+Entry	SdIsTrans
+Entry	SdSpuWrite
+Entry	SdGetSpuPlayAddr
+Entry	SdGetKeyoffCount
+Entry	SdGetKey
+Entry	SdSetVoice
+Entry	SdSetKey
+Entry	SdSetDsp
+Entry	SdSpuMalloc
+Entry	SdIrqRegist
+Entry	SdVol7ToVol14
+Entry	SdPanToVol14
+Entry	SdGetHLine
+Entry	SdGetVolume
+Entry	SdVoiceFlush
+Entry	SdPcmCtrl
+Entry	SdGetTime
+Entry	SdSetKeyoffCount
+Entry	SdSetNoise
+Entry	SdSpuFree
+Entry	SdMono
+Entry	SdGetUTime
