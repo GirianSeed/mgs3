@@ -3,12 +3,73 @@
 #include <libsd.h>
 #include "sdlib.h"
 
+#define SD_ALLOC_SIZE       16
+#define SD_QUEUE_SIZE       16
+#define SD_PCM_BUFFER_SIZE  0x400
+#define SD_TRANSBUF_SIZE    0x3000
+#define SD_STACK_SIZE       0x800
+
 #define VER(MM, mm) (((MM) << 8) | (mm))
 ModuleInfo Module = { "kcej_sound_basic_lib", VER(2,11) };
 
+typedef struct {
+    int unk1 : 8;
+    int unk2 : 24;
+    int unk3;
+} SD_ALLOC;
+
+typedef struct {
+    int on : 1;
+    int mono : 1;
+    int sema1;
+    int sema2;
+    int sema3;
+    char transbuf[SD_TRANSBUF_SIZE];
+} SD_SYS;
+
+typedef struct {
+    char pad1[0x22];
+    sint8 keyoffs;
+    char pad2[0x5];
+} SD_CHAN;
+
+typedef struct {
+    int unk1;
+    uint8 voice;
+    char unk3;
+    char unk4;
+    char unk5;
+    int unk6;
+} SD_DSP;
+
+typedef void (*sd_pcm_job)(void *, int);
+
+typedef struct {
+    char buffer[2][SD_PCM_BUFFER_SIZE];
+    unsigned int count;
+    sd_pcm_job job1;
+    sd_pcm_job job2;
+} SD_PCM;
+
+enum {
+    SD_QUEUE_READY = 0,
+    SD_QUEUE_BUSY = 1,
+    SD_QUEUE_PENDING = 2,
+};
+
+typedef struct {
+    char unk0;
+    char unk1;
+    uint8 status;
+    char channel;
+    unsigned int s_addr;
+    void *m_addr;
+    unsigned int size;
+} SD_QUEUE;
+
 //.rodata
-static const int defCore[2] = { 0,1 };
-static const int defVc[24] = {
+static const int defCore[_SD_NCORE] = { 0,1 };
+static const int defVc[_SD_NCHAN] = {
     0,
     2,
     4,
@@ -166,37 +227,37 @@ int gTimerID;
 int commonIrq;
 
 //.bss
-static iSys;                    // sizeof:0x3010
+static SD_SYS iSys;             // sizeof:0x3010
 static int thSdLoop;            // sizeof:4
 static int thSdLoopRegset;      // sizeof:4
 static int thSdLoopPcm;         // sizeof:4
-static int keyOn[2];            // sizeof:8
-static int keyOff[2];           // sizeof:8
-static int keyOff2[2];          // sizeof:8
-static int dspOn[2];            // sizeof:8
-static int dspOff[2];           // sizeof:8
-static int dspOff2[2];          // sizeof:8
-static int dspBit[2];           // sizeof:8
-static int noiseOn[2];          // sizeof:8
-static int noiseOff[2];         // sizeof:8
-static int noiseOff2[2];        // sizeof:8
-static int noiseBit[2];         // sizeof:8
-static int update[2];           // sizeof:8
-static _stChan;                 // sizeof:0x780
-static stDsp;                   // sizeof:0x18
-static stNoise;                 // sizeof:8
+static int keyOn[_SD_NCORE];    // sizeof:8
+static int keyOff[_SD_NCORE];   // sizeof:8
+static int keyOff2[_SD_NCORE];  // sizeof:8
+static int dspOn[_SD_NCORE];    // sizeof:8
+static int dspOff[_SD_NCORE];   // sizeof:8
+static int dspOff2[_SD_NCORE];  // sizeof:8
+static int dspBit[_SD_NCORE];   // sizeof:8
+static int noiseOn[_SD_NCORE];  // sizeof:8
+static int noiseOff[_SD_NCORE]; // sizeof:8
+static int noiseOff2[_SD_NCORE]; // sizeof:8
+static int noiseBit[_SD_NCORE]; // sizeof:8
+static int update[_SD_NCORE];   // sizeof:8
+static SD_CHAN _stChan[_SD_NCORE][_SD_NCHAN]; // sizeof:0x780
+static SD_DSP stDsp[_SD_NCORE]; // sizeof:0x18
+static int stNoise[_SD_NCORE];  // sizeof:8
 static dmaQueueNo;              // sizeof:4
-static stSpuAlloc;              // sizeof:0x80 (ES21: 0x100)
-static queueSpuTrans;           // sizeof:0x100
-static fSpuTrans;               // sizeof:8
-static iPcm;                    // sizeof:0x80C (?)
+static SD_ALLOC stSpuAlloc[SD_ALLOC_SIZE];    // sizeof:0x80 (ES21: 0x100)
+static SD_QUEUE queueSpuTrans[SD_QUEUE_SIZE]; // sizeof:0x100
+static sint8 fSpuTrans[2];      // sizeof:2
+static SD_PCM iPcm;             // sizeof:0x80C
 
 static SdJobSpuWrite()
 {
     /* todo: decompile */
 }
 
-SdSpuWrite()
+int SdSpuWrite(unsigned int dst, void *src, unsigned int size)
 {
     /* todo: decompile */
 }
@@ -276,9 +337,83 @@ static SdLoop()
     /* todo: decompile */
 }
 
-SdInitSdlib()
+
+int SdInitSdlib(void)
 {
-    /* todo: decompile */
+    struct ThreadParam thread;
+    struct SemaParam sema;
+
+    memset(&iSys, 0, sizeof(iSys));
+
+    if (iSys.on == SD_TRUE) {
+        return SD_SUCCESS;
+    }
+
+    iSys.on = SD_TRUE;
+
+    SdInitSdlib2();
+    FlushDcache();
+
+    sema.attr = SA_THPRI;
+    sema.maxCount = 1;
+    sema.initCount = 0;
+    iSys.sema1 = CreateSema(&sema);
+
+    sema.attr = SA_THPRI;
+    sema.maxCount = 1;
+    sema.initCount = 0;
+    iSys.sema2 = CreateSema(&sema);
+
+    sema.attr = SA_THPRI;
+    sema.maxCount = 1;
+    sema.initCount = 0;
+    iSys.sema3 = CreateSema(&sema);
+
+    SignalSema(iSys.sema1);
+    SignalSema(iSys.sema2);
+    SignalSema(iSys.sema3);
+
+    thread.attr = TH_C;
+    thread.entry = SdLoop;
+    thread.initPriority = 24;
+    thread.stackSize = SD_STACK_SIZE;
+    thread.option = 0;
+
+    if ((thSdLoop = CreateThread(&thread)) <= 0) {
+        return SD_ERROR;
+    }
+
+    StartThread(thSdLoop, 0);
+
+    thread.attr = TH_C;
+    thread.entry = SdLoopRegset;
+    thread.initPriority = 26;
+    thread.stackSize = SD_STACK_SIZE;
+    thread.option = 0;
+
+    if ((thSdLoopRegset = CreateThread(&thread)) <= 0) {
+        return SD_ERROR;
+    }
+
+    StartThread(thSdLoopRegset, 0);
+
+    thread.attr = TH_C;
+    thread.entry = SdLoopPcm;
+    thread.initPriority = 25;
+    thread.stackSize = SD_STACK_SIZE;
+    thread.option = 0;
+
+    if ((thSdLoopPcm = CreateThread(&thread)) <= 0) {
+        return SD_ERROR;
+    }
+
+    StartThread(thSdLoopPcm, 0);
+
+    gTimerID = AllocHardTimer(TC_SYSCLOCK, 32, 1);
+    SetTimerHandler(gTimerID, SYSCLOCK / IRQ_TIME, SdIrqCallback, &thSdLoop);
+    SetupHardTimer(gTimerID, TC_SYSCLOCK, TM_NO_GATE, 1);
+    StartHardTimer(gTimerID);
+    return SD_SUCCESS;
 }
 
 int SdIsEmptyQueue(void)
@@ -286,117 +421,211 @@ int SdIsEmptyQueue(void)
     return (rQueueSpuTrans == wQueueSpuTrans);
 }
 
-SdIsTrans()
+int SdIsTrans(int queue)
 {
-    /* todo: decompile */
+    int avail;
+
+    if (queue <= 0) {
+        avail = (fSpuTrans[1] == 0) ? 1 : -1;
+
+        if (avail != -1) {
+            return 0;
+        }
+
+        return -1;
+    }
+
+    return queueSpuTrans[queue - 1].status;
 }
 
-SdGetSpuPlayAddr()
+unsigned int SdGetSpuPlayAddr(sint8 core, sint8 voice)
 {
-    /* todo: decompile */
+    return sceSdGetAddr(defCore[core] | defVc[voice] | SD_VA_NAX);
 }
 
-SdGetKeyoffCount()
+int SdGetKeyoffCount(sint8 core, sint8 voice)
 {
-    /* todo: decompile */
+    return _stChan[core][voice].keyoffs;
 }
 
-SdSetKeyoffCount()
+/*
+TODO: Fix -O3 breaking the match
+
+int SdSetKeyoffCount(int core, int voice, int count)
 {
-    /* todo: decompile */
+    WaitSema(iSys.sema3);
+
+    if (count > 127) {
+        _stChan[core][voice].keyoffs = 127;
+    } else {
+        _stChan[core][voice].keyoffs = count;
+    }
+
+    SignalSema(iSys.sema3);
+    return _stChan[core][voice].keyoffs;
+}
+*/
+
+int SdGetVolume(sint8 core, sint8 voice)
+{
+    uint16 addr;
+    uint32 lo, hi;
+
+    addr = defCore[core] | defVc[voice];
+    lo = sceSdGetParam(addr | SD_VP_VOLXL);
+    hi = sceSdGetParam(addr | SD_VP_VOLXR);
+    return (hi << 16) | lo;
 }
 
-SdGetVolume()
+void SdGetKey(uint8 param, int *out)
 {
-    /* todo: decompile */
-}
-
-void SdGetKey(uint8 arg0, int *arg1)
-{
-    switch (arg0) {
+    switch (param) {
     case 0:
-        arg1[0] = keyOff[0];
-        arg1[1] = keyOff[1];
+        out[0] = keyOff[0];
+        out[1] = keyOff[1];
         break;
     case 1:
-        arg1[0] = keyOn[0];
-        arg1[1] = keyOn[1];
+        out[0] = keyOn[0];
+        out[1] = keyOn[1];
         break;
     case 2:
-        arg1[0] = dspOff[0];
-        arg1[1] = dspOff[1];
+        out[0] = dspOff[0];
+        out[1] = dspOff[1];
         break;
     case 3:
-        arg1[0] = dspOn[0];
-        arg1[1] = dspOn[1];
+        out[0] = dspOn[0];
+        out[1] = dspOn[1];
         break;
     case 4:
-        arg1[0] = noiseOff[0];
-        arg1[1] = noiseOff[1];
+        out[0] = noiseOff[0];
+        out[1] = noiseOff[1];
         break;
     case 5:
-        arg1[0] = noiseOn[0];
-        arg1[1] = noiseOn[1];
+        out[0] = noiseOn[0];
+        out[1] = noiseOn[1];
         break;
     default:
-        return;
+        break;
     }
 }
 
-SdSetDsp()
+void SdSetDsp(sint8 core, sint8 voice, sint8 arg2)
 {
-    /* todo: decompile */
+    int num;
+
+    WaitSema(iSys.sema3);
+
+    stDsp[core].voice = voice;
+    num = dspNo[stDsp[core].voice];
+
+    stDsp[core].unk3 = arg2;
+
+    if ((num & 0xF) >= 8) {
+        stDsp[core].voice = iDspNo[7];
+    }
+
+    SignalSema(iSys.sema3);
 }
 
-SdSetNoise()
+void SdSetNoise(sint8 core, int freq)
 {
-    /* todo: decompile */
+    WaitSema(iSys.sema3);
+    stNoise[core] = (stNoise[core] & ~0x3F) | (freq & 0x3F);
+    SignalSema(iSys.sema3);
 }
 
-SdVol7ToVol14()
+int SdVol7ToVol14(int vol, int arg1)
 {
-    /* todo: decompile */
+    if (arg1 < 0)
+    {
+        return (((arg1 + 128) * volumeTable[vol]) / 128) + ((-arg1 * volumeTable2[vol]) / 128);
+    }
+    else
+    {
+        return (arg1 * vol) + (((128 - arg1) * volumeTable[vol]) / 128);
+    }
 }
 
-SdMono()
+int SdMono(int mono)
 {
-    /* todo: decompile */
+    iSys.mono = mono;
+    return SD_SUCCESS;
 }
 
-SdPanToVol14()
+int SdPanToVol14(sint8 pan, sint8 side)
 {
-    /* todo: decompile */
+    if (iSys.mono)
+    {
+        return panpotTable[64];
+    }
+
+    return (side == 0) ? panpotTable[pan] : panpotTable[127 - pan];
 }
 
-SdSpuFree()
+int SdSpuFree(int arg0)
 {
-    /* todo: decompile */
+    short i;
+
+    WaitSema(iSys.sema2);
+
+    for (i = 0; i < SD_ALLOC_SIZE; i++)
+    {
+        if ((stSpuAlloc[i].unk1 == 1) && (stSpuAlloc[i].unk2 == arg0)) {
+            stSpuAlloc[i].unk1 = 0;
+            break;
+        }
+    }
+
+    sortByAddr();
+    SignalSema(iSys.sema2);
+    return SD_SUCCESS;
 }
 
-SdVoiceFlush()
+void SdVoiceFlush(int flush)
 {
-    /* todo: decompile */
+    mVcFlush = flush;
+    fVcFlushReq = 1 - fVcFlushJob;
 }
 
-SdGetHLine()
+int SdGetHLine(void)
 {
-    /* todo: decompile */
+    return (sdSync * IRQ_HCOUNT) + GetTimerCounter(gTimerID);
 }
 
-SdGetUTime()
+int SdGetUTime(void)
 {
-    /* todo: decompile */
+    struct SysClock clock;
+    int sec;
+    int usec;
+
+    GetSystemTime(&clock);
+    SysClock2USec(&clock, &sec, &usec);
+
+    return usec + sec * 1000000;
 }
 
-SdGetTime()
+int SdGetTime(void)
 {
-    /* todo: decompile */
+    struct SysClock clock;
+    int sec;
+    int usec;
+
+    GetSystemTime(&clock);
+    SysClock2USec(&clock, &sec, &usec);
+
+    return (unsigned int)usec / 1000 + sec * 1000;
 }
 
-SdIrqRegist()
+int SdIrqRegist(int thid)
 {
-    static int num = 0; //.data num.69
-    /* todo: decompile */
+    static int num = 0;
+
+    if (num < 0 || num >= 16) {
+        return SD_ERROR;
+    }
+
+    thRegist[num++] = thid;
+    return num;
 }
 
 void SdQuitSdlib(void)
@@ -414,29 +643,80 @@ int sdlibInit()
     return RESIDENT_END;
 }
 
-SdInitSpuWrite()
+void SdInitSpuWrite(void)
 {
-    /* todo: decompile */
+    wQueueSpuTrans = 0;
+    rQueueSpuTrans = 0;
+    fSpuTrans[0] = fSpuTrans[1] = 1;
+    SdSpuWrite(0x5100, NULL, 64);
+    SdSpuWrite(0x5200, NULL, 64);
 }
 
-static SdTransIrqCallback()
+static void SdTransIrqCallback(void)
 {
-    /* todo: decompile */
+    int old;
+    int which;
+
+    iReleaseWaitThread(thSdLoopPcm);
+
+    if (iPcm.job2) {
+        CpuSuspendIntr(&old);
+        which = ((sceSdBlockTransStatus(0, 0) >> 24) ^ 1) & 1;
+        iPcm.job2(iPcm.buffer[which], 1);
+        CpuResumeIntr(old);
+    }
 }
 
 static unsigned int SdIrqCallback(void *ptr)
 {
     iWakeupThread(thSdLoop);
     iWakeupThread(thSdLoopRegset);
-    return 0x2D000;
+    return SYSCLOCK / IRQ_TIME;
 }
 
-static SdLoopPcm()
+static void SdLoopPcm(void)
 {
-    /* todo: decompile */
+    int which;
+
+    while (fSdLoop == 0) {
+        SleepThread();
+    }
+
+    while (fSdLoop != 0) {
+        SleepThread();
+        iPcm.count++;
+
+        if (iPcm.job1) {
+            which = ((sceSdBlockTransStatus(0, 0) >> 24) ^ 1) & 1;
+            iPcm.job1(iPcm.buffer[which], 1);
+        }
+    }
+
+    ExitThread();
 }
 
-static SdLoopRegset()
+static void SdLoopRegset(void)
 {
-    /* todo: decompile */
+    while (fSdLoop == 0) {
+        SleepThread();
+    }
+
+    while (fSdLoop != 0) {
+        SleepThread();
+        CancelWakeupThread(GetThreadId());
+
+        switch (mVcFlush) {
+        case 0:
+            SdFlushSetVoice();
+            break;
+        case 1:
+            if (fVcFlushJob != fVcFlushReq) {
+                SdFlushSetVoice();
+                fVcFlushJob = fVcFlushReq;
+            }
+            break;
+        }
+    }
+
+    ExitThread();
 }
