@@ -7,32 +7,32 @@
 ModuleInfo Module = { "kcej_sound_basic_lib", VER(2,11) };
 
 //.rodata
-static const short defCore[2] = { 0,1 };
-static const short defVc[48] = {
-    0, 0,
-    2, 0,
-    4, 0,
-    6, 0,
-    8, 0,
-    10, 0,
-    12, 0,
-    14, 0,
-    16, 0,
-    18, 0,
-    20, 0,
-    22, 0,
-    24, 0,
-    26, 0,
-    28, 0,
-    30, 0,
-    32, 0,
-    34, 0,
-    36, 0,
-    38, 0,
-    40, 0,
-    42, 0,
-    44, 0,
-    46, 0
+static const int defCore[2] = { 0,1 };
+static const int defVc[24] = {
+    0,
+    2,
+    4,
+    6,
+    8,
+    10,
+    12,
+    14,
+    16,
+    18,
+    20,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    34,
+    36,
+    38,
+    40,
+    42,
+    44,
+    46
 };
 static const int dspSize[10] = {
     0x00000080,
