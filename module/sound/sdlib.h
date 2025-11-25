@@ -116,34 +116,34 @@ extern "C" {
 #endif
 
 /* sdlib.c */
-SdSpuWrite();
-SdSetVoice();
-SdSetKey();
-SdSpuMalloc();
-SdPcmCtrl();
-SdInitSdlib2();
-SdQuitSdlib2();
-SdInitSdlib();
+// SdSpuWrite();
+// SdSetVoice();
+// SdSetKey();
+// SdSpuMalloc();
+// SdPcmCtrl();
+// SdInitSdlib2();
+// SdQuitSdlib2();
+// SdInitSdlib();
 int SdIsEmptyQueue(void);
-SdIsTrans();
-SdGetSpuPlayAddr();
-SdGetKeyoffCount();
-SdSetKeyoffCount();
-SdGetVolume();
-SdGetKey();
-SdSetDsp();
-SdSetNoise();
-SdVol7ToVol14();
-SdMono();
-SdPanToVol14();
-SdSpuFree();
-SdVoiceFlush();
-SdGetHLine();
-SdGetUTime();
-SdGetTime();
-SdIrqRegist();
+// SdIsTrans();
+// SdGetSpuPlayAddr();
+// SdGetKeyoffCount();
+// SdSetKeyoffCount();
+// SdGetVolume();
+// SdGetKey();
+// SdSetDsp();
+// SdSetNoise();
+// SdVol7ToVol14();
+// SdMono();
+// SdPanToVol14();
+// SdSpuFree();
+// SdVoiceFlush();
+// SdGetHLine();
+// SdGetUTime();
+// SdGetTime();
+// SdIrqRegist();
 void SdQuitSdlib(void);
-SdInitSpuWrite();
+// SdInitSpuWrite();
 
 #ifdef __cplusplus
 }
