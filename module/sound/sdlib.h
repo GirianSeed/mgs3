@@ -13,8 +13,9 @@ typedef sint8           int8;
 
 // NOTE: Copied from keyboardmania
 enum {
-    IRQ_TIME = 250,
-    IRQ_HCOUNT = 63,
+    IRQ_TIME = 200,
+    IRQ_HCOUNT = 79,
+    SYSCLOCK = 36864000,
     SD_FALSE = 0,
     SD_TRUE = 1,
     SD_OFF = 0,
