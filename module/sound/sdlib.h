@@ -130,7 +130,7 @@ int SdIsEmptyQueue(void);
 // SdGetKeyoffCount();
 // SdSetKeyoffCount();
 // SdGetVolume();
-// SdGetKey();
+void SdGetKey(uint8 arg0, int *arg1);
 // SdSetDsp();
 // SdSetNoise();
 // SdVol7ToVol14();

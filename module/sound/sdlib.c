@@ -170,18 +170,18 @@ static iSys;                    // sizeof:0x3010
 static int thSdLoop;            // sizeof:4
 static int thSdLoopRegset;      // sizeof:4
 static int thSdLoopPcm;         // sizeof:4
-static keyOn;                   // sizeof:8
-static keyOff;                  // sizeof:8
-static keyOff2;                 // sizeof:8
-static dspOn;                   // sizeof:8
-static dspOff;                  // sizeof:8
-static dspOff2;                 // sizeof:8
-static dspBit;                  // sizeof:8
-static noiseOn;                 // sizeof:8
-static noiseOff;                // sizeof:8
-static noiseOff2;               // sizeof:8
-static noiseBit;                // sizeof:8
-static update;                  // sizeof:8
+static int keyOn[2];            // sizeof:8
+static int keyOff[2];           // sizeof:8
+static int keyOff2[2];          // sizeof:8
+static int dspOn[2];            // sizeof:8
+static int dspOff[2];           // sizeof:8
+static int dspOff2[2];          // sizeof:8
+static int dspBit[2];           // sizeof:8
+static int noiseOn[2];          // sizeof:8
+static int noiseOff[2];         // sizeof:8
+static int noiseOff2[2];        // sizeof:8
+static int noiseBit[2];         // sizeof:8
+static int update[2];           // sizeof:8
 static _stChan;                 // sizeof:0x780
 static stDsp;                   // sizeof:0x18
 static stNoise;                 // sizeof:8
@@ -311,9 +311,36 @@ SdGetVolume()
     /* todo: decompile */
 }
 
-SdGetKey()
+void SdGetKey(uint8 arg0, int *arg1)
 {
-    /* todo: decompile */
+    switch (arg0) {
+    case 0:
+        arg1[0] = keyOff[0];
+        arg1[1] = keyOff[1];
+        break;
+    case 1:
+        arg1[0] = keyOn[0];
+        arg1[1] = keyOn[1];
+        break;
+    case 2:
+        arg1[0] = dspOff[0];
+        arg1[1] = dspOff[1];
+        break;
+    case 3:
+        arg1[0] = dspOn[0];
+        arg1[1] = dspOn[1];
+        break;
+    case 4:
+        arg1[0] = noiseOff[0];
+        arg1[1] = noiseOff[1];
+        break;
+    case 5:
+        arg1[0] = noiseOn[0];
+        arg1[1] = noiseOn[1];
+        break;
+    default:
+        return;
+    }
 }
 
 SdSetDsp()
