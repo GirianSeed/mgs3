@@ -53,12 +53,12 @@ $(LIBRARY)ent.s: $(LIBRARY).tbl
 
 # sound library target
 $(LIBRARY).irx: $(sdlib_OBJS)
-	$(LINK.o) -o $@ $^ $(sdlib_ILIBS)
+	$(LINK.o) -o $@ $(sdlib_OBJS) $(sdlib_ILIBS)
 	$(IFIXUP) -o $(LIBRARY).irx $(LIBRARY).irx
 
 # sound driver target
-$(DRIVER).irx: $(sddrv_OBJS)
-	$(LINK.o) -o $@ $^ $(sddrv_ILIBS)
+$(DRIVER).irx: $(sddrv_OBJS) $(LIBRARY).ilb
+	$(LINK.o) -o $@ $(sddrv_OBJS) $(sddrv_ILIBS)
 	$(IFIXUP) -o $(DRIVER).irx $(DRIVER).irx
 
 .PHONY: clean
