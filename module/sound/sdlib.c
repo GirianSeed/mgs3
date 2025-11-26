@@ -3,14 +3,16 @@
 #include <libsd.h>
 #include "sdlib.h"
 
+#define VER(MM, mm) (((MM) << 8) | (mm))
+ModuleInfo Module = { "kcej_sound_basic_lib", VER(2,11) };
+
+/*---------------------------------------------------------------------------*/
+
 #define SD_ALLOC_SIZE       16
 #define SD_QUEUE_SIZE       16
 #define SD_PCM_BUFFER_SIZE  0x400
 #define SD_TRANSBUF_SIZE    0x3000
 #define SD_STACK_SIZE       0x800
-
-#define VER(MM, mm) (((MM) << 8) | (mm))
-ModuleInfo Module = { "kcej_sound_basic_lib", VER(2,11) };
 
 typedef struct {
     int unk1 : 8;
@@ -66,6 +68,8 @@ typedef struct {
     void *m_addr;
     unsigned int size;
 } SD_QUEUE;
+
+/*---------------------------------------------------------------------------*/
 
 //.rodata
 static const int defCore[_SD_NCORE] = { 0,1 };
@@ -252,6 +256,8 @@ static SD_QUEUE queueSpuTrans[SD_QUEUE_SIZE]; // sizeof:0x100
 static sint8 fSpuTrans[2];      // sizeof:2
 static SD_PCM iPcm;             // sizeof:0x80C
 
+/*---------------------------------------------------------------------------*/
+
 static SdJobSpuWrite()
 {
     /* todo: decompile */
@@ -373,40 +379,37 @@ int SdInitSdlib(void)
     SignalSema(iSys.sema2);
     SignalSema(iSys.sema3);
 
-    thread.attr = TH_C;
-    thread.entry = SdLoop;
+    thread.attr         = TH_C;
+    thread.entry        = SdLoop;
     thread.initPriority = 24;
-    thread.stackSize = SD_STACK_SIZE;
-    thread.option = 0;
-
-    if ((thSdLoop = CreateThread(&thread)) <= 0) {
+    thread.stackSize    = SD_STACK_SIZE;
+    thread.option       = 0;
+    thSdLoop = CreateThread(&thread);
+    if (thSdLoop <= 0) {
         return SD_ERROR;
     }
-
     StartThread(thSdLoop, 0);
 
-    thread.attr = TH_C;
-    thread.entry = SdLoopRegset;
+    thread.attr         = TH_C;
+    thread.entry        = SdLoopRegset;
     thread.initPriority = 26;
-    thread.stackSize = SD_STACK_SIZE;
-    thread.option = 0;
-
-    if ((thSdLoopRegset = CreateThread(&thread)) <= 0) {
+    thread.stackSize    = SD_STACK_SIZE;
+    thread.option       = 0;
+    thSdLoopRegset = CreateThread(&thread);
+    if (thSdLoopRegset <= 0) {
         return SD_ERROR;
     }
-
     StartThread(thSdLoopRegset, 0);
 
-    thread.attr = TH_C;
-    thread.entry = SdLoopPcm;
+    thread.attr         = TH_C;
+    thread.entry        = SdLoopPcm;
     thread.initPriority = 25;
-    thread.stackSize = SD_STACK_SIZE;
-    thread.option = 0;
-
-    if ((thSdLoopPcm = CreateThread(&thread)) <= 0) {
+    thread.stackSize    = SD_STACK_SIZE;
+    thread.option       = 0;
+    thSdLoopPcm = CreateThread(&thread);
+    if (thSdLoopPcm <= 0) {
         return SD_ERROR;
     }
-
     StartThread(thSdLoopPcm, 0);
 
     gTimerID = AllocHardTimer(TC_SYSCLOCK, 32, 1);
