@@ -52,6 +52,7 @@ $(LIBRARY)ent.s: $(LIBRARY).tbl
 	$(ILBGEN) -e $@ $<
 
 # sound library target
+$(LIBRARY).irx: LDFLAGS = -e sdlibInit
 $(LIBRARY).irx: $(sdlib_OBJS)
 	$(LINK.o) -o $@ $(sdlib_OBJS) $(sdlib_ILIBS)
 	$(IFIXUP) -o $(LIBRARY).irx $(LIBRARY).irx
