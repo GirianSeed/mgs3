@@ -342,7 +342,7 @@ static SdInitSpu()
     /* todo: decompile */
 }
 
-static void SdInitSdlib2(void)
+void SdInitSdlib2(void)
 {
     unsigned int i, j;
 
@@ -387,7 +387,7 @@ static void SdInitSdlib2(void)
     stSpuAlloc[15].size = 0x200000 - stSpuAlloc[14].addr - stSpuAlloc[14].size;
 }
 
-static SdQuitSdlib2()
+SdQuitSdlib2()
 {
     /* todo: decompile */
 }
@@ -700,7 +700,7 @@ int sdlibInit()
     return RESIDENT_END;
 }
 
-static void SdInitSpuWrite(void)
+void SdInitSpuWrite(void)
 {
     wQueueSpuTrans = 0;
     rQueueSpuTrans = 0;
