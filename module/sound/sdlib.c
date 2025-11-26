@@ -60,13 +60,12 @@ enum {
 };
 
 typedef struct {
-    char unk0;
-    char unk1;
+    short unk0;
     uint8 status;
     char channel;
     unsigned int s_addr;
     void *m_addr;
-    unsigned int size;
+    int size;
 } SD_QUEUE;
 
 /*---------------------------------------------------------------------------*/
@@ -146,9 +145,9 @@ static const short panpotTable[128] = {
 };
 
 //.data
-static int fSdLoop = 0;         // sizeof:4
-static int fVcFlushReq = 0;     // sizeof:4
-static int fVcFlushJob = 0;     // sizeof:4
+static int fSdLoop = SD_FALSE;  // sizeof:4
+static int fVcFlushReq = SD_FALSE; // sizeof:4
+static int fVcFlushJob = SD_FALSE; // sizeof:4
 static int mVcFlush = 0;        // sizeof:4
 static int thRegist[16] = {0};  // sizeof:64
 static int sdSync = 0;          // sizeof:4
@@ -179,7 +178,7 @@ static int update[_SD_NCORE];   // sizeof:8
 static SD_CHAN _stChan[_SD_NCORE][_SD_NCHAN]; // sizeof:0x780
 static SD_DSP stDsp[_SD_NCORE]; // sizeof:0x18
 static int stNoise[_SD_NCORE];  // sizeof:8
-static dmaQueueNo;              // sizeof:4
+static sint16 dmaQueueNo[2];    // sizeof:4
 static SD_ALLOC stSpuAlloc[SD_ALLOC_SIZE];    // sizeof:0x80 (ES21: 0x100)
 static SD_QUEUE queueSpuTrans[SD_QUEUE_SIZE]; // sizeof:0x100
 static sint8 fSpuTrans[2];      // sizeof:2
@@ -187,9 +186,44 @@ static SD_PCM iPcm;             // sizeof:0x80C
 
 /*---------------------------------------------------------------------------*/
 
-static SdJobSpuWrite()
+static int SdJobSpuWrite(void)
 {
-    /* todo: decompile */
+    int channel;
+
+    while (rQueueSpuTrans != wQueueSpuTrans) {
+        if (queueSpuTrans[rQueueSpuTrans].size > 0) {
+            channel = -1;
+
+            if (!fSpuTrans[1]) {
+                channel = 1;
+            }
+
+            if (channel == -1) {
+                return 1;
+            }
+
+            queueSpuTrans[rQueueSpuTrans].channel = channel;
+
+            if (sceSdVoiceTrans(
+                queueSpuTrans[rQueueSpuTrans].channel, 0,
+                queueSpuTrans[rQueueSpuTrans].m_addr,
+                queueSpuTrans[rQueueSpuTrans].s_addr,
+                queueSpuTrans[rQueueSpuTrans].size) < 0) {
+                break;
+            }
+
+            queueSpuTrans[rQueueSpuTrans].size = 0;
+            queueSpuTrans[rQueueSpuTrans].status = SD_QUEUE_BUSY;
+            queueSpuTrans[rQueueSpuTrans].unk0 = 0;
+
+            dmaQueueNo[channel] = rQueueSpuTrans;
+            fSpuTrans[channel] = SD_TRUE;
+        }
+
+        rQueueSpuTrans = (rQueueSpuTrans + 1) % SD_QUEUE_SIZE;
+    }
+
+    return 0;
 }
 
 int SdSpuWrite(unsigned int dst, void *src, unsigned int size)
@@ -358,7 +392,7 @@ int SdIsTrans(int queue)
     int avail;
 
     if (queue <= 0) {
-        avail = (fSpuTrans[1] == 0) ? 1 : -1;
+        avail = !fSpuTrans[1] ? 1 : -1;
 
         if (avail != -1) {
             return 0;
@@ -562,7 +596,7 @@ int SdIrqRegist(int thid)
 
 void SdQuitSdlib(void)
 {
-    fSdLoop = 0;
+    fSdLoop = SD_FALSE;
 }
 
 int sdlibInit()
@@ -579,7 +613,7 @@ void SdInitSpuWrite(void)
 {
     wQueueSpuTrans = 0;
     rQueueSpuTrans = 0;
-    fSpuTrans[0] = fSpuTrans[1] = 1;
+    fSpuTrans[0] = fSpuTrans[1] = SD_TRUE;
     SdSpuWrite(0x5100, NULL, 64);
     SdSpuWrite(0x5200, NULL, 64);
 }
@@ -610,11 +644,11 @@ static void SdLoopPcm(void)
 {
     int which;
 
-    while (fSdLoop == 0) {
+    while (!fSdLoop) {
         SleepThread();
     }
 
-    while (fSdLoop != 0) {
+    while (fSdLoop) {
         SleepThread();
         iPcm.count++;
 
@@ -629,11 +663,11 @@ static void SdLoopPcm(void)
 
 static void SdLoopRegset(void)
 {
-    while (fSdLoop == 0) {
+    while (!fSdLoop) {
         SleepThread();
     }
 
-    while (fSdLoop != 0) {
+    while (fSdLoop) {
         SleepThread();
         CancelWakeupThread(GetThreadId());
 
