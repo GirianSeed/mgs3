@@ -117,34 +117,34 @@ extern "C" {
 #endif
 
 /* sdlib.c */
-// SdSpuWrite();
+int SdSpuWrite(unsigned int dst, void *src, unsigned int size);
 // SdSetVoice();
 // SdSetKey();
 // SdSpuMalloc();
 // SdPcmCtrl();
 // SdInitSdlib2();
 // SdQuitSdlib2();
-// SdInitSdlib();
+int SdInitSdlib(void);
 int SdIsEmptyQueue(void);
-// SdIsTrans();
-// SdGetSpuPlayAddr();
-// SdGetKeyoffCount();
+int SdIsTrans(int queue);
+unsigned int SdGetSpuPlayAddr(sint8 core, sint8 voice);
+int SdGetKeyoffCount(sint8 core, sint8 voice);
 // SdSetKeyoffCount();
-// SdGetVolume();
-void SdGetKey(uint8 arg0, int *arg1);
-// SdSetDsp();
-// SdSetNoise();
-// SdVol7ToVol14();
-// SdMono();
-// SdPanToVol14();
-// SdSpuFree();
-// SdVoiceFlush();
-// SdGetHLine();
-// SdGetUTime();
-// SdGetTime();
-// SdIrqRegist();
+int SdGetVolume(sint8 core, sint8 voice);
+void SdGetKey(uint8 param, int *out);
+void SdSetDsp(sint8 core, sint8 voice, sint8 arg2);
+void SdSetNoise(sint8 core, int freq);
+int SdVol7ToVol14(int vol, int arg1);
+int SdMono(int mono);
+int SdPanToVol14(sint8 pan, sint8 side);
+int SdSpuFree(int arg0);
+void SdVoiceFlush(int flush);
+int SdGetHLine(void);
+int SdGetUTime(void);
+int SdGetTime(void);
+int SdIrqRegist(int thid);
 void SdQuitSdlib(void);
-// SdInitSpuWrite();
+void SdInitSpuWrite(void);
 
 #ifdef __cplusplus
 }
