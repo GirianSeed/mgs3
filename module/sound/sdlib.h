@@ -120,10 +120,8 @@ extern "C" {
 int SdSpuWrite(unsigned int dst, void *src, unsigned int size);
 // SdSetVoice();
 // SdSetKey();
-// SdSpuMalloc();
+int SdSpuMalloc(int size);
 // SdPcmCtrl();
-// SdInitSdlib2();
-// SdQuitSdlib2();
 int SdInitSdlib(void);
 int SdIsEmptyQueue(void);
 int SdIsTrans(int queue);
@@ -137,14 +135,13 @@ void SdSetNoise(sint8 core, int freq);
 int SdVol7ToVol14(int vol, int arg1);
 int SdMono(int mono);
 int SdPanToVol14(sint8 pan, sint8 side);
-int SdSpuFree(int arg0);
+int SdSpuFree(int ptr);
 void SdVoiceFlush(int flush);
 int SdGetHLine(void);
 int SdGetUTime(void);
 int SdGetTime(void);
 int SdIrqRegist(int thid);
 void SdQuitSdlib(void);
-void SdInitSpuWrite(void);
 
 #ifdef __cplusplus
 }

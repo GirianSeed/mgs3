@@ -15,9 +15,9 @@ ModuleInfo Module = { "kcej_sound_basic_lib", VER(2,11) };
 #define SD_STACK_SIZE       0x800
 
 typedef struct {
-    int unk1 : 8;
-    int unk2 : 24;
-    int unk3;
+    int used : 8;
+    int addr : 24;
+    int size : 24;
 } SD_ALLOC;
 
 typedef struct {
@@ -30,18 +30,22 @@ typedef struct {
 } SD_SYS;
 
 typedef struct {
-    char pad1[0x22];
+    char pad1[0x20];
+    sint8 unk1;
+    sint8 unk2;
     sint8 keyoffs;
     char pad2[0x5];
 } SD_CHAN;
 
 typedef struct {
-    int unk1;
-    uint8 voice;
+    char unk1;
+    char unk2;
     char unk3;
-    char unk4;
+    uint8 unk4;
+    uint8 voice;
     char unk5;
-    int unk6;
+    short unk6;
+    int unk7;
 } SD_DSP;
 
 typedef void (*sd_pcm_job)(void *, int);
@@ -271,14 +275,61 @@ static SdFlushSetVoice()
     /* todo: decompile */
 }
 
-static sortByAddr()
+static void sortByAddr(void)
 {
-    /* todo: decompile */
+    SD_ALLOC temp;
+    short i, j;
+
+    for (i = 1; i < SD_ALLOC_SIZE - 1; i++) {
+        for (j = i + 1; j < SD_ALLOC_SIZE - 1; j++) {
+            if (stSpuAlloc[i].addr > stSpuAlloc[j].addr && stSpuAlloc[j].addr > 0) {
+                temp = stSpuAlloc[i];
+                stSpuAlloc[i] = stSpuAlloc[j];
+                stSpuAlloc[j] = temp;
+            }
+        }
+    }
 }
 
-SdSpuMalloc()
+int SdSpuMalloc(int size)
 {
-    /* todo: decompile */
+    short i, j;
+
+    WaitSema(iSys.smSpuAlloc);
+
+    for (i = 0; i < SD_ALLOC_SIZE; i++) {
+        if (stSpuAlloc[i].used == 0 && stSpuAlloc[i].size >= size) {
+            break;
+        }
+    }
+
+    if (i == SD_ALLOC_SIZE) {
+        i = -1;
+    } else {
+        for (j = 0; j < SD_ALLOC_SIZE; j++) {
+            if (stSpuAlloc[j].used == 0 && stSpuAlloc[j].addr == 0) {
+                break;
+            }
+        }
+
+        if (j < SD_ALLOC_SIZE) {
+            stSpuAlloc[j].size = stSpuAlloc[i].size;
+            stSpuAlloc[i].size = size;
+            stSpuAlloc[j].size -= stSpuAlloc[i].size;
+
+            if (stSpuAlloc[j].size != 0) {
+                stSpuAlloc[j].addr = stSpuAlloc[i].addr + stSpuAlloc[i].size;
+            } else {
+                stSpuAlloc[j].addr = 0;
+            }
+        }
+    }
+
+    stSpuAlloc[i].used = 1;
+
+    sortByAddr();
+    SignalSema(iSys.smSpuAlloc);
+    return stSpuAlloc[i].addr;
 }
 
 SdPcmCtrl()
@@ -291,12 +342,52 @@ static SdInitSpu()
     /* todo: decompile */
 }
 
-SdInitSdlib2()
+static void SdInitSdlib2(void)
 {
-    /* todo: decompile */
+    unsigned int i, j;
+
+    for (i = 0; i < _SD_NCORE; i++) {
+        dmaQueueNo[i] = 0;
+        keyOn[i] = keyOff[i] = dspOn[i] = dspOff[i] = dspBit[i] = update[i] = 0;
+
+        stDsp[i].voice = 0;
+        stDsp[i].unk4 = 0xFF;
+        stDsp[i].unk5 = 0;
+        stDsp[i].unk6 = -1;
+
+        for (j = 0; j < _SD_NCHAN; j++) {
+            _stChan[i][j].unk1 = j + i * _SD_NCHAN;
+        }
+    }
+
+    memset(stSpuAlloc, 0, sizeof(stSpuAlloc));
+
+    stSpuAlloc[0].used = 2;
+    stSpuAlloc[0].size = 0x5100;
+    stSpuAlloc[0].addr = 0;
+
+    stSpuAlloc[1].used = 0;
+    stSpuAlloc[1].addr = 0x5100;
+    stSpuAlloc[1].size = 0x1AF00 - dspSize[iDspNo[7]];
+
+    stSpuAlloc[2].used = 2;
+    stSpuAlloc[2].addr = 0x20000 - dspSize[iDspNo[7]];
+    stSpuAlloc[2].size = dspSize[iDspNo[7]];
+
+    stSpuAlloc[3].used = 0;
+    stSpuAlloc[3].addr = 0x20000;
+    stSpuAlloc[3].size = 0x1E0000 - dspSize[iDspNo[7]];
+
+    stSpuAlloc[14].used = 2;
+    stSpuAlloc[14].addr = 0x200000 - dspSize[iDspNo[7]];
+    stSpuAlloc[14].size = dspSize[iDspNo[7]];
+
+    stSpuAlloc[15].used = 0;
+    stSpuAlloc[15].addr = 0x200000;
+    stSpuAlloc[15].size = 0x200000 - stSpuAlloc[14].addr - stSpuAlloc[14].size;
 }
 
-SdQuitSdlib2()
+static SdQuitSdlib2()
 {
     /* todo: decompile */
 }
@@ -484,7 +575,7 @@ void SdSetDsp(sint8 core, sint8 voice, sint8 arg2)
     stDsp[core].voice = voice;
     num = dspNo[stDsp[core].voice];
 
-    stDsp[core].unk3 = arg2;
+    stDsp[core].unk5 = arg2;
 
     if ((num & 0xF) >= 8) {
         stDsp[core].voice = iDspNo[7];
@@ -528,7 +619,7 @@ int SdPanToVol14(sint8 pan, sint8 side)
     return (side == 0) ? panpotTable[pan] : panpotTable[127 - pan];
 }
 
-int SdSpuFree(int arg0)
+int SdSpuFree(int ptr)
 {
     short i;
 
@@ -536,8 +627,8 @@ int SdSpuFree(int arg0)
 
     for (i = 0; i < SD_ALLOC_SIZE; i++)
     {
-        if ((stSpuAlloc[i].unk1 == 1) && (stSpuAlloc[i].unk2 == arg0)) {
-            stSpuAlloc[i].unk1 = 0;
+        if (stSpuAlloc[i].used == 1 && stSpuAlloc[i].addr == ptr) {
+            stSpuAlloc[i].used = 0;
             break;
         }
     }
@@ -609,7 +700,7 @@ int sdlibInit()
     return RESIDENT_END;
 }
 
-void SdInitSpuWrite(void)
+static void SdInitSpuWrite(void)
 {
     wQueueSpuTrans = 0;
     rQueueSpuTrans = 0;
