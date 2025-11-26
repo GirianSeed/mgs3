@@ -21,11 +21,11 @@ typedef struct {
 } SD_ALLOC;
 
 typedef struct {
-    int on : 1;
-    int mono : 1;
-    int sema1;
-    int sema2;
-    int sema3;
+    int fSdlibActive:1;
+    int fSdMono:1;
+    int smSpuWrite;
+    int smSpuAlloc;
+    int smSpuSet;
     char transbuf[SD_TRANSBUF_SIZE];
 } SD_SYS;
 
@@ -314,11 +314,11 @@ int SdInitSdlib(void)
 
     memset(&iSys, 0, sizeof(iSys));
 
-    if (iSys.on == SD_TRUE) {
+    if (iSys.fSdlibActive == SD_TRUE) {
         return SD_SUCCESS;
     }
 
-    iSys.on = SD_TRUE;
+    iSys.fSdlibActive = SD_TRUE;
 
     SdInitSdlib2();
     FlushDcache();
@@ -326,21 +326,21 @@ int SdInitSdlib(void)
     sema.attr = SA_THPRI;
     sema.maxCount = 1;
     sema.initCount = 0;
-    iSys.sema1 = CreateSema(&sema);
+    iSys.smSpuWrite = CreateSema(&sema);
 
     sema.attr = SA_THPRI;
     sema.maxCount = 1;
     sema.initCount = 0;
-    iSys.sema2 = CreateSema(&sema);
+    iSys.smSpuAlloc = CreateSema(&sema);
 
     sema.attr = SA_THPRI;
     sema.maxCount = 1;
     sema.initCount = 0;
-    iSys.sema3 = CreateSema(&sema);
+    iSys.smSpuSet = CreateSema(&sema);
 
-    SignalSema(iSys.sema1);
-    SignalSema(iSys.sema2);
-    SignalSema(iSys.sema3);
+    SignalSema(iSys.smSpuWrite);
+    SignalSema(iSys.smSpuAlloc);
+    SignalSema(iSys.smSpuSet);
 
     thread.attr         = TH_C;
     thread.entry        = SdLoop;
@@ -419,7 +419,7 @@ TODO: Fix -O3 breaking the match
 
 int SdSetKeyoffCount(int core, int voice, int count)
 {
-    WaitSema(iSys.sema3);
+    WaitSema(iSys.smSpuSet);
 
     if (count > 127) {
         _stChan[core][voice].keyoffs = 127;
@@ -427,7 +427,7 @@ int SdSetKeyoffCount(int core, int voice, int count)
         _stChan[core][voice].keyoffs = count;
     }
 
-    SignalSema(iSys.sema3);
+    SignalSema(iSys.smSpuSet);
     return _stChan[core][voice].keyoffs;
 }
 */
@@ -479,7 +479,7 @@ void SdSetDsp(sint8 core, sint8 voice, sint8 arg2)
 {
     int num;
 
-    WaitSema(iSys.sema3);
+    WaitSema(iSys.smSpuSet);
 
     stDsp[core].voice = voice;
     num = dspNo[stDsp[core].voice];
@@ -490,14 +490,14 @@ void SdSetDsp(sint8 core, sint8 voice, sint8 arg2)
         stDsp[core].voice = iDspNo[7];
     }
 
-    SignalSema(iSys.sema3);
+    SignalSema(iSys.smSpuSet);
 }
 
 void SdSetNoise(sint8 core, int freq)
 {
-    WaitSema(iSys.sema3);
+    WaitSema(iSys.smSpuSet);
     stNoise[core] = (stNoise[core] & ~0x3F) | (freq & 0x3F);
-    SignalSema(iSys.sema3);
+    SignalSema(iSys.smSpuSet);
 }
 
 int SdVol7ToVol14(int vol, int arg1)
@@ -514,13 +514,13 @@ int SdVol7ToVol14(int vol, int arg1)
 
 int SdMono(int mono)
 {
-    iSys.mono = mono;
+    iSys.fSdMono = mono;
     return SD_SUCCESS;
 }
 
 int SdPanToVol14(sint8 pan, sint8 side)
 {
-    if (iSys.mono)
+    if (iSys.fSdMono)
     {
         return panpotTable[64];
     }
@@ -532,7 +532,7 @@ int SdSpuFree(int arg0)
 {
     short i;
 
-    WaitSema(iSys.sema2);
+    WaitSema(iSys.smSpuAlloc);
 
     for (i = 0; i < SD_ALLOC_SIZE; i++)
     {
@@ -543,7 +543,7 @@ int SdSpuFree(int arg0)
     }
 
     sortByAddr();
-    SignalSema(iSys.sema2);
+    SignalSema(iSys.smSpuAlloc);
     return SD_SUCCESS;
 }
 
