@@ -13,9 +13,9 @@ typedef sint8           int8;
 
 // NOTE: Copied from keyboardmania
 enum {
-    IRQ_TIME = 200,
-    IRQ_HCOUNT = 79,
-    SYSCLOCK = 36864000,
+    IRQ_TIME = 200,         // km: IRQ_TIME = 250
+    IRQ_HCOUNT = 79,        // km: IRQ_HCOUNT = 63
+    SYSCLOCK = 36864000,    // added for MGS3
     SD_FALSE = 0,
     SD_TRUE = 1,
     SD_OFF = 0,
