@@ -35,7 +35,7 @@ sdlib_ILIBS     := -ilb=libsd.ilb
 
 sddrv_SRCS      := sddrv.c sdfile.c mtast.c efx.c seq.c memst.c vagst.c plii.c
 sddrv_OBJS      := $(sddrv_SRCS:.c=.o)
-sddrv_ILIBS     := -ilb=libsd.ilb -ilb=./$(LIBRARY).ilb
+sddrv_ILIBS     := -ilb=libsd.ilb -ilb=./$(LIBRARY).ilb -ilb=jsifman.ilb -ilb=cdbios.ilb
 
 #---------------------------------------------------------------
 
