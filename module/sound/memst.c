@@ -8,7 +8,10 @@ INCLUDE_ASM("asm/nonmatchings/memst", memstTick);
 
 INCLUDE_ASM("asm/nonmatchings/memst", memstInit);
 
-INCLUDE_ASM("asm/nonmatchings/memst", memstQuit);
+int memstQuit(void)
+{
+    return 0;
+}
 
 INCLUDE_ASM("asm/nonmatchings/memst", memstGetVoice);
 
