@@ -505,8 +505,8 @@ int SdGetKeyoffCount(sint8 core, sint8 voice)
     return _stChan[core][voice].keyoffs;
 }
 
-/*
-TODO: Fix -O3 breaking the match
+#if 0
+// TODO: Fix -O3 breaking the match
 
 int SdSetKeyoffCount(int core, int voice, int count)
 {
@@ -521,7 +521,7 @@ int SdSetKeyoffCount(int core, int voice, int count)
     SignalSema(iSys.smSpuSet);
     return _stChan[core][voice].keyoffs;
 }
-*/
+#endif
 
 int SdGetVolume(sint8 core, sint8 voice)
 {
