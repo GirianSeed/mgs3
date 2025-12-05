@@ -1,4 +1,3 @@
-#include <libsd.h>
 
 INCLUDE_ASM("asm/nonmatchings/sdfile", sdCdRead);
 

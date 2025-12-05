@@ -1,4 +1,4 @@
-#include <libsd.h>
+#include <libsd.h>      // for sceSdNote2Pitch
 
 INCLUDE_ASM("asm/nonmatchings/seq", func_00008620);
 

@@ -1,4 +1,3 @@
-#include <libsd.h>
 
 INCLUDE_ASM("asm/nonmatchings/mtast", func_00002A80);
 
