@@ -117,7 +117,7 @@ extern "C" {
 #endif
 
 /* sdlib.c */
-int SdSpuWrite(unsigned int dst, void *src, unsigned int size);
+int SdSpuWrite(unsigned int dst, void *src, int size);
 // SdSetVoice();
 // SdSetKey();
 int SdSpuMalloc(int size);
@@ -127,7 +127,7 @@ int SdIsEmptyQueue(void);
 int SdIsTrans(int queue);
 unsigned int SdGetSpuPlayAddr(sint8 core, sint8 voice);
 int SdGetKeyoffCount(sint8 core, sint8 voice);
-// SdSetKeyoffCount();
+int SdSetKeyoffCount(int core, int voice, int count);
 int SdGetVolume(sint8 core, sint8 voice);
 void SdGetKey(uint8 param, int *out);
 void SdSetDsp(sint8 core, sint8 voice, sint8 arg2);
