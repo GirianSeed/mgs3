@@ -151,12 +151,12 @@ static const short panpotTable[128] = {
 };
 
 //.data
-static int fSdLoop = SD_FALSE;  // sizeof:4
-static int fVcFlushReq = SD_FALSE; // sizeof:4
-static int fVcFlushJob = SD_FALSE; // sizeof:4
-static int mVcFlush = 0;        // sizeof:4
-static int thRegist[16] = {0};  // sizeof:64
-static int sdSync = 0;          // sizeof:4
+static int fSdLoop = SD_FALSE;
+static int fVcFlushReq = SD_FALSE;
+static int fVcFlushJob = SD_FALSE;
+static int mVcFlush = 0;
+static int thRegist[16] = {0};
+static int sdSync = 0;
 static sint8 rQueueSpuTrans = 0;
 static sint8 wQueueSpuTrans = 0;
 
@@ -165,30 +165,30 @@ int gTimerID;
 int commonIrq;
 
 //.bss
-static SD_SYS iSys;             // sizeof:0x3010
-static int thSdLoop;            // sizeof:4
-static int thSdLoopRegset;      // sizeof:4
-static int thSdLoopPcm;         // sizeof:4
-static int keyOn[_SD_NCORE];    // sizeof:8
-static int keyOff[_SD_NCORE];   // sizeof:8
-static int keyOff2[_SD_NCORE];  // sizeof:8
-static int dspOn[_SD_NCORE];    // sizeof:8
-static int dspOff[_SD_NCORE];   // sizeof:8
-static int dspOff2[_SD_NCORE];  // sizeof:8
-static int dspBit[_SD_NCORE];   // sizeof:8
-static int noiseOn[_SD_NCORE];  // sizeof:8
-static int noiseOff[_SD_NCORE]; // sizeof:8
-static int noiseOff2[_SD_NCORE]; // sizeof:8
-static int noiseBit[_SD_NCORE]; // sizeof:8
-static uint32 update[_SD_NCORE];   // sizeof:8
+static SD_SYS iSys; // sizeof:0x3010
+static int thSdLoop;
+static int thSdLoopRegset;
+static int thSdLoopPcm;
+static int keyOn[_SD_NCORE];
+static int keyOff[_SD_NCORE];
+static int keyOff2[_SD_NCORE];
+static int dspOn[_SD_NCORE];
+static int dspOff[_SD_NCORE];
+static int dspOff2[_SD_NCORE];
+static int dspBit[_SD_NCORE];
+static int noiseOn[_SD_NCORE];
+static int noiseOff[_SD_NCORE];
+static int noiseOff2[_SD_NCORE];
+static int noiseBit[_SD_NCORE];
+static uint32 update[_SD_NCORE];
 static SD_CHAN _stChan[_SD_NCORE][_SD_NCHAN]; // sizeof:0x780
 static SD_DSP stDsp[_SD_NCORE]; // sizeof:0x18
-static SD_NOISE stNoise[_SD_NCORE];  // sizeof:8
-static sint16 dmaQueueNo[2];    // sizeof:4
-static SD_ALLOC stSpuAlloc[SD_ALLOC_SIZE];    // sizeof:0x80 (ES21: 0x100)
+static SD_NOISE stNoise[_SD_NCORE]; // sizeof:8
+static sint16 dmaQueueNo[2];
+static SD_ALLOC stSpuAlloc[SD_ALLOC_SIZE]; // sizeof:0x80 (ES21: 0x100)
 static SD_QUEUE queueSpuTrans[SD_QUEUE_SIZE]; // sizeof:0x100
-static sint8 fSpuTrans[2];      // sizeof:2
-static SD_PCM iPcm;             // sizeof:0x80C
+static sint8 fSpuTrans[2];
+static SD_PCM iPcm; // sizeof:0x80C
 
 /*---------------------------------------------------------------------------*/
 
