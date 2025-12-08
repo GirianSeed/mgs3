@@ -30,14 +30,7 @@ typedef struct {
 } SD_SYS;
 
 typedef struct {
-    uint32 mask;
-    uint32 chans[2];
-    sint16 volL;
-    sint16 volR;
-    uint16 pitch;
-    uint16 pad[3];
-    uint32 addr;
-    uint32 adsr;
+    SD_VOICE voice;
     sint8 unk1;
     sint8 unk2;
     sint8 keyoffs;
@@ -46,15 +39,13 @@ typedef struct {
 } SD_CHAN;
 
 typedef struct {
-    int addr:24;
+    sint32 addr:24;
     uint32 mode:8;
-    uint8 voice;
-    char unk5;
-    int depth:16;
-    int unk7;
+    uint32 newmode:8;
+    sint32 newdepth:8;
+    sint32 depth:16;
+    sint32 atten;
 } SD_DSP;
-
-typedef void (*sd_pcm_job)(void *, int);
 
 typedef struct {
     char buffer[2][SD_PCM_BUFFER_SIZE];
@@ -71,7 +62,7 @@ enum {
 
 typedef struct {
     short unk0;
-    uint8 status;
+    sint8 status;
     char channel;
     uint32 s_addr;
     void *m_addr;
@@ -241,29 +232,288 @@ static int SdJobSpuWrite(void)
     return SD_SUCCESS;
 }
 
+#if 0
+// TODO: Fix store being moved out of delay slot
 int SdSpuWrite(uint32 dst, void *src, int size)
 {
-    /* todo: decompile */
+    int index;
+
+    if (((wQueueSpuTrans + 1) % SD_QUEUE_SIZE) == rQueueSpuTrans) {
+        return SD_ERROR;
+    }
+
+    WaitSema(iSys.smSpuWrite);
+    index = wQueueSpuTrans;
+
+    if (size == 0) {
+        queueSpuTrans[index].status = SD_QUEUE_READY;
+    } else {
+        queueSpuTrans[index].status = SD_QUEUE_PENDING;
+    }
+
+    if (src) {
+        queueSpuTrans[index].channel = -1;
+        queueSpuTrans[index].s_addr = dst;
+        queueSpuTrans[index].m_addr = src;
+        queueSpuTrans[index].size = size;
+
+        wQueueSpuTrans = (wQueueSpuTrans + 1) % SD_QUEUE_SIZE;
+    } else {
+        if (size % SD_CLEARBUFF_SIZE) {
+            index = wQueueSpuTrans;
+            queueSpuTrans[index].status = SD_QUEUE_PENDING;
+            queueSpuTrans[index].channel = -1;
+            queueSpuTrans[index].s_addr = dst;
+            queueSpuTrans[index].m_addr = iSys.clearBuff;
+            queueSpuTrans[index].size = size % SD_CLEARBUFF_SIZE;
+
+            wQueueSpuTrans = (wQueueSpuTrans + 1) % SD_QUEUE_SIZE;
+            size -= size % SD_CLEARBUFF_SIZE;
+        }
+
+        while (size > 0) {
+            index = wQueueSpuTrans;
+            queueSpuTrans[index].status = SD_QUEUE_PENDING;
+            queueSpuTrans[index].channel = -1;
+            queueSpuTrans[index].s_addr = dst;
+            queueSpuTrans[index].m_addr = iSys.clearBuff;
+            queueSpuTrans[index].size = SD_CLEARBUFF_SIZE;
+
+            wQueueSpuTrans = (wQueueSpuTrans + 1) % SD_QUEUE_SIZE;
+            size -= SD_CLEARBUFF_SIZE;
+        }
+    }
+
+    SignalSema(iSys.smSpuWrite);
+    return index + 1;
+}
+#endif
+
+void SdSetVoice(SD_VOICE *voice)
+{
+    sint8 c, v;
+    int bit;
+
+    WaitSema(iSys.smSpuSet);
+
+    for (c = 0; c < _SD_NCORE; c++) {
+        bit = 1;
+
+        for (v = 0, bit = 1; v < _SD_NCHAN; v++, bit <<= 1) {
+            if (!(voice->chans[c] & bit)) {
+                continue;
+            }
+
+            if (voice->mask & SD_VC_VOLL) {
+                _stChan[c][v].voice.volL = voice->volL;
+                _stChan[c][v].voice.mask |= SD_VC_VOLL;
+            }
+
+            if (voice->mask & SD_VC_VOLR) {
+                _stChan[c][v].voice.volR = voice->volR;
+                _stChan[c][v].voice.mask |= SD_VC_VOLR;
+            }
+
+            if (voice->mask & SD_VC_PITCH) {
+                _stChan[c][v].voice.pitch = voice->pitch;
+                _stChan[c][v].voice.mask |= SD_VC_PITCH;
+            }
+
+            if (voice->mask & SD_VC_ADDR) {
+                _stChan[c][v].voice.addr = voice->addr;
+                _stChan[c][v].voice.mask |= SD_VC_ADDR;
+            }
+
+            if (voice->mask & SD_VC_ADSR) {
+                _stChan[c][v].voice.adsr = voice->adsr;
+                _stChan[c][v].voice.mask |= SD_VC_ADSR;
+            }
+
+            _stChan[c][v].voice.chans[c] = bit;
+            update[c] |= bit;
+        }
+    }
+
+    SignalSema(iSys.smSpuSet);
 }
 
-SdSetVoice()
+void SdSetKey(uint8 param, int *key)
 {
-    /* todo: decompile */
+    sint16 c;
+    int bits;
+    int voice;
+
+    WaitSema(iSys.smSpuSet);
+
+    for (c = 0; c < _SD_NCORE; c++) {
+        switch(param) {
+        case SD_KEY_ON:
+            keyOn[c] |= key[c];
+            bits = key[c];
+            voice = 0;
+
+            while (bits != 0 && voice < _SD_NCHAN) {
+                if (bits & 0x1) {
+                    _stChan[c][voice].keyoffs = 4;
+                }
+
+                voice++;
+                bits >>= 1;
+            }
+            break;
+        case SD_KEY_OFF:
+            keyOff[c] |= key[c] & ~keyOn[c];
+            keyOff2[c] |= key[c] & keyOn[c];
+            break;
+        case SD_DSP_OFF:
+            dspOff[c] |= key[c] & ~dspOn[c];
+            dspOff2[c] |= key[c] & dspOn[c];
+            break;
+        case SD_DSP_ON:
+            dspOn[c] |= key[c];
+            break;
+        case SD_NOISE_OFF:
+            noiseOff[c] |= key[c] & ~noiseOn[c];
+            noiseOff2[c] |= key[c] & noiseOn[c];
+            break;
+        case SD_NOISE_ON:
+            noiseOn[c] |= key[c];
+            break;
+        }
+    }
+
+    SignalSema(iSys.smSpuSet);
 }
 
-SdSetKey()
+static void SdFlushSetDsp(void)
 {
-    /* todo: decompile */
-}
+    static short step[_SD_NCORE] = { 0, 0 }; //.data step.46
+    static short wait[_SD_NCORE] = { 0, 0 }; //.data wait.47
+    static short idQ[_SD_NCORE] = { -1, -1 }; //.data idQ.48
+    static short szDsp[_SD_NCORE]; //.bss szDsp.49
+    static short adDsp[_SD_NCORE]; //.bss adDsp.50
 
-static SdFlushSetDsp()
-{
-    static short step[2] = { 0, 0 }; //.data step.46
-    static short wait[2] = { 0, 0 }; //.data wait.47
-    static short idQ[2] = { -1, -1 }; //.data idQ.48
-    static short szDsp[2]; //.bss szDsp.49
-    static short adDsp[2]; //.bss adDsp.50
-    /* todo: decompile */
+    sceSdEffectAttr attr;
+    sceSdEffectAttr attr2;
+    sint16 c;
+    int index;
+    int status;
+
+    for (c = 0; c < _SD_NCORE; c++) {
+        switch (step[c]) {
+        case 0:
+            if (stDsp[c].mode != stDsp[c].newmode) {
+                stDsp[c].newmode &= 0xF;
+                sceSdSetCoreAttr(defCore[c] | SD_C_EFFECT_ENABLE, 0);
+                step[c] = 0x3C;
+            } else if (stDsp[c].depth != (stDsp[c].newdepth << 8)) {
+                stDsp[c].atten = (stDsp[c].newdepth << 8) - stDsp[c].depth;
+                stDsp[c].depth = stDsp[c].newdepth << 8;
+                step[c] = 0x8C;
+            }
+            break;
+        case 0x3C:
+            adDsp[c] = stDsp[c].addr / 64;
+            szDsp[c] = dspSize[iDspNo[7]] / 64;
+            /* fallthrough */
+        case 0x3F:
+            if (szDsp[c] > 768) {
+                idQ[c] = SdSpuWrite(adDsp[c] * 64, NULL, SD_CLEARBUFF_SIZE);
+                adDsp[c] += SD_CLEARBUFF_SIZE / 64;
+                szDsp[c] -= SD_CLEARBUFF_SIZE / 64;
+            } else {
+                idQ[c] = SdSpuWrite(adDsp[c] * 64, NULL, szDsp[c] * 64);
+                adDsp[c] = 0;
+                szDsp[c] = 0;
+            }
+
+            step[c] = 0x41;
+            break;
+        case 0x41:
+            if (idQ[c] <= 0) {
+                index = -1;
+                if (fSpuTrans[1] == 0) {
+                    index = 1;
+                }
+
+                status = -1;
+                if (index != -1) {
+                    status = 0;
+                }
+            } else {
+                status = queueSpuTrans[idQ[c] - 1].status;
+            }
+
+            if (status == SD_QUEUE_READY) {
+                if (szDsp[c] > 0) {
+                    step[c] = 0x3F;
+                } else {
+                    idQ[c] = -1;
+                    step[c] = 0x64;
+                }
+            }
+            break;
+        case 0x64:
+            if (wait[c] > 0) {
+                wait[c]--;
+                break;
+            }
+
+            if (stDsp[c].mode != stDsp[c].newmode) {
+                sceSdSetCoreAttr(defCore[c] | SD_C_EFFECT_ENABLE, 0);
+
+                attr.mode = SD_REV_MODE_OFF;
+                attr.depth_L = attr.depth_R = 0;
+                sceSdSetEffectAttr(defCore[c], &attr);
+
+                stDsp[c].mode = stDsp[c].newmode;
+                stDsp[c].atten = stDsp[c].depth = stDsp[c].newdepth << 8;
+                step[c] = 0x6E;
+            } else if (stDsp[c].depth != (stDsp[c].newdepth << 8)) {
+                sceSdSetCoreAttr(defCore[c] | SD_C_EFFECT_ENABLE, 1);
+
+                stDsp[c].atten = stDsp[c].depth = stDsp[c].newdepth << 8;
+                sceSdSetParam(defCore[c] | SD_P_EVOLL, 0);
+                sceSdSetParam(defCore[c] | SD_P_EVOLR, 0);
+                step[c] = 0x8C;
+            }
+            break;
+        case 0x6E:
+            attr2.depth_L = attr2.depth_R = 0;
+            attr2.mode = stDsp[c].mode;
+            sceSdSetEffectAttr(defCore[c], &attr2);
+            step[c] = 0x82;
+            break;
+        case 0x82:
+            sceSdSetCoreAttr(defCore[c] | SD_C_EFFECT_ENABLE, 1);
+            step[c] = 0x8C;
+            break;
+        case 0x8C:
+            stDsp[c].atten = (stDsp[c].atten * 7) / 8;
+            if (stDsp[c].atten == 0) {
+                stDsp[c].depth = stDsp[c].newdepth << 8;
+                sceSdSetParam(defCore[c] | SD_P_EVOLL, stDsp[c].depth & 0xFF00);
+                sceSdSetParam(defCore[c] | SD_P_EVOLR, stDsp[c].depth);
+                step[c] = 0;
+            } else {
+                sceSdSetParam(defCore[c] | SD_P_EVOLL, stDsp[c].depth - stDsp[c].atten);
+                sceSdSetParam(defCore[c] | SD_P_EVOLR, stDsp[c].depth - stDsp[c].atten);
+            }
+            break;
+        }
+
+        if (dspOn[c] != 0 || dspOff[c] != 0) {
+            dspBit[c] &= ~dspOff[c];
+            dspBit[c] |= dspOn[c];
+
+            dspOff[c] = dspOff2[c];
+            dspOff2[c] = 0;
+            dspOn[c] = 0;
+
+            sceSdSetSwitch(defCore[c] | SD_S_VMIXEL, dspBit[c]);
+            sceSdSetSwitch(defCore[c] | SD_S_VMIXER, dspBit[c]);
+        }
+    }
 }
 
 static void SdChannelCheck(void)
@@ -273,11 +523,11 @@ static void SdChannelCheck(void)
     SD_CHAN *chan;
     int bit;
 
-    for (core = 0; core < 2; core++) {
+    for (core = 0; core < _SD_NCORE; core++) {
         chan = _stChan[core];
         bit = 1;
 
-        for (voice = 0; voice < 24; voice++, chan++) {
+        for (voice = 0; voice < _SD_NCHAN; voice++, chan++) {
             if (!(keyOn[core] & bit) && (sceSdGetParam(defCore[core] | defVc[voice] | SD_VP_ENVX) == 0)) {
                 if (chan->keyoffs == 1) {
                     keyOff[core] |= chan->keyoffs << voice;
@@ -303,33 +553,33 @@ static void SdVoiceSet(void)
     int voice;
     SD_CHAN *chan;
 
-    for (core = 0; core < 2; core++) {
-        for (voice = 0; voice < 24; voice++) {
+    for (core = 0; core < _SD_NCORE; core++) {
+        for (voice = 0; voice < _SD_NCHAN; voice++) {
             if (update[core] & 0x1) {
                 chan = &_stChan[core][voice];
 
-                if (chan->mask & SD_VC_VOLR) {
-                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_VOLR, chan->volR);
+                if (chan->voice.mask & SD_VC_VOLR) {
+                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_VOLR, chan->voice.volR);
                 }
 
-                if (chan->mask & SD_VC_VOLL) {
-                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_VOLL, chan->volL);
+                if (chan->voice.mask & SD_VC_VOLL) {
+                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_VOLL, chan->voice.volL);
                 }
 
-                if (chan->mask & SD_VC_PITCH) {
-                sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_PITCH, chan->pitch);
+                if (chan->voice.mask & SD_VC_PITCH) {
+                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_PITCH, chan->voice.pitch);
                 }
 
-                if (chan->mask & SD_VC_ADDR) {
-                    sceSdSetAddr(defCore[core] | defVc[voice] | SD_VA_SSA, chan->addr);
+                if (chan->voice.mask & SD_VC_ADDR) {
+                    sceSdSetAddr(defCore[core] | defVc[voice] | SD_VA_SSA, chan->voice.addr);
                 }
 
-                if (chan->mask & SD_VC_ADSR) {
-                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_ADSR1, chan->adsr);
-                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_ADSR2, chan->adsr >> 16);
+                if (chan->voice.mask & SD_VC_ADSR) {
+                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_ADSR1, chan->voice.adsr);
+                    sceSdSetParam(defCore[core] | defVc[voice] | SD_VP_ADSR2, chan->voice.adsr >> 16);
                 }
 
-                chan->mask = 0;
+                chan->voice.mask = 0;
             }
 
             update[core] >>= 1;
@@ -341,7 +591,7 @@ static void SdNoiseSet(void)
 {
     int i;
 
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < _SD_NCORE; i++) {
         if (stNoise[i].clk != stNoise[i].newclk) {
             stNoise[i].clk = stNoise[i].newclk;
             sceSdSetCoreAttr(defCore[i] | SD_C_NOISE_CLK, stNoise[i].clk);
@@ -455,15 +705,27 @@ int SdSpuMalloc(int size)
     return stSpuAlloc[i].addr;
 }
 
-SdPcmCtrl()
+#if 0
+// TODO: Fix bad codegen
+int SdPcmCtrl(int index, sd_pcm_job job)
 {
-    /* todo: decompile */
+    switch (index) {
+    case 0:
+        iPcm.job1 = job;
+        break;
+    case 1:
+        iPcm.job2 = job;
+        break;
+    }
+
+    return SD_SUCCESS;
 }
+#endif
 
 static void SdInitSpu(void)
 {
-    int addr[2];
-    int key[2];
+    int addr[_SD_NCORE];
+    int key[_SD_NCORE];
     sceSdEffectAttr attr;
     int *keyp = key;
     short i;
@@ -481,18 +743,18 @@ static void SdInitSpu(void)
 
     keyp[0] = 0xFFFFFF;
     keyp[1] = 0xFFFFFF;
-    SdSetKey(0, keyp);
+    SdSetKey(SD_KEY_OFF, keyp);
 
     keyp[0] = 0xFFFFFF;
     keyp[1] = 0xFFFFFF;
-    SdSetKey(2, keyp);
+    SdSetKey(SD_DSP_OFF, keyp);
 
     sceSdSetParam(SD_CORE_0 | SD_P_MMIX, ~(SD_MMIX_MINEL | SD_MMIX_MINER) & 0xFFF);
     sceSdSetParam(SD_CORE_1 | SD_P_MMIX, ~(SD_MMIX_MINEL | SD_MMIX_MINER | SD_MMIX_SINEL | SD_MMIX_SINER) & 0xFFF);
 
     sceSdSetCoreAttr(SD_C_SPDIF_MODE, SD_SPDIF_MEDIA_DVD | SD_SPDIF_COPY_PROHIBIT);
 
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < _SD_NCORE; i++) {
         sceSdSetCoreAttr(defCore[i] | SD_C_EFFECT_ENABLE, 0);
 
         stDsp[i].addr = addr[i] - dspSize[iDspNo[7]] + 1;
@@ -514,7 +776,7 @@ static void SdInitSpu(void)
         sceSdSetParam(defCore[i] | SD_P_EVOLL, 0);
         sceSdSetParam(defCore[i] | SD_P_EVOLR, 0);
 
-        for (voice = 0; voice < 24; voice++) {
+        for (voice = 0; voice < _SD_NCHAN; voice++) {
             sceSdSetParam(defCore[i] | defVc[voice] | SD_VP_VOLL, 0);
             sceSdSetParam(defCore[i] | defVc[voice] | SD_VP_VOLR, 0);
         }
@@ -551,7 +813,7 @@ void SdInitSdlib2(void)
 
         stDsp[i].voice = 0;
         stDsp[i].mode = 0xFF;
-        stDsp[i].unk5 = 0;
+        stDsp[i].newdepth = 0;
         stDsp[i].depth = -1;
 
         for (j = 0; j < _SD_NCHAN; j++) {
@@ -590,11 +852,11 @@ static inline void sdSetDspZero(sint8 core)
 {
     WaitSema(iSys.smSpuSet);
 
-    stDsp[core].voice = 0;
-    stDsp[core].unk5 = 0;
+    stDsp[core].newmode = 0;
+    stDsp[core].newdepth = 0;
 
-    if ((dspNo[stDsp[core].voice] & 0xF) >= 8) {
-        stDsp[core].voice = iDspNo[7];
+    if ((dspNo[stDsp[core].newmode] & 0xF) >= 8) {
+        stDsp[core].newmode = iDspNo[7];
     }
 
     SignalSema(iSys.smSpuSet);
@@ -602,18 +864,18 @@ static inline void sdSetDspZero(sint8 core)
 
 void SdQuitSdlib2(void)
 {
-    uint32 key[2];
+    uint32 key[_SD_NCORE];
     short core;
 
     key[0] = 0xFFFFFF;
     key[1] = 0xFFFFFF;
-    SdSetKey(0, key);
+    SdSetKey(SD_KEY_OFF, key);
 
     key[0] = 0xFFFFFF;
     key[1] = 0xFFFFFF;
-    SdSetKey(2, key);
+    SdSetKey(SD_DSP_OFF, key);
 
-    for (core = 0; core < 2; core++) {
+    for (core = 0; core < _SD_NCORE; core++) {
         sceSdSetParam(defCore[core] | SD_P_MVOLL, 0);
         sceSdSetParam(defCore[core] | SD_P_MVOLR, 0);
         sceSdSetParam(defCore[core] | SD_P_EVOLL, 0);
@@ -849,15 +1111,15 @@ void SdGetKey(uint8 param, int *out)
     }
 }
 
-void SdSetDsp(sint8 core, sint8 voice, sint8 arg2)
+void SdSetDsp(sint8 core, sint8 mode, sint8 depth)
 {
     WaitSema(iSys.smSpuSet);
 
-    stDsp[core].voice = voice;
-    stDsp[core].unk5 = arg2;
+    stDsp[core].newmode = mode;
+    stDsp[core].newdepth = depth;
 
-    if ((dspNo[stDsp[core].voice] & 0xF) >= 8) {
-        stDsp[core].voice = iDspNo[7];
+    if ((dspNo[stDsp[core].newmode] & 0xF) >= 8) {
+        stDsp[core].newmode = iDspNo[7];
     }
 
     SignalSema(iSys.smSpuSet);
