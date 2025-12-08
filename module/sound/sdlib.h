@@ -30,6 +30,8 @@ enum {
     SD_KEY_ON = 1,
     SD_DSP_OFF = 2,
     SD_DSP_ON = 3,
+    SD_NOISE_OFF = 4,
+    SD_NOISE_ON = 5,
     _SD_NCORE = 2,
     _SD_NCHAN = 24,
     _SD_CH00 = 0,
@@ -100,6 +102,8 @@ enum {
     SD_VC_ADSR  = (1 << _SD_VOICE_ADSR),  // 0x40
 };
 
+typedef void (*sd_pcm_job)(void *, int);
+
 // NOTE: Copied from keyboardmania
 typedef struct { // 0x20
     /* 0x000 */ uint32 mask;
@@ -118,10 +122,10 @@ extern "C" {
 
 /* sdlib.c */
 int SdSpuWrite(uint32 dst, void *src, int size);
-// SdSetVoice();
-// SdSetKey();
+void SdSetVoice(SD_VOICE *voice);
+void SdSetKey(uint8 param, int *key);
 int SdSpuMalloc(int size);
-// SdPcmCtrl();
+// int SdPcmCtrl(int index, sd_pcm_job job);
 int SdInitSdlib(void);
 int SdIsEmptyQueue(void);
 int SdIsTrans(int queue);
@@ -130,7 +134,7 @@ int SdGetKeyoffCount(sint8 core, sint8 voice);
 int SdSetKeyoffCount(int core, int voice, int count);
 int SdGetVolume(sint8 core, sint8 voice);
 void SdGetKey(uint8 param, int *out);
-void SdSetDsp(sint8 core, sint8 voice, sint8 arg2);
+void SdSetDsp(sint8 core, sint8 mode, sint8 depth);
 void SdSetNoise(sint8 core, int freq);
 int SdVol7ToVol14(int vol, int arg1);
 int SdMono(int mono);
