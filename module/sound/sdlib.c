@@ -73,7 +73,7 @@ typedef struct {
     short unk0;
     uint8 status;
     char channel;
-    unsigned int s_addr;
+    uint32 s_addr;
     void *m_addr;
     int size;
 } SD_QUEUE;
@@ -241,7 +241,7 @@ static int SdJobSpuWrite(void)
     return SD_SUCCESS;
 }
 
-int SdSpuWrite(unsigned int dst, void *src, int size)
+int SdSpuWrite(uint32 dst, void *src, int size)
 {
     /* todo: decompile */
 }
@@ -543,7 +543,7 @@ static void SdInitSpu(void)
 
 void SdInitSdlib2(void)
 {
-    unsigned int i, j;
+    uint32 i, j;
 
     for (i = 0; i < _SD_NCORE; i++) {
         dmaQueueNo[i] = 0;
@@ -602,7 +602,7 @@ static inline void sdSetDspZero(sint8 core)
 
 void SdQuitSdlib2(void)
 {
-    unsigned int key[2];
+    uint32 key[2];
     short core;
 
     key[0] = 0xFFFFFF;
@@ -784,7 +784,7 @@ int SdIsTrans(int queue)
     return queueSpuTrans[queue - 1].status;
 }
 
-unsigned int SdGetSpuPlayAddr(sint8 core, sint8 voice)
+uint32 SdGetSpuPlayAddr(sint8 core, sint8 voice)
 {
     return sceSdGetAddr(defCore[core] | defVc[voice] | SD_VA_NAX);
 }
@@ -1009,7 +1009,7 @@ static void SdTransIrqCallback(void)
     }
 }
 
-static unsigned int SdIrqCallback(void *ptr)
+static uint32 SdIrqCallback(void *ptr)
 {
     iWakeupThread(thSdLoop);
     iWakeupThread(thSdLoopRegset);
