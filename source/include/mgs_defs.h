@@ -2,7 +2,7 @@
 #define __MGS3_MGS_DEFS_H__
 
 #include <stddef.h>     // for NULL
-#include <limits.h>
+#include <limits.h>     // for MIN/MAX
 #include "gcctest.h"
 
 // NOTE: ee-gcc 2.9/2.96's limits.h wrongly defines the minimum and maximum
