@@ -108,9 +108,9 @@
 // This will crash the program with the intention of invoking
 // the MTS exception handler screen (which was compiled out).
 //
-// I guess KCEJ chose to dereference 1 instead of 0 to distinguish
-// exceptions raised intentionally from actual NULL-pointer dereferences.
-// Notice that it's also writing to an unaligned memory address.
+// Choosing to dereference 1 instead of 0 distinguishes exceptions raised
+// intentionally from actual NULL-pointer dereference bugs, and doubles as
+// an unaligned write to memory.
 //
 #define HANGUP()        (*(int *)1 = 0)
 
