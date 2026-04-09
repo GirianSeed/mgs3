@@ -136,7 +136,8 @@
 /*---------------------------------------------------------------------------*/
 // Color Format #defines
 
-/* RGBA8888 format */
+/*----- RGBA8888 format -----*/
+
 #ifdef WORDS_BIGENDIAN
 #define RGBA_R_SHIFT    (24)
 #define RGBA_G_SHIFT    (16)
@@ -149,14 +150,42 @@
 #define RGBA_A_SHIFT    (24)
 #endif
 
+#define RGBA_R_MASK     (0xff << RGBA_R_SHIFT)
+#define RGBA_G_MASK     (0xff << RGBA_G_SHIFT)
+#define RGBA_B_MASK     (0xff << RGBA_B_SHIFT)
+#define RGBA_A_MASK     (0xff << RGBA_A_SHIFT)
+
+// #define MAKE_RGB_WITHOUT_BITMASK
+#ifdef MAKE_RGB_WITHOUT_BITMASK
+/* simple version without setting the alpha channel */
+#define MAKE_RGB(_r, _g, _b)                                    \
+        ((unsigned int)(((_r) << RGBA_R_SHIFT) |                \
+                        ((_g) << RGBA_G_SHIFT) |                \
+                        ((_b) << RGBA_B_SHIFT)))
+#else
+#define MAKE_RGB(_r, _g, _b)                                    \
+        ((unsigned int)((((_r) & 0xff) << RGBA_R_SHIFT) |       \
+                        (((_g) & 0xff) << RGBA_G_SHIFT) |       \
+                        (((_b) & 0xff) << RGBA_B_SHIFT)))
+#endif
+
+// #define MAKE_RGBA_WITHOUT_BITMASK
+#ifdef MAKE_RGBA_WITHOUT_BITMASK
+#define MAKE_RGBA(_r,_g,_b,_a)                                  \
+        ((unsigned int)(((_r) << RGBA_R_SHIFT) |                \
+                        ((_g) << RGBA_G_SHIFT) |                \
+                        ((_b) << RGBA_B_SHIFT) |                \
+                        ((_a) << RGBA_A_SHIFT)))
+#else
 #define MAKE_RGBA(_r,_g,_b,_a)                                  \
         ((unsigned int)((((_r) & 0xff) << RGBA_R_SHIFT) |       \
                         (((_g) & 0xff) << RGBA_G_SHIFT) |       \
                         (((_b) & 0xff) << RGBA_B_SHIFT) |       \
                         (((_a) & 0xff) << RGBA_A_SHIFT)))
+#endif
 
 #define MAKE_RGB0(_r,_g,_b)     MAKE_RGBA(_r,_g,_b,0x00)
-#define MAKE_RGBX(_r,_g,_b)     MAKE_RGBA(_r,_g,_b,0xff)
+#define MAKE_RGBX(_r,_g,_b)     MAKE_RGBA(_r,_g,_b,0xff) /* full-alpha */
 #define MAKE_RGBH(_r,_g,_b)     MAKE_RGBA(_r,_g,_b,0x80) /* half-alpha */
 
 #define GET_R_FROM_RGBA(_rgba)  (((_rgba) >> RGBA_R_SHIFT) & 0xff)
@@ -164,7 +193,8 @@
 #define GET_B_FROM_RGBA(_rgba)  (((_rgba) >> RGBA_B_SHIFT) & 0xff)
 #define GET_A_FROM_RGBA(_rgba)  (((_rgba) >> RGBA_A_SHIFT) & 0xff)
 
-/* ARGB8888 format */
+/*----- ARGB8888 format -----*/
+
 #ifdef WORDS_BIGENDIAN
 #define ARGB_A_SHIFT    (24)
 #define ARGB_R_SHIFT    (16)
@@ -177,14 +207,28 @@
 #define ARGB_B_SHIFT    (24)
 #endif
 
+#define ARGB_A_MASK     (0xff << ARGB_A_SHIFT)
+#define ARGB_R_MASK     (0xff << ARGB_R_SHIFT)
+#define ARGB_G_MASK     (0xff << ARGB_G_SHIFT)
+#define ARGB_B_MASK     (0xff << ARGB_B_SHIFT)
+
+// #define MAKE_ARGB_WITHOUT_BITMASK
+#ifdef MAKE_ARGB_WITHOUT_BITMASK
+#define MAKE_ARGB(_a,_r,_g,_b)                                  \
+        ((unsigned int)(((_a) << ARGB_A_SHIFT) |                \
+                        ((_r) << ARGB_R_SHIFT) |                \
+                        ((_g) << ARGB_G_SHIFT) |                \
+                        ((_b) << ARGB_B_SHIFT)))
+#else
 #define MAKE_ARGB(_a,_r,_g,_b)                                  \
         ((unsigned int)((((_a) & 0xff) << ARGB_A_SHIFT) |       \
                         (((_r) & 0xff) << ARGB_R_SHIFT) |       \
                         (((_g) & 0xff) << ARGB_G_SHIFT) |       \
                         (((_b) & 0xff) << ARGB_B_SHIFT)))
+#endif
 
 #define MAKE_0RGB(_r,_g,_b)     MAKE_ARGB(0x00,_r,_g,_b)
-#define MAKE_XRGB(_r,_g,_b)     MAKE_ARGB(0xff,_r,_g,_b)
+#define MAKE_XRGB(_r,_g,_b)     MAKE_ARGB(0xff,_r,_g,_b) /* full-alpha */
 #define MAKE_HRGB(_r,_g,_b)     MAKE_ARGB(0x80,_r,_g,_b) /* half-alpha */
 
 #define GET_A_FROM_ARGB(_argb)  (((_argb) >> ARGB_A_SHIFT) & 0xff)
@@ -192,7 +236,8 @@
 #define GET_G_FROM_ARGB(_argb)  (((_argb) >> ARGB_G_SHIFT) & 0xff)
 #define GET_B_FROM_ARGB(_argb)  (((_argb) >> ARGB_B_SHIFT) & 0xff)
 
-/* common colors */
+/*----- Common Colors -----*/
+
 #define COLOR_BLACK     MAKE_RGB0(  0,  0,  0)
 #define COLOR_WHITE     MAKE_RGB0(255,255,255)
 #define COLOR_GRAY      MAKE_RGB0(128,128,128)
