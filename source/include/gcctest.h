@@ -2,8 +2,9 @@
 #define __gcctest_h__
 
 /*---------------------------------------------------------------------------*/
-/* GNU-C Compiler Major/Minor Version Tests                                  */
+/* GNU-C Compiler Version Tests                                              */
 /*---------------------------------------------------------------------------*/
+// GCC documentation for predefined macros:
 // https://gcc.gnu.org/onlinedocs/cpp/Common-Predefined-Macros.html
 
 #if defined(__GNUC__)
