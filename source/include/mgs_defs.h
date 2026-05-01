@@ -40,6 +40,12 @@
 //#define CLAMP(x, min, max) (((x) < (min)) ? (min) : ((x) > (max)) ? (max) : (x))
 //#define CLAMP(x, min, max) (((x) > (max)) ? (max) : ((x) < (min)) ? (min) : (x))
 #endif
+#ifndef CLAMP_MIN
+#define CLAMP_MIN(x, min) (((x) < (min)) ? (min) : (x))
+#endif
+#ifndef CLAMP_MAX
+#define CLAMP_MAX(x, max) (((x) > (max)) ? (max) : (x))
+#endif
 
 #ifndef SWAP
 #define SWAP(a, b)                                              \
