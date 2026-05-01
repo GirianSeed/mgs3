@@ -39,7 +39,8 @@ typedef long128         int128;         /* 128-bit signed integer   */
 typedef u_long128       u_int128;       /* 128-bit unsigned integer */
 
 /*---------------------------------------------------------------------------*/
-// Linear Algebra typedefs (backported from MGS4's mgs_types.h)
+/* Linear Algebra typedefs (backported from MGS4's mgs_types.h)              */
+/*---------------------------------------------------------------------------*/
 
 #if defined(__R5900__) && !__GNUC_PREREQ(2, 95)
 // https://gcc.gnu.org/onlinedocs/gcc/Unnamed-Fields.html
@@ -78,8 +79,8 @@ typedef ALIGN16 union FMATRIX {
 } FMATRIX;
 
 /*---------------------------------------------------------------------------*/
-// Type-Conversion Unions (backported from MGS4's mgs_types.h)
-//
+/* Type-Conversion Unions (backported from MGS4's mgs_types.h)               */
+/*---------------------------------------------------------------------------*/
 // These appear to be derived from the PlayStation 2 "Software Keyboard"
 // sample library header 'skb/include/extypes.h' and/or 'psptypes.h' from
 // the PSP devkit release.

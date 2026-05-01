@@ -18,7 +18,8 @@
 #define COUNTOF(array)  _countof(array)
 
 /*---------------------------------------------------------------------------*/
-// Common Macro #defines
+/* Common Macro #defines                                                     */
+/*---------------------------------------------------------------------------*/
 
 #ifndef MIN
 #define MIN(x, y)       (((x) < (y)) ? (x) : (y))
@@ -71,7 +72,8 @@
 #endif
 
 /*---------------------------------------------------------------------------*/
-// Compiler attribute #defines
+/* Compiler attribute #defines                                               */
+/*---------------------------------------------------------------------------*/
 
 #if defined(__GNUC__)
 #define ALIGN(_x)       __attribute__((aligned(_x)))
@@ -104,6 +106,8 @@
 #endif
 
 /*---------------------------------------------------------------------------*/
+/* Custom assertion #defines                                                 */
+/*---------------------------------------------------------------------------*/
 
 // This will crash the program with the intention of invoking
 // the MTS exception handler screen (which was compiled out).
@@ -134,7 +138,8 @@
 #endif // DEBUG
 
 /*---------------------------------------------------------------------------*/
-// Color Format #defines
+/* Color Format #defines                                                     */
+/*---------------------------------------------------------------------------*/
 
 /*----- RGBA8888 format -----*/
 
