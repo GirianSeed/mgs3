@@ -24,7 +24,7 @@ typedef unsigned char *POINTER;
 typedef unsigned short int UINT2;
 
 /* UINT4 defines a four byte word */
-#if defined(__mips__) && (defined(__R5900__) || defined(__ee__))
+#if defined(__LP64__) || (defined(__R5900__) || defined(__ee__))
 typedef unsigned int UINT4;
 #else
 typedef unsigned long int UINT4;
