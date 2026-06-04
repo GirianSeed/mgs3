@@ -29,6 +29,9 @@ typedef signed int      int32;          /* 32-bit signed integer    */
 typedef unsigned int    u_int32;        /* 32-bit unsigned integer  */
 typedef signed long     int64;          /* 64-bit signed integer    */
 typedef unsigned long   u_int64;        /* 64-bit unsigned integer  */
+
+typedef signed int      long32;         /* 32-bit signed long       */
+typedef unsigned int    u_long32;       /* 32-bit unsigned long     */
 typedef signed long     long64;         /* 64-bit signed long       */
 typedef unsigned long   u_long64;       /* 64-bit unsigned long     */
 
