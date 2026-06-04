@@ -1,5 +1,7 @@
 #include "common.h"
 
+#define BIT_LEN 24
+
 /*!
  *  @brief      2nd-generation string-hashing function.
  *              Originally from "METAL GEAR SOLID 2" (2001).
@@ -31,10 +33,10 @@ int GV_StrCode( const char *string )
 {
     unsigned char c;
     unsigned char *p = (unsigned char *)string;
-    unsigned int id = 0, mask = 0x00ffffff;
+    unsigned int id = 0, mask = ((1 << BIT_LEN) - 1);
 
     while (( c = *p++ )) {
-        id = ((id << 5) | (id >> 19));
+        id = ((id << 5) | (id >> (BIT_LEN - 5)));
         id += c;
         id &= mask;
     }
