@@ -9,41 +9,37 @@ extern "C" {
 
 /*---------------------------------------------------------------------------*/
 
-#define PAD_U           SCE_PADLup      // 0x1000 ↑
-#define PAD_D           SCE_PADLdown    // 0x4000 ↓
-#define PAD_L           SCE_PADLleft    // 0x8000 ←
-#define PAD_R           SCE_PADLright   // 0x2000 →
-#define PAD_A           SCE_PADRright   // 0x0020 ○
-#define PAD_B           SCE_PADRdown    // 0x0040 ×
-#define PAD_X           SCE_PADRup      // 0x0010 △
-#define PAD_Y           SCE_PADRleft    // 0x0080 □
-#define PAD_L1          SCE_PADL1       // 0x0004 L1
-#define PAD_R1          SCE_PADR1       // 0x0008 R1
-#define PAD_L2          SCE_PADL2       // 0x0001 L2
-#define PAD_R2          SCE_PADR2       // 0x0002 R2
-#define PAD_STA         SCE_PADstart    // 0x0800 START
-#define PAD_SEL         SCE_PADselect   // 0x0100 SELECT
-#define PAD_AL          SCE_PADi        // 0x0200 L3
-#define PAD_AR          SCE_PADj        // 0x0400 R3
+#define _PAD_U          SCE_PADLup      // 0x1000 ↑
+#define _PAD_D          SCE_PADLdown    // 0x4000 ↓
+#define _PAD_L          SCE_PADLleft    // 0x8000 ←
+#define _PAD_R          SCE_PADLright   // 0x2000 →
+#define _PAD_A          SCE_PADRright   // 0x0020 ○
+#define _PAD_B          SCE_PADRdown    // 0x0040 ×
+#define _PAD_X          SCE_PADRup      // 0x0010 △
+#define _PAD_Y          SCE_PADRleft    // 0x0080 □
+#define _PAD_L1         SCE_PADL1       // 0x0004 L1
+#define _PAD_R1         SCE_PADR1       // 0x0008 R1
+#define _PAD_L2         SCE_PADL2       // 0x0001 L2
+#define _PAD_R2         SCE_PADR2       // 0x0002 R2
+#define _PAD_L3         SCE_PADi        // 0x0200 L3
+#define _PAD_R3         SCE_PADj        // 0x0400 R3
+#define _PAD_START      SCE_PADstart    // 0x0800 START
+#define _PAD_SELECT     SCE_PADselect   // 0x0100 SELECT
 
 /* button masks */
-#define PAD_UDLR        (PAD_U  | PAD_D  | PAD_L  | PAD_R)
-#define PAD_ABXY        (PAD_A  | PAD_B  | PAD_X  | PAD_Y)
-#define PAD_LR          (PAD_L1 | PAD_L2 | PAD_R1 | PAD_R2)
+#define _PAD_UDLR       (_PAD_U  | _PAD_D  | _PAD_L  | _PAD_R)
+#define _PAD_ABXY       (_PAD_A  | _PAD_B  | _PAD_X  | _PAD_Y)
+#define _PAD_LR         (_PAD_L1 | _PAD_L2 | _PAD_R1 | _PAD_R2)
 
 /* button aliases */
-#define PAD_UP          PAD_U           // ↑
-#define PAD_DOWN        PAD_D           // ↓
-#define PAD_LEFT        PAD_L           // ←
-#define PAD_RIGHT       PAD_R           // →
-#define PAD_CIRCLE      PAD_A           // ○
-#define PAD_CROSS       PAD_B           // ×
-#define PAD_TRIANGLE    PAD_X           // △
-#define PAD_SQUARE      PAD_Y           // □
-#define PAD_START       PAD_STA         // START
-#define PAD_SELECT      PAD_SEL         // SELECT
-#define PAD_L3          PAD_AL          // L3
-#define PAD_R3          PAD_AR          // R3
+#define _PAD_UP         _PAD_U          // ↑
+#define _PAD_DOWN       _PAD_D          // ↓
+#define _PAD_LEFT       _PAD_L          // ←
+#define _PAD_RIGHT      _PAD_R          // →
+#define _PAD_CIRCLE     _PAD_A          // ○
+#define _PAD_CROSS      _PAD_B          // ×
+#define _PAD_TRIANGLE   _PAD_X          // △
+#define _PAD_SQUARE     _PAD_Y          // □
 
 /*---------------------------------------------------------------------------*/
 
