@@ -5,7 +5,7 @@
 
 #define GCX_scenerio            0x00180720  // GV_StrCode("scenerio")
 
-/* libgcl/basic.c */
+/* system/libgcl/basic.c */
 #define CMD_if                  0x00000d86  // GV_StrCode("if")
 #define CMD_switch              0x00a65db5  // GV_StrCode("switch")
 #define CMD_eval                0x0034648c  // GV_StrCode("eval")
@@ -22,1157 +22,1157 @@
 #define CMD_mesg                0x003822c7  // GV_StrCode("mesg") MesgCmd
 #define CMD_rapid_mesg          0x00ccbde3  // GV_StrCode("rapid_mesg") RMesgCmd
 
+#if 0
 /*---------------------------------------------------------------------------*/
-// Chara IDs unique to only one version of the game have been marked with
-// the following specmarks (in parentheses):
+// NOTE: Some function names were taken from MGS4 (2006.09.07 builds).
+// Additional NewChara function names exist in MGS3's binaries, but not all
+// have been added yet.
 //
-// - TRIAL-EDITION-ONLY         Only found in MGS3: TRIAL EDITION
-// - SNAKE-EATER-ONLY           Only found in MGS3: SNAKE EATER
-// - SUBSISTENCE-ONLY           Only found in MGS3: SUBSISTENCE
-// - SUBSISTENCE-DISC1-ONLY     Only found in MGS3: SUBSISTENCE (DISC 1)
-// - PERSISTENCE-DISC2-ONLY     Only found in MGS3: SUBSISTENCE (DISC 2)
-// - EXISTENCE-DISC3-ONLY       Only found in MGS3: SUBSISTENCE (DISC 3)
-// - ONLINE-ONLY                Only found in METAL GEAR ONLINE
-//
-// NOTE: Most function names were taken from MGS4 (2006.09.07 builds).
-// Additional NewChara function names exist in the MGS3 binary, but those
-// haven't been added yet.
-
-#define CHARA_PAPER             0x00001846  // GV_StrCode("紙") | NewPaper
-#define CHARA_SNOW              0x000018e3  // GV_StrCode("雪") | NewSnow
-#define CHARA_BUTTERFLY         0x00001933  // GV_StrCode("蝶") | NewButterfly
-#define CHARA_00003d59          0x00003d59
-#define CHARA_000063ab          0x000063ab
-#define CHARA_00009c13          0x00009c13
-#define CHARA_cos               0x00019a53  // GV_StrCode("cos") NewGclCos
-#define CHARA_sin               0x0001d98e  // GV_StrCode("sin") NewGclSin
-#define CHARA_0002a797          0x0002a797
-#define CHARA_0002c078          0x0002c078
-#define CHARA_0002e075          0x0002e075  // (ONLINE-ONLY)
-#define CHARA_MAIN_MENU_SET     0x00030464  // GV_StrCode("メインメニュー設定")
-#define CHARA_00036a1d          0x00036a1d
-#define CHARA_000406a2          0x000406a2
-#define CHARA_0004b093          0x0004b093  // (SUBSISTENCE-ONLY)
-#define CHARA_0004effa          0x0004effa  // (SUBSISTENCE-ONLY)
-#define CHARA_00053da0          0x00053da0  // NewGclVarClear
-#define CHARA_0005e0ab          0x0005e0ab
-#define CHARA_CAMERA            0x00061ade  // GV_StrCode("カメラ") NewCamera
-#define CHARA_ENEMY_MEMORY_GET  0x00069104  // GV_StrCode("敵兵メモリー読み取り") | ENEMEM_GclGet
-#define CHARA_0006b8cb          0x0006b8cb
-#define CHARA_MARKHOR           0x0006bdf6  // GV_StrCode("マーコール") | NewMarkhor
-#define CHARA_0006ee2c          0x0006ee2c
-#define CHARA_0006fb39          0x0006fb39
-#define CHARA_00070a7d          0x00070a7d
-#define CHARA_0007cda7          0x0007cda7
-#define CHARA_00087298          0x00087298
-#define CHARA_0008ed2e          0x0008ed2e
-#define CHARA_00094a4c          0x00094a4c
-#define CHARA_0009a1a8          0x0009a1a8  // (ONLINE-ONLY)
-#define CHARA_0009c882          0x0009c882
-#define CHARA_000a06c7          0x000a06c7
-#define CHARA_DOOR_STATUS_GET   0x000a3e0b  // GV_StrCode("ドア状態取得") | COM_DoorGetLockStatus
-#define CHARA_SPHERE_CAMERA     0x000b17f8  // GV_StrCode("平行カメラ") NewSphericalCamera (SUBSISTENCE-ONLY)
-#define CHARA_000b56f4          0x000b56f4
-#define CHARA_CLEARING_SET      0x000bf5f2  // GV_StrCode("クリアリング設定") | COM_SetClearingData
-#define CHARA_000c4faf          0x000c4faf
-#define CHARA_000c7ada          0x000c7ada
-#define CHARA_000c7f0e          0x000c7f0e
-#define CHARA_000c942e          0x000c942e
-#define CHARA_SPECIAL_MODE_SET  0x000cd3af  // GV_StrCode("スペシャルモード設定") | COM_SetSpecialMode
-#define CHARA_MIRROR_CONTROL    0x000d02fd  // GV_StrCode("鏡面モデル管理") | NewMirrorControl
-#define CHARA_000d7c37          0x000d7c37
-#define CHARA_000d9578          0x000d9578
-#define CHARA_000dcfb6          0x000dcfb6
-#define CHARA_000dd485          0x000dd485
-#define CHARA_000e0767          0x000e0767
-#define CHARA_000e9f80          0x000e9f80
-#define CHARA_000f3d40          0x000f3d40  // ComGetCurrentStage (ONLINE-ONLY)
-#define CHARA_000f47ae          0x000f47ae
-#define CHARA_000f6a54          0x000f6a54  // (ONLINE-ONLY)
-#define CHARA_000fa91c          0x000fa91c
-#define CHARA_000fdc57          0x000fdc57
-#define CHARA_00103a44          0x00103a44
-#define CHARA_0010f943          0x0010f943
-#define CHARA_0011488e          0x0011488e
-#define CHARA_0011f61d          0x0011f61d
-#define CHARA_00123141          0x00123141
-#define CHARA_00127162          0x00127162
-#define CHARA_00127f37          0x00127f37  // (SNAKE-EATER-ONLY)
-#define CHARA_PLAYER            0x00128946  // GV_StrCode("プレイヤー") NewPlayer
-#define CHARA_RAIN_CONTROL      0x0012bd53  // GV_StrCode("雨制御") | NewRainControl
-#define CHARA_0013010a          0x0013010a
-#define CHARA_00138004          0x00138004
-#define CHARA_00138a16          0x00138a16
-#define CHARA_0013e297          0x0013e297
-#define CHARA_001433b7          0x001433b7  // (ONLINE-ONLY)
-#define CHARA_00144e5f          0x00144e5f  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_SVM_CURE_MODE     0x00147784  // GV_StrCode("サバイバルビューワ治療モード") | NewSurvivalCureModeScn
-#define CHARA_0014b909          0x0014b909
-#define CHARA_00157ba6          0x00157ba6
-#define CHARA_0015d3da          0x0015d3da
-#define CHARA_0015dd87          0x0015dd87
-#define CHARA_0015fb8b          0x0015fb8b
-#define CHARA_0017a281          0x0017a281
-#define CHARA_0018227c          0x0018227c
-#define CHARA_00182ad7          0x00182ad7  // (SNAKE-EATER-ONLY)
-#define CHARA_00182db4          0x00182db4
-#define CHARA_00182f0b          0x00182f0b
-#define CHARA_JIMAKU_CONTROL    0x0018d40b  // GV_StrCode("字幕制御")  | NewJimakuControl
-#define CHARA_00190342          0x00190342  // (ONLINE-ONLY)
-#define CHARA_001922ff          0x001922ff
-#define CHARA_00193292          0x00193292
-#define CHARA_0019608b          0x0019608b
-#define CHARA_001993d9          0x001993d9
-#define CHARA_0019b364          0x0019b364
-#define CHARA_0019dc5f          0x0019dc5f
-#define CHARA_001a273a          0x001a273a  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_001a7e08          0x001a7e08  // (ONLINE-ONLY)
-#define CHARA_001aae5f          0x001aae5f  // (SNAKE-EATER-ONLY)
-#define CHARA_RADAR             0x001af92a  // GV_StrCode("レーダー") | NewRadar
-#define CHARA_001ba50e          0x001ba50e
-#define CHARA_ITEM_FACE_SET     0x001c2370  // GV_StrCode("アイテムフェイスペイント設定") | GM_COM_InventoryFacePaintEnable
-#define CHARA_001c5d31          0x001c5d31
-#define CHARA_001d65f8          0x001d65f8
-#define CHARA_001e226c          0x001e226c  // ComGetCurrentRule (ONLINE-ONLY)
-#define CHARA_ENDING            0x001f119a  // GV_StrCode("エンディング") | NewEnding
-#define CHARA_001f1ae9          0x001f1ae9  // (ONLINE-ONLY)
-#define CHARA_0020377d          0x0020377d
-#define CHARA_002056f8          0x002056f8
-#define CHARA_0020f5a1          0x0020f5a1
-#define CHARA_002156c2          0x002156c2
-#define CHARA_00232853          0x00232853
-#define CHARA_WATER_MONITOR     0x00236330  // GV_StrCode("水面監視") | NewCheckWaterLevel
-#define CHARA_00240e13          0x00240e13
-#define CHARA_00242db9          0x00242db9  // (SUBSISTENCE-ONLY)
-#define CHARA_002431fb          0x002431fb  // (ONLINE-ONLY)
-#define CHARA_00246285          0x00246285  // (ONLINE-ONLY)
-#define CHARA_0024b801          0x0024b801  // (ONLINE-ONLY)
-#define CHARA_0025849f          0x0025849f
-#define CHARA_0025e019          0x0025e019
-#define CHARA_SORROW            0x00264a32  // GV_StrCode("ソロー") | NewSorrow
-#define CHARA_0027b5ee          0x0027b5ee  // (ONLINE-ONLY)
-#define CHARA_00283977          0x00283977
-#define CHARA_00289035          0x00289035
-#define CHARA_0028a0fd          0x0028a0fd  // (ONLINE-ONLY)
-#define CHARA_00291919          0x00291919
-#define CHARA_00294a42          0x00294a42
-#define CHARA_002a5803          0x002a5803
-#define CHARA_002a89a9          0x002a89a9
-#define CHARA_002abfa6          0x002abfa6  // (ONLINE-ONLY)
-#define CHARA_002ac7e3          0x002ac7e3
-#define CHARA_KEROTAN           0x002ae72c  // GV_StrCode("ケロタン") | NewKerotan
-#define CHARA_002af8ee          0x002af8ee
-#define CHARA_002b2336          0x002b2336
-#define CHARA_002bbe1e          0x002bbe1e
-#define CHARA_002c7dbf          0x002c7dbf
-#define CHARA_002cb94b          0x002cb94b
-#define CHARA_002cd772          0x002cd772
-#define CHARA_002d5509          0x002d5509
-#define CHARA_002d8b5c          0x002d8b5c
-#define CHARA_002dd63c          0x002dd63c
-#define CHARA_002e9c03          0x002e9c03
-#define CHARA_002f0a89          0x002f0a89  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_002fec39          0x002fec39  // (TRIAL-EDITION-ONLY)
-#define CHARA_00300842          0x00300842
-#define CHARA_0030aa8c          0x0030aa8c
-#define CHARA_0030ca36          0x0030ca36
-#define CHARA_0030ca90          0x0030ca90  // NewHQC
-#define CHARA_003120ee          0x003120ee
-#define CHARA_00316839          0x00316839
-#define CHARA_00317ba4          0x00317ba4
-#define CHARA_003190fc          0x003190fc
-#define CHARA_0031b090          0x0031b090
-#define CHARA_0031f1c3          0x0031f1c3
-#define CHARA_atan              0x00325c8e  // GV_StrCode("atan") NewGclAtan
-#define CHARA_00325ee3          0x00325ee3
-#define CHARA_0032977d          0x0032977d  // (ONLINE-ONLY)
-#define CHARA_StreamStopAll     0x0032fb70  // GV_StrCode("StreamStopAll") | NewStreamStopAll
-#define CHARA_00334080          0x00334080
-#define CHARA_00336e1b          0x00336e1b
-#define CHARA_00339bf8          0x00339bf8
-#define CHARA_demo              0x0033a20f  // GV_StrCode("demo") NewPolygonDemoStart
-#define CHARA_003465ae          0x003465ae
-#define CHARA_00349f5c          0x00349f5c
-#define CHARA_0035508a          0x0035508a
-#define CHARA_00355d54          0x00355d54  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_MAP               0x0035a2cf  // GV_StrCode("マップ") | NewSetMap
-#define CHARA_00367d64          0x00367d64  // (ONLINE-ONLY)
-#define CHARA_0036b6b2          0x0036b6b2
-#define CHARA_00370e86          0x00370e86  // (SUBSISTENCE-DISC1-ONLY)
-#define CHARA_0037a451          0x0037a451  // (ONLINE-ONLY)
-#define CHARA_0037d96f          0x0037d96f
-#define CHARA_0037e71b          0x0037e71b
-#define CHARA_003874a0          0x003874a0
-#define CHARA_00395ca2          0x00395ca2
-#define CHARA_003981ee          0x003981ee
-#define CHARA_INVENTORY_SAVE    0x00398e32  // GV_StrCode("武器・アイテム所持数セーブ") | GM_COM_InventorySave
-#define CHARA_0039dd1f          0x0039dd1f
-#define CHARA_0039e451          0x0039e451
-#define CHARA_0039e4eb          0x0039e4eb
-#define CHARA_003a3347          0x003a3347  // (ONLINE-ONLY)
-#define CHARA_rand              0x003a9224  // GV_StrCode("rand") NewRand
-#define CHARA_003b184b          0x003b184b
-#define CHARA_003b9ed6          0x003b9ed6
-#define CHARA_003baee1          0x003baee1
-#define CHARA_003c1027          0x003c1027  // (ONLINE-ONLY)
-#define CHARA_003c1a5c          0x003c1a5c
-#define CHARA_003c6528          0x003c6528
-#define CHARA_003c8494          0x003c8494
-#define CHARA_003d7a83          0x003d7a83
-#define CHARA_003d7f5f          0x003d7f5f
-#define CHARA_003db09f          0x003db09f
-#define CHARA_EFFECT_BOUND_EXEC 0x003dfd0b  // GV_StrCode("エフェクトバウンド実行") | UTL_EFT_ExecCallback
-#define CHARA_003e9879          0x003e9879
-#define CHARA_INVENTORY_ADD_NUM 0x003ec885  // GV_StrCode("武器・アイテム所持数追加") | GM_COM_InventoryAddNum
-#define CHARA_003f1072          0x003f1072
-#define CHARA_003f30d7          0x003f30d7
-#define CHARA_003f3b77          0x003f3b77
-#define CHARA_003f3f97          0x003f3f97
-#define CHARA_003f47bd          0x003f47bd
-#define CHARA_003f6dc0          0x003f6dc0
-#define CHARA_003f7038          0x003f7038
-#define CHARA_004030d7          0x004030d7
-#define CHARA_00407e28          0x00407e28
-#define CHARA_004130d7          0x004130d7
-#define CHARA_00413f60          0x00413f60
-#define CHARA_SE_JIMAKU_ADD     0x004147a5  // GV_StrCode("ＳＥ字幕登録") | GM_COM_AddSeJimaku
-#define CHARA_EFFECT_BOUND_ADD  0x0042181a  // GV_StrCode("エフェクトバウンド追加") | UTL_EFT_AddBoundFromGCL
-#define CHARA_004230d7          0x004230d7
-#define CHARA_00424392          0x00424392
-#define CHARA_00425441          0x00425441
-#define CHARA_00426afb          0x00426afb
-#define CHARA_0043059f          0x0043059f  // (ONLINE-ONLY)
-#define CHARA_0043635c          0x0043635c
-#define CHARA_00437870          0x00437870
-#define CHARA_00439eb4          0x00439eb4
-#define CHARA_0043bc3e          0x0043bc3e
-#define CHARA_CAMERA_SET        0x0043f718  // GV_StrCode("カメラ設定") COM_SetCamera
-#define CHARA_00447870          0x00447870
-#define CHARA_0044fda5          0x0044fda5
-#define CHARA_00456267          0x00456267
-#define CHARA_00457870          0x00457870
-#define CHARA_0045ca8d          0x0045ca8d
-#define CHARA_0045d09d          0x0045d09d  // (ONLINE-ONLY)
-#define CHARA_00464066          0x00464066
-#define CHARA_ENEMEM_RENEW      0x0046fcd2  // GV_StrCode("敵兵メモリー更新") | ENEMEM_GclRenewMemory
-#define CHARA_00478411          0x00478411
-#define CHARA_00479c81          0x00479c81
-#define CHARA_0047c980          0x0047c980
-#define CHARA_0047e5e1          0x0047e5e1
-#define CHARA_00480a35          0x00480a35
-#define CHARA_0048ef2f          0x0048ef2f
-#define CHARA_0048f40e          0x0048f40e  // NewOnlineErrorCheck (ONLINE-ONLY)
-#define CHARA_0048fea7          0x0048fea7
-#define CHARA_004953ff          0x004953ff
-#define CHARA_004956cb          0x004956cb  // (SNAKE-EATER-ONLY)
-#define CHARA_PL_FORCE_MOTION   0x00495ef5  // GV_StrCode("プレイヤー強制モーション") | PL_COM_SetForce
-#define CHARA_00497ac3          0x00497ac3
-#define CHARA_CODEC_STATUS      0x00497be6  // GV_StrCode("無線状態") | CodecStatus
-#define CHARA_004984cf          0x004984cf  // (ONLINE-ONLY)
-#define CHARA_0049b880          0x0049b880
-#define CHARA_0049e772          0x0049e772  // (SUBSISTENCE-ONLY)
-#define CHARA_CODEC_SET         0x004a243a  // GV_StrCode("無線設定") | NewCodec
-#define CHARA_004ab3b2          0x004ab3b2
-#define CHARA_004ac6dc          0x004ac6dc
-#define CHARA_004aeee6          0x004aeee6
-#define CHARA_004b5fd9          0x004b5fd9
-#define CHARA_004bbb60          0x004bbb60
-#define CHARA_004bf65a          0x004bf65a
-#define CHARA_004c4879          0x004c4879
-#define CHARA_004caf18          0x004caf18  // (SUBSISTENCE-DISC1-ONLY)
-#define CHARA_004d2cb4          0x004d2cb4
-#define CHARA_004dca90          0x004dca90  // (SUBSISTENCE-ONLY)
-#define CHARA_004e3a78          0x004e3a78
-#define CHARA_004e61bf          0x004e61bf
-#define CHARA_004e84a4          0x004e84a4
-#define CHARA_PL_SET_ELUDE      0x004eeb4b  // GV_StrCode("プレイヤーエルード") | PL_COM_SetElude
-#define CHARA_004f8a22          0x004f8a22
-#define CHARA_004fae63          0x004fae63
-#define CHARA_00503da9          0x00503da9
-#define CHARA_00512854          0x00512854
-#define CHARA_00519afa          0x00519afa
-#define CHARA_0051b0c9          0x0051b0c9  // (SUBSISTENCE-ONLY)
-#define CHARA_SCREEN            0x0051dac1  // GV_StrCode("スクリーン") | NewScreen (TV in Graniny Gorki Lab B1)
-#define CHARA_00527980          0x00527980
-#define CHARA_005290cd          0x005290cd
-#define CHARA_CAMERA_CHECK_OFF  0x00537c0a  // GV_StrCode("カメラチェック無効") | NewCameraCheckDisable
-#define CHARA_0053973d          0x0053973d
-#define CHARA_0053bd7a          0x0053bd7a  // (ONLINE-ONLY)
-#define CHARA_0053cf3a          0x0053cf3a
-#define CHARA_CAMERA_CHECK_ON   0x0053dc0a  // GV_StrCode("カメラチェック有効") | NewCameraCheckEnable
-#define CHARA_foreach           0x00542b2d  // GV_StrCode("foreach") NewForeach
-#define CHARA_00546382          0x00546382  // (ONLINE-ONLY)
-#define CHARA_005585fa          0x005585fa
-#define CHARA_DOOR              0x0055b942  // GV_StrCode("ドア") | NewDoor
-#define CHARA_0055e068          0x0055e068
-#define CHARA_00560808          0x00560808  // (ONLINE-ONLY)
-#define CHARA_00567092          0x00567092
-#define CHARA_0056ab3a          0x0056ab3a
-#define CHARA_MAP_CONNECT       0x0056e234  // GV_StrCode("マップ接合") | NewMapConnect
-#define CHARA_0056e784          0x0056e784
-#define CHARA_MAP_SET           0x0056ef97  // GV_StrCode("マップ設定") | NewMapSet
-#define CHARA_00573139          0x00573139
-#define CHARA_00573507          0x00573507
-#define CHARA_0058191a          0x0058191a
-#define CHARA_00588da3          0x00588da3
-#define CHARA_INVENTORY_LOAD    0x00598e28  // GV_StrCode("武器・アイテム所持数ロード") | GM_COM_InventoryLoad
-#define CHARA_0059ab1e          0x0059ab1e
-#define CHARA_0059ec5a          0x0059ec5a
-#define CHARA_005a5816          0x005a5816
-#define CHARA_005a8c59          0x005a8c59
-#define CHARA_005a92a4          0x005a92a4
-#define CHARA_MAP_SHOW          0x005ae655  // GV_StrCode("マップ表示") | NewShowMap
-#define CHARA_005af36e          0x005af36e  // GM_COM_InventoryWeaponSet
-#define CHARA_varsave           0x005b316e  // GV_StrCode("varsave") NewSaveVariable
-#define CHARA_WEAPON_AMMO_NUM   0x005b364b  // GV_StrCode("武器弾数") | GM_COM_InventoryWeaponNum
-#define CHARA_005b3d4e          0x005b3d4e
-#define CHARA_005b5e45          0x005b5e45
-#define CHARA_CHAIR             0x005b7832  // GV_StrCode("椅子") | NewChair
-#define CHARA_005bb791          0x005bb791
-#define CHARA_AUTOMATIC_DOOR    0x005bc599  // GV_StrCode("自動ドア") | NewAutomaticDoor
-#define CHARA_PAD_DEMO          0x005c0bae  // GV_StrCode("パッドデモ") | NewPadDemoPlay
-#define CHARA_005c65b0          0x005c65b0
-#define CHARA_005cb38e          0x005cb38e
-#define CHARA_005d1667          0x005d1667
-#define CHARA_005d7e30          0x005d7e30
-#define CHARA_005e3345          0x005e3345
-#define CHARA_005e5a53          0x005e5a53
-#define CHARA_005e826b          0x005e826b
-#define CHARA_005f5cf7          0x005f5cf7
-#define CHARA_005f64a4          0x005f64a4
-#define CHARA_005fd3c4          0x005fd3c4
-#define CHARA_005fe46d          0x005fe46d
-#define CHARA_00605b52          0x00605b52
-#define CHARA_00609a10          0x00609a10
-#define CHARA_0060d52e          0x0060d52e  // (SNAKE-EATER-ONLY)
-#define CHARA_00614f27          0x00614f27
-#define CHARA_006184e7          0x006184e7  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_00618d6a          0x00618d6a
-#define CHARA_0061d13b          0x0061d13b
-#define CHARA_0061f0ba          0x0061f0ba
-#define CHARA_006239b1          0x006239b1
-#define CHARA_EFFECT_BOUND_INIT 0x006263f9  // GV_StrCode("エフェクトバウンド初期化") | UTL_EFT_InitBound
-#define CHARA_00626785          0x00626785
-#define CHARA_0062ff2e          0x0062ff2e  // NewGrassMng
-#define CHARA_006339b1          0x006339b1
-#define CHARA_GAME_OVER_START   0x00635875  // GV_StrCode("ゲームオーバー処理開始") | GM_GameOverStartScn
-#define CHARA_0063c1d8          0x0063c1d8
-#define CHARA_0063cf9b          0x0063cf9b
-#define CHARA_006408fc          0x006408fc
-#define CHARA_006422b0          0x006422b0
-#define CHARA_006439b1          0x006439b1
-#define CHARA_CORPSE            0x00645113  // GV_StrCode("死体君") | NewCorpGcl
-#define CHARA_00647dff          0x00647dff
-#define CHARA_COLONEL           0x0064b3f4  // GV_StrCode("大佐")
-#define CHARA_ENEMY_SOLDIER     0x006539fc  // GV_StrCode("敵兵")
-#define CHARA_00653bbf          0x00653bbf
-#define CHARA_0065b8b4          0x0065b8b4
-#define CHARA_00661b4a          0x00661b4a
-#define CHARA_00661f68          0x00661f68  // (ONLINE-ONLY)
-#define CHARA_00663da5          0x00663da5  // (SNAKE-EATER-ONLY)
-#define CHARA_0066d654          0x0066d654  // (ONLINE-ONLY)
-#define CHARA_0066e5d4          0x0066e5d4
-#define CHARA_00678c46          0x00678c46
-#define CHARA_00679afb          0x00679afb  // (ONLINE-ONLY)
-#define CHARA_0067a960          0x0067a960
-#define CHARA_BEE_WALL          0x00684209  // GV_StrCode("蜂壁") | NewBeeWall
-#define CHARA_00684bfa          0x00684bfa
-#define CHARA_GAME_OVER_END     0x006856c1  // GV_StrCode("ゲームオーバー処理終了") | GM_GameOverEndScn
-#define CHARA_00686853          0x00686853  // NewSCBoundTrapChara (SUBSISTENCE-ONLY)
-#define CHARA_00686b4d          0x00686b4d
-#define CHARA_PAD_VIBRATION     0x0068cb9c  // GV_StrCode("パッド振動") | NewPadVibrationScn
-#define CHARA_00690245          0x00690245
-#define CHARA_CINEMA_SCREEN     0x00690610  // GV_StrCode("シネマスクリーン") | NewCinemaScreen
-#define CHARA_0069b87e          0x0069b87e  // COM_PutStageModel_MeshControl
-#define CHARA_0069eb6c          0x0069eb6c
-#define CHARA_006a3940          0x006a3940
-#define CHARA_PAD_OPERATION     0x006a725a  // GV_StrCode("パッド操作") | NewPadControl
-#define CHARA_006aa0dc          0x006aa0dc
-#define CHARA_assert            0x006b237d  // GV_StrCode("assert") NewGclAssert
-#define CHARA_006b25fd          0x006b25fd
-#define CHARA_006bc9a5          0x006bc9a5
-#define CHARA_006bdb60          0x006bdb60
-#define CHARA_006c109d          0x006c109d
-#define CHARA_006cb041          0x006cb041
-#define CHARA_006e520e          0x006e520e
-#define CHARA_006e6102          0x006e6102
-#define CHARA_006e989d          0x006e989d
-#define CHARA_006e989e          0x006e989e
-#define CHARA_006e9c2c          0x006e9c2c  // (ONLINE-ONLY)
-#define CHARA_006ea2a8          0x006ea2a8
-#define CHARA_006f7d4d          0x006f7d4d  // NewGameInit
-#define CHARA_006f8307          0x006f8307
-#define CHARA_00706450          0x00706450
-#define CHARA_00708c6b          0x00708c6b
-#define CHARA_0070b8e6          0x0070b8e6
-#define CHARA_0070d322          0x0070d322
-#define CHARA_0070f3aa          0x0070f3aa
-#define CHARA_INVENTORY_NAMES   0x007128d0  // GV_StrCode("武器・アイテム名称設定") | GM_COM_InventorySetNames
-#define CHARA_00712f17          0x00712f17
-#define CHARA_0071e7d6          0x0071e7d6  // NewSystemLightSet
-#define CHARA_0072007f          0x0072007f
-#define CHARA_00723f41          0x00723f41
-#define CHARA_007267b7          0x007267b7
-#define CHARA_0072705f          0x0072705f
-#define CHARA_00729f2d          0x00729f2d
-#define CHARA_PUT_MOTION_MODEL  0x0072f23c  // GV_StrCode("プットモーションモデル")
-#define CHARA_00735ef7          0x00735ef7
-#define CHARA_delay             0x00743c9f  // GV_StrCode("delay") NewDelay
-#define CHARA_0074cb83          0x0074cb83  // NewDefeatedCameraGCL (ONLINE-ONLY)
-#define CHARA_0074e86b          0x0074e86b  // NewGclLangUpdate
-#define CHARA_007546ba          0x007546ba
-#define CHARA_007555e2          0x007555e2
-#define CHARA_007576da          0x007576da
-#define CHARA_00757d0a          0x00757d0a
-#define CHARA_0075fed4          0x0075fed4
-#define CHARA_007632dc          0x007632dc
-#define CHARA_00767f58          0x00767f58
-#define CHARA_0076d431          0x0076d431
-#define CHARA_0077318d          0x0077318d  // (TRIAL-EDITION-ONLY)
-#define CHARA_00773af5          0x00773af5
-#define CHARA_0077ab68          0x0077ab68
-#define CHARA_0077c520          0x0077c520
-#define CHARA_00783abd          0x00783abd
-#define CHARA_00789c04          0x00789c04
-#define CHARA_00790b97          0x00790b97
-#define CHARA_00795ac9          0x00795ac9
-#define CHARA_0079705d          0x0079705d
-#define CHARA_0079912b          0x0079912b
-#define CHARA_CODEC_MEMORY      0x007a0761  // GV_StrCode("無線メモリー") | NewCodecMemory
-#define CHARA_007a5d76          0x007a5d76
-#define CHARA_007a8432          0x007a8432
-#define CHARA_007a86b8          0x007a86b8
-#define CHARA_Stream            0x007aa13a  // GV_StrCode("Stream") | NewStreamSet
-#define CHARA_007aee60          0x007aee60
-#define CHARA_007b2a7c          0x007b2a7c
-#define CHARA_CAMO_SET          0x007b4944  // GV_StrCode("カモフラ設定")
-#define CHARA_007bc389          0x007bc389
-#define CHARA_GENERIC_ANIMAL    0x007c4d11  // GV_StrCode("汎用動物")
-#define CHARA_007c6960          0x007c6960
-#define CHARA_SUBSCREEN         0x007cbbcf  // GV_StrCode("子画面")
-#define CHARA_007d55de          0x007d55de
-#define CHARA_007d7aec          0x007d7aec
-#define CHARA_007e2caf          0x007e2caf
-#define CHARA_007e5115          0x007e5115
-#define CHARA_007e641f          0x007e641f  // NewPutStageModelSet
-#define CHARA_007e750c          0x007e750c
-#define CHARA_007eedb2          0x007eedb2
-#define CHARA_CAMERA_VIEW_CHECK 0x007f3c88  // GV_StrCode("カメラ視界チェック") | NewViewCheckCommand
-#define CHARA_007f52a2          0x007f52a2
-#define CHARA_007f6650          0x007f6650  // (SUBSISTENCE-ONLY)
-#define CHARA_007ff1b0          0x007ff1b0
-#define CHARA_SYSTEM_CALLBACK   0x0080b977  // GV_StrCode("システムコールバック") | NewSystemCallback
-#define CHARA_008175a4          0x008175a4
-#define CHARA_SILVER_DISP       0x0081f1ef  // GV_StrCode("SILVER_DISP") | NewSilverDisp
-#define CHARA_0081fb77          0x0081fb77
-#define CHARA_00824a42          0x00824a42
-#define CHARA_00829346          0x00829346
-#define CHARA_store_loadedvar   0x0082a05e  // GV_StrCode("store_loadedvar") | ComStoreLoadedVariable
-#define CHARA_0082b327          0x0082b327  // (ONLINE-ONLY)
-#define CHARA_VecLen            0x0082bdc0  // GV_StrCode("VecLen") | NewGclVecLen
-#define CHARA_reboot            0x0082cb3e  // GV_StrCode("reboot") | NewGclReboot
-#define CHARA_0083102f          0x0083102f
-#define CHARA_00831ee1          0x00831ee1  // (ONLINE-ONLY)
-#define CHARA_00843fea          0x00843fea
-#define CHARA_0084594d          0x0084594d
-#define CHARA_PL_LIFE_ADD       0x00849ba0  // GV_StrCode("プレイヤーライフ加算") | PL_COM_LifeAdd
-#define CHARA_0084aa82          0x0084aa82
-#define CHARA_0085b70d          0x0085b70d
-#define CHARA_008673c6          0x008673c6
-#define CHARA_0086c63a          0x0086c63a  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_ENEMY_MEMORY_COPY 0x0086d1cf  // GV_StrCode("敵兵メモリーコピー") | ENEMEM_GclCopy
-#define CHARA_00870aac          0x00870aac
-#define CHARA_select            0x0087a1c0  // GV_StrCode("select") NewSelect
-#define CHARA_0088117d          0x0088117d  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_008855a7          0x008855a7
-#define CHARA_ENEMEM_ALL_RESET  0x0088f9b0  // GV_StrCode("敵兵メモリーオールリセット") | ENEMEM_GclAllReset
-#define CHARA_00890539          0x00890539
-#define CHARA_008961cd          0x008961cd
-#define CHARA_008961eb          0x008961eb
-#define CHARA_repeat            0x0089a17e  // GV_StrCode("repeat") NewRepeat
-#define CHARA_0089ab22          0x0089ab22  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_0089c7aa          0x0089c7aa
-#define CHARA_0089ed67          0x0089ed67  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_008a02c7          0x008a02c7
-#define CHARA_FEAR              0x008a7b70  // GV_StrCode("フィアー") | NewFear
-#define CHARA_008a7b7a          0x008a7b7a
-#define CHARA_LOCKER            0x008aa572  // GV_StrCode("ロッカー") | NewLocker
-#define CHARA_008b0ce2          0x008b0ce2
-#define CHARA_PL_SET_INVINCIBLE 0x008b19f0  // GV_StrCode("プレイヤー無敵セット") | NewPlayerSetInvincible
-#define CHARA_008b1e74          0x008b1e74
-#define CHARA_008b3466          0x008b3466
-#define CHARA_008b4322          0x008b4322
-#define CHARA_008b5ace          0x008b5ace
-#define CHARA_008b6086          0x008b6086  // GM_COM_PadCheck
-#define CHARA_008b94e9          0x008b94e9  // (ONLINE-ONLY)
-#define CHARA_LOCKER_STATUS     0x008b976d  // GV_StrCode("ロッカー状態") | NewLockerStatus
-#define CHARA_SOKOLOV           0x008ba20a  // GV_StrCode("ソコロフ") | NewSokolov
-#define CHARA_008c301c          0x008c301c  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_008d06cc          0x008d06cc
-#define CHARA_008d4ec1          0x008d4ec1
-#define CHARA_008d5639          0x008d5639
-#define CHARA_008d92ed          0x008d92ed
-#define CHARA_008dc8ae          0x008dc8ae
-#define CHARA_DEMO_PAD_CANCEL   0x008e298d  // GV_StrCode("デモキャンセルチェック") | NewPadCancel
-#define CHARA_008e7500          0x008e7500  // (ONLINE-ONLY)
-#define CHARA_008f8e19          0x008f8e19
-#define CHARA_008fdada          0x008fdada
-#define CHARA_009027e9          0x009027e9
-#define CHARA_FURY              0x00909f7f  // GV_StrCode("フューリー") | NewFury
-#define CHARA_0091818c          0x0091818c  // NewBGColorSet
-#define CHARA_009197cf          0x009197cf
-#define CHARA_00919ade          0x00919ade  // (SUBSISTENCE-DISC1-ONLY)
-#define CHARA_0092034e          0x0092034e
-#define CHARA_00921c90          0x00921c90  // (ONLINE-ONLY)
-#define CHARA_PRODUCT_CODE_SET  0x0092a625  // GV_StrCode("プロダクトコード設定") | ComSetProductCode
-#define CHARA_getconfig         0x0092eb54  // GV_StrCode("getconfig") | NewGetConfig
-#define CHARA_00934cb2          0x00934cb2
-#define CHARA_009351d9          0x009351d9
-#define CHARA_00936419          0x00936419
-#define CHARA_00939b07          0x00939b07  // (SNAKE-EATER-ONLY)
-#define CHARA_0093aab1          0x0093aab1
-#define CHARA_SPECIAL_MODE      0x0093e44a  // GV_StrCode("スペシャルモード") | NewSpecialMode
-#define CHARA_DOOR_LOCK         0x0093f33d  // GV_StrCode("ドアロック") | COM_DoorLock
-#define CHARA_MENU_SET          0x00944e11  // GV_StrCode("メニュー設定") | NewSetMenuStatus
-#define CHARA_009474ff          0x009474ff
-#define CHARA_0095bc75          0x0095bc75  // (SUBSISTENCE-ONLY)
-#define CHARA_0095c0ca          0x0095c0ca
-#define CHARA_00962fbc          0x00962fbc
-#define CHARA_009634b1          0x009634b1
-#define CHARA_009634f6          0x009634f6  // (ONLINE-ONLY)
-#define CHARA_0096dfdc          0x0096dfdc
-#define CHARA_0097451b          0x0097451b
-#define CHARA_SNOW_SHOW         0x00978db6  // GV_StrCode("雪表示") | NewSnowDisplay
-#define CHARA_0097a3cf          0x0097a3cf
-#define CHARA_00985c58          0x00985c58
-#define CHARA_0098b109          0x0098b109
-#define CHARA_0099f754          0x0099f754
-#define CHARA_EFFECT_INIT       0x009a0d0a  // GV_StrCode("エフェクト初期化") UTL_EFT_Initialize
-#define CHARA_009a1040          0x009a1040
-#define CHARA_009af657          0x009af657
-#define CHARA_009b8923          0x009b8923  // (ONLINE-ONLY)
-#define CHARA_009bc19a          0x009bc19a
-#define CHARA_009bc48f          0x009bc48f
-#define CHARA_009bc4ad          0x009bc4ad
-#define CHARA_009ce52c          0x009ce52c
-#define CHARA_009d0339          0x009d0339
-#define CHARA_009d7b8e          0x009d7b8e
-#define CHARA_009d9093          0x009d9093
-#define CHARA_009dc687          0x009dc687
-#define CHARA_009e8ba6          0x009e8ba6
-#define CHARA_009e9407          0x009e9407  // (ONLINE-ONLY)
-#define CHARA_009f406f          0x009f406f
-#define CHARA_009f4866          0x009f4866
-#define CHARA_009f4aa0          0x009f4aa0
-#define CHARA_009ff2c6          0x009ff2c6
-#define CHARA_009ff6eb          0x009ff6eb
-#define CHARA_00a066ac          0x00a066ac
-#define CHARA_PL_STATUS_OR      0x00a0b247  // GV_StrCode("プレイヤーステータスＯＲ") | PL_COM_GetPlayerStatusOr
-#define CHARA_00a11fd7          0x00a11fd7
-#define CHARA_00a1a4fb          0x00a1a4fb
-#define CHARA_00a1f82d          0x00a1f82d
-#define CHARA_00a202d2          0x00a202d2
-#define CHARA_00a2125d          0x00a2125d
-#define CHARA_00a21d45          0x00a21d45
-#define CHARA_00a314f7          0x00a314f7
-#define CHARA_00a314f8          0x00a314f8
-#define CHARA_SLIT_LIGHT        0x00a366ff  // GV_StrCode("スリットライト") | NewSlitLight
-#define CHARA_00a3bf7b          0x00a3bf7b
-#define CHARA_00a3c689          0x00a3c689
-#define CHARA_00a42bee          0x00a42bee
-#define CHARA_00a47661          0x00a47661
-#define CHARA_00a4a2c3          0x00a4a2c3
-#define CHARA_BULLET_MARK       0x00a56fcf  // GV_StrCode("弾痕エフェクト") | NewBulletMark
-#define CHARA_while             0x00a5b1ec  // GV_StrCode("while") | NewGclWhile
-#define CHARA_00a63bd9          0x00a63bd9  // (ONLINE-ONLY)
-#define CHARA_00a6b60b          0x00a6b60b  // (ONLINE-ONLY)
-#define CHARA_00a72bc6          0x00a72bc6
-#define CHARA_00a7593d          0x00a7593d
-#define CHARA_00a7f286          0x00a7f286  // (ONLINE-ONLY)
-#define CHARA_00a833fe          0x00a833fe
-#define CHARA_00a85df0          0x00a85df0
-#define CHARA_00a8e328          0x00a8e328  // (ONLINE-ONLY)
-#define CHARA_00a8e8ac          0x00a8e8ac  // (ONLINE-ONLY)
-#define CHARA_CAMERA_CHECK      0x00a900fe  // GV_StrCode("カメラチェック") | NewCameraCheck
-#define CHARA_00a934ea          0x00a934ea
-#define CHARA_TWIN_DOOR         0x00a97d6f  // GV_StrCode("両開きドア") | NewMzTwindoor (Ponizovje warehouse's exterior doors)
-#define CHARA_00a99275          0x00a99275
-#define CHARA_00a9b595          0x00a9b595  // (TRIAL-EDITION-ONLY)
-#define CHARA_00aacac8          0x00aacac8
-#define CHARA_00aaf706          0x00aaf706
-#define CHARA_00ab3f7c          0x00ab3f7c
-#define CHARA_00ab55dc          0x00ab55dc  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_RESIDENT_RES_SET  0x00ab5a2a  // GV_StrCode("常駐リソース設定") | NewResidentResourceSet
-#define CHARA_00ab73fd          0x00ab73fd  // (ONLINE-ONLY)
-#define CHARA_00ab8ce6          0x00ab8ce6
-#define CHARA_00abab99          0x00abab99
-#define CHARA_00abd4e4          0x00abd4e4
-#define CHARA_RANDOM_INIT       0x00ac4ee8  // GV_StrCode("ランダム初期化")
-#define CHARA_00ac684a          0x00ac684a
-#define CHARA_00ac82f9          0x00ac82f9
-#define CHARA_00acc699          0x00acc699  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_00ad6f9c          0x00ad6f9c
-#define CHARA_00adc02a          0x00adc02a
-#define CHARA_00af1f08          0x00af1f08
-#define CHARA_00af33b6          0x00af33b6  // (ONLINE-ONLY)
-#define CHARA_00af44a8          0x00af44a8
-#define CHARA_00b00c01          0x00b00c01
-#define CHARA_00b101ec          0x00b101ec
-#define CHARA_00b121a2          0x00b121a2  // (ONLINE-ONLY)
-#define CHARA_00b13b94          0x00b13b94  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_00b19a58          0x00b19a58
-#define CHARA_00b2f7ee          0x00b2f7ee
-#define CHARA_00b38a65          0x00b38a65  // (ONLINE-ONLY)
-#define CHARA_00b3a94e          0x00b3a94e
-#define CHARA_00b3ba87          0x00b3ba87
-#define CHARA_00b3f1b7          0x00b3f1b7
-#define CHARA_00b4a39d          0x00b4a39d
-#define CHARA_00b4d338          0x00b4d338
-#define CHARA_00b57eca          0x00b57eca
-#define CHARA_00b58481          0x00b58481
-#define CHARA_00b61cc0          0x00b61cc0
-#define CHARA_00b687e8          0x00b687e8
-#define CHARA_00b6e94e          0x00b6e94e
-#define CHARA_00b712e6          0x00b712e6
-#define CHARA_00b74a98          0x00b74a98
-#define CHARA_00b7f7d1          0x00b7f7d1
-#define CHARA_00b916d4          0x00b916d4
-#define CHARA_00b91a2d          0x00b91a2d
-#define CHARA_00b96482          0x00b96482
-#define CHARA_ENEMEM_RESET      0x00b97d41  // GV_StrCode("敵兵メモリーリセット") | ENEMEM_GclReset
-#define CHARA_00b9cd73          0x00b9cd73  // (ONLINE-ONLY)
-#define CHARA_00b9da1d          0x00b9da1d
-#define CHARA_00b9e1f4          0x00b9e1f4
-#define CHARA_00b9f944          0x00b9f944  // (SNAKE-EATER-ONLY)
-#define CHARA_MAP_SYSTEM        0x00ba3a38  // GV_StrCode("マップシステム") | NewMapSystem
-#define CHARA_00bae1be          0x00bae1be
-#define CHARA_00baf651          0x00baf651
-#define CHARA_00bce74e          0x00bce74e  // (ONLINE-ONLY)
-#define CHARA_00bcf6ff          0x00bcf6ff
-#define CHARA_SHADOW_MANAGER    0x00bd400b  // GV_StrCode("影管理") | NewShadowControl
-#define CHARA_00bd8d95          0x00bd8d95
-#define CHARA_00beb908          0x00beb908
-#define CHARA_00bf0504          0x00bf0504
-#define CHARA_00bf051f          0x00bf051f  // (SUBSISTENCE-ONLY)
-#define CHARA_00bf76c9          0x00bf76c9  // (ONLINE-ONLY)
-#define CHARA_00c075b9          0x00c075b9
-#define CHARA_00c08865          0x00c08865  // (ONLINE-ONLY)
-#define CHARA_00c090b1          0x00c090b1
-#define CHARA_00c19aa4          0x00c19aa4
-#define CHARA_00c1f2f3          0x00c1f2f3
-#define CHARA_00c2d9fe          0x00c2d9fe  // (TRIAL-EDITION-ONLY)
-#define CHARA_00c392d3          0x00c392d3
-#define CHARA_DOOR_UNLOCK       0x00c3ec86  // GV_StrCode("ドアアンロック") | COM_DoorUnlock
-#define CHARA_00c3f409          0x00c3f409
-#define CHARA_ENEMY_STATUS_GET  0x00c44d8b  // GV_StrCode("敵兵状態取得") | COM_GetEnemyStatus
-#define CHARA_00c455c8          0x00c455c8
-#define CHARA_INV_SLOT_CLEAR    0x00c5162b  // GV_StrCode("武器・アイテムスロットクリア") | GM_COM_InventorySlotClear
-#define CHARA_00c51848          0x00c51848
-#define CHARA_00c53ae7          0x00c53ae7
-#define CHARA_00c53b05          0x00c53b05
-#define CHARA_00c65d9f          0x00c65d9f
-#define CHARA_00c6fdfc          0x00c6fdfc
-#define CHARA_00c70c04          0x00c70c04
-#define CHARA_00c710c6          0x00c710c6
-#define CHARA_ARRAY_SET         0x00c74f97  // GV_StrCode("配列セット") NewArraySet
-#define CHARA_00c78563          0x00c78563
-#define CHARA_00c7f9ca          0x00c7f9ca
-#define CHARA_00c851b0          0x00c851b0
-#define CHARA_00c885a5          0x00c885a5
-#define CHARA_SLIT_LIGHT_FADE   0x00c88764  // GV_StrCode("スリットライトフェード") | NewSlitLightFade
-#define CHARA_00c8e303          0x00c8e303  // (ONLINE-ONLY)
-#define CHARA_FADE_IO           0x00c8e3fd  // GV_StrCode("フェード") | NewFadeInOutScn
-#define CHARA_00c8e80a          0x00c8e80a  // (ONLINE-ONLY)
-#define CHARA_00c8fb44          0x00c8fb44
-#define CHARA_00c9af4c          0x00c9af4c
-#define CHARA_00c9bbe9          0x00c9bbe9
-#define CHARA_00ca337e          0x00ca337e
-#define CHARA_00ca3e5b          0x00ca3e5b
-#define CHARA_00ca91c4          0x00ca91c4
-#define CHARA_00cafda9          0x00cafda9
-#define CHARA_JOHNNY            0x00cb1834  // GV_StrCode("ジョニー") | NewJohnny
-#define CHARA_00cb3fd9          0x00cb3fd9
-#define CHARA_00cbfca6          0x00cbfca6
-#define CHARA_00cc2e24          0x00cc2e24
-#define CHARA_00cc5a5a          0x00cc5a5a
-#define CHARA_00cc9a2b          0x00cc9a2b
-#define CHARA_00ccbefe          0x00ccbefe  // (ONLINE-ONLY)
-#define CHARA_00ccd7f9          0x00ccd7f9
-#define CHARA_00cd646f          0x00cd646f  // GM_InventoryDaemonStart
-#define CHARA_00cda34c          0x00cda34c
-#define CHARA_00cda34e          0x00cda34e
-#define CHARA_RAIL_BRIDGE_BOMB  0x00cdd822  // GV_StrCode("鉄橋爆破") | NewRailBridgeDemolition
-#define CHARA_00cde39f          0x00cde39f
-#define CHARA_00ce2d79          0x00ce2d79
-#define CHARA_00cf9028          0x00cf9028
-#define CHARA_00d00676          0x00d00676
-#define CHARA_00d05ba0          0x00d05ba0
-#define CHARA_00d0cf49          0x00d0cf49
-#define CHARA_00d0f729          0x00d0f729
-#define CHARA_00d0fb6d          0x00d0fb6d
-#define CHARA_OPTION_MODE_SET   0x00d110ce  // GV_StrCode("オプションモード設定") | COM_SetOptionMode
-#define CHARA_00d17a99          0x00d17a99
-#define CHARA_00d19e27          0x00d19e27
-#define CHARA_00d25d5a          0x00d25d5a
-#define CHARA_00d29bb4          0x00d29bb4
-#define CHARA_WIND_CONTROL      0x00d2bd87  // GV_StrCode("風制御") | NewWindManager
-#define CHARA_StreamStop        0x00d30863  // GV_StrCode("StreamStop") | NewStreamStop
-#define CHARA_00d4381c          0x00d4381c
-#define CHARA_00d45cf1          0x00d45cf1
-#define CHARA_00d46f76          0x00d46f76
-#define CHARA_00d4b51a          0x00d4b51a
-#define CHARA_00d4d8a5          0x00d4d8a5  // (ONLINE-ONLY)
-#define CHARA_00d4ea76          0x00d4ea76  // NewHeadUpDisplay (ONLINE-ONLY)
-#define CHARA_00d517fe          0x00d517fe
-#define CHARA_CAM_R_STICK_SET   0x00d5545b  // GV_StrCode("右スティックカメラ設定") | COM_SetCameraRightStick
-#define CHARA_00d5cb81          0x00d5cb81
-#define CHARA_00d61bf6          0x00d61bf6
-#define CHARA_00d65266          0x00d65266
-#define CHARA_00d6fd05          0x00d6fd05
-#define CHARA_00d73a9c          0x00d73a9c
-#define CHARA_OPTION_MODE       0x00d7b646  // GV_StrCode("オプションモード") | COM_OptionMode
-#define CHARA_00d8361e          0x00d8361e
-#define CHARA_00d8714a          0x00d8714a
-#define CHARA_00d8cb74          0x00d8cb74
-#define CHARA_00d8d32f          0x00d8d32f
-#define CHARA_00d8fd67          0x00d8fd67
-#define CHARA_00d9046e          0x00d9046e
-#define CHARA_00d98b39          0x00d98b39
-#define CHARA_00d9b7de          0x00d9b7de
-#define CHARA_00da2917          0x00da2917
-#define CHARA_00da9244          0x00da9244
-#define CHARA_TRAP_SWITCH       0x00da97fb  // GV_StrCode("トラップ切り替え") GM_COM_TrapSwitchCommand
-#define CHARA_00daad6b          0x00daad6b  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_00dac400          0x00dac400
-#define CHARA_00daed21          0x00daed21
-#define CHARA_00daf423          0x00daf423
-#define CHARA_00db4ee7          0x00db4ee7  // (ONLINE-ONLY)
-#define CHARA_00dbb521          0x00dbb521
-#define CHARA_00dc2db5          0x00dc2db5  // (ONLINE-ONLY)
-#define CHARA_LOAD_SOUND_PACK   0x00dc83c5  // GV_StrCode("ロードサウンドパック") | GM_LoadPack
-#define CHARA_00dd173e          0x00dd173e
-#define CHARA_00dd5eb6          0x00dd5eb6  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_00dd5eb7          0x00dd5eb7  // (PERSISTENCE-DISC2-ONLY)
-#define CHARA_00dde914          0x00dde914  // NewFogSet
-#define CHARA_FONT_INIT         0x00de07c0  // GV_StrCode("フォント初期化") | NewFontInit
-#define CHARA_00de2c60          0x00de2c60
-#define CHARA_00de545a          0x00de545a
-#define CHARA_00deb2a3          0x00deb2a3
-#define CHARA_00dec9e1          0x00dec9e1
-#define CHARA_00decc26          0x00decc26
-#define CHARA_00dee2e0          0x00dee2e0
-#define CHARA_00df1d9c          0x00df1d9c
-#define CHARA_ITEMBOX           0x00df4cae  // GV_StrCode("アイテムボックス") | NewItemBox
-#define CHARA_00e002ea          0x00e002ea
-#define CHARA_00e08648          0x00e08648
-#define CHARA_SPRITE_2D_SHOW    0x00e0dbba  // GV_StrCode("２Ｄスプライト表示") | New2DSprite
-#define CHARA_00e0f9c7          0x00e0f9c7
-#define CHARA_00e22b51          0x00e22b51
-#define CHARA_00e2808c          0x00e2808c
-#define CHARA_SCN_DEMO_START    0x00e29adb  // GV_StrCode("シナリオデモ開始") | NewStartScenarioDemo
-#define CHARA_00e387af          0x00e387af
-#define CHARA_00e44f0c          0x00e44f0c
-#define CHARA_VecResize         0x00e4750f  // GV_StrCode("VecResize") | NewGclResizeVector
-#define CHARA_00e4b84a          0x00e4b84a  // (ONLINE-ONLY)
-#define CHARA_00e5619d          0x00e5619d
-#define CHARA_00e5dfd7          0x00e5dfd7
-#define CHARA_00e5fd50          0x00e5fd50
-#define CHARA_00e764b2          0x00e764b2
-#define CHARA_00e76d74          0x00e76d74  // NewGclVariableMove
-#define CHARA_00e78c6d          0x00e78c6d
-#define CHARA_00e7939b          0x00e7939b
-#define CHARA_SCN_DEMO_END      0x00e79927  // GV_StrCode("シナリオデモ終了") | NewEndScenarioDemo
-#define CHARA_00e7a1d7          0x00e7a1d7  // (SUBSISTENCE-ONLY)
-#define CHARA_00e81436          0x00e81436
-#define CHARA_00e82679          0x00e82679
-#define CHARA_00e84f76          0x00e84f76
-#define CHARA_PL_STATUS_AND     0x00e923a5  // GV_StrCode("プレイヤーステータスＡＮＤ") | PL_COM_GetPlayerStatusAnd
-#define CHARA_00e93330          0x00e93330
-#define CHARA_CODEC_SYSTEM      0x00e96d82  // GV_StrCode("無線システム") | NewCodecDaemon
-#define CHARA_00e99d79          0x00e99d79  // (SUBSISTENCE-ONLY)
-#define CHARA_00e9cacf          0x00e9cacf  // (ONLINE-ONLY)
-#define CHARA_00e9fd79          0x00e9fd79  // (SUBSISTENCE-ONLY)
-#define CHARA_00ea1854          0x00ea1854
-#define CHARA_00eacdac          0x00eacdac
-#define CHARA_00eaf7bb          0x00eaf7bb  // (ONLINE-ONLY)
-#define CHARA_00eb0f77          0x00eb0f77
-#define CHARA_00eb2429          0x00eb2429
-#define CHARA_00eb660a          0x00eb660a  // (SNAKE-EATER-ONLY)
-#define CHARA_00eb72e4          0x00eb72e4
-#define CHARA_00eb837a          0x00eb837a
-#define CHARA_BLUR_EFFECT       0x00eb98e0  // GV_StrCode("ブラーエフェクト") | NewBlur
-#define CHARA_00ec3235          0x00ec3235
-#define CHARA_00ec341f          0x00ec341f
-#define CHARA_00ec94ca          0x00ec94ca
-#define CHARA_00ed0fa0          0x00ed0fa0
-#define CHARA_00ed1c87          0x00ed1c87
-#define CHARA_00edbf7a          0x00edbf7a
-#define CHARA_00edd516          0x00edd516
-#define CHARA_00edda6d          0x00edda6d
-#define CHARA_00ee47ad          0x00ee47ad  // (SUBSISTENCE-ONLY)
-#define CHARA_00ef16a0          0x00ef16a0
-#define CHARA_00ef8aaf          0x00ef8aaf
-#define CHARA_00f02397          0x00f02397  // (SUBSISTENCE-ONLY)
-#define CHARA_00f10849          0x00f10849
-#define CHARA_00f1745e          0x00f1745e  // (EXISTENCE-DISC3-ONLY)
-#define CHARA_00f19dce          0x00f19dce
-#define CHARA_load_restart      0x00f2dfcd  // GV_StrCode("load_restart") | NewLoadRestart
-#define CHARA_00f32f4e          0x00f32f4e
-#define CHARA_00f3658f          0x00f3658f  // (ONLINE-ONLY)
-#define CHARA_00f4cdf7          0x00f4cdf7  // (SUBSISTENCE-ONLY)
-#define CHARA_PAIN              0x00f526ea  // GV_StrCode("ペイン") | NewPain
-#define CHARA_PL_STAM_ADD       0x00f53bd3  // GV_StrCode("プレイヤースタミナ加算") | PL_COM_StaminaAdd
-#define CHARA_00f552a3          0x00f552a3
-#define CHARA_00f5ade7          0x00f5ade7
-#define CHARA_00f63a97          0x00f63a97
-#define CHARA_00f66375          0x00f66375
-#define CHARA_00f69343          0x00f69343  // (ONLINE-ONLY)
-#define CHARA_00f6a218          0x00f6a218
-#define CHARA_MAIN_MENU         0x00f6ef99  // GV_StrCode("メインメニュー") | NewMainMenuScn
-#define CHARA_00f74d93          0x00f74d93  // (ONLINE-ONLY)
-#define CHARA_00f75d58          0x00f75d58  // (ONLINE-ONLY)
-#define CHARA_00f7a440          0x00f7a440
-#define CHARA_PL_STAM_SUB       0x00f817d3  // GV_StrCode("プレイヤースタミナ減算") | PL_COM_StaminaDec
-#define CHARA_00f8675e          0x00f8675e
-#define CHARA_00f88982          0x00f88982
-#define CHARA_00f8e4bc          0x00f8e4bc
-#define CHARA_00f8fbb2          0x00f8fbb2
-#define CHARA_00faa832          0x00faa832  // (ONLINE-ONLY)
-#define CHARA_00fac9cf          0x00fac9cf
-#define CHARA_STAGE_WEATHER_SET 0x00fafbcd  // GV_StrCode("ステージ環境天候変更") | GM_COM_SetEnvStage_SetWeather
-#define CHARA_00fb50d6          0x00fb50d6
-#define CHARA_00fb8044          0x00fb8044
-#define CHARA_00fbbdba          0x00fbbdba
-#define CHARA_GAME_OVER_CHECK   0x00fbeb7f  // GV_StrCode("ゲームオーバーチェック") | GM_COM_IsGameOver
-#define CHARA_00fc9315          0x00fc9315
-#define CHARA_00fca54f          0x00fca54f  // (ONLINE-ONLY)
-#define CHARA_ITEM_NUM          0x00fd6b3f  // GV_StrCode("アイテム数") | GM_COM_InventoryItemNum
-#define CHARA_00fd6c92          0x00fd6c92
-#define CHARA_00fddbab          0x00fddbab
-#define CHARA_sound_test        0x00fe6730  // GV_StrCode("sound_test") | NewSoundTest
-#define CHARA_00fe950a          0x00fe950a
-#define CHARA_00ff40ce          0x00ff40ce
-#define CHARA_00ff46e5          0x00ff46e5
-#define CHARA_00ff7af1          0x00ff7af1  // (ONLINE-ONLY)
-#define CHARA_00ff8e39          0x00ff8e39
-#define CHARA_00ffbe20          0x00ffbe20
-#define CHARA_MOVIE_PLAY        0x00ffbece  // GV_StrCode("MOVIE再生") | NewMpegPssMovieStr
-#define CHARA_00ffecfd          0x00ffecfd
+//  +---------------> METAL GEAR SOLID 3: TRIAL VERSION
+//  | +-------------> METAL GEAR SOLID 3: SNAKE EATER
+//  | | +-----------> METAL GEAR SOLID 3: SUBSISTENCE
+//  | | |  +-----------> DISC 1: SUBSISTENCE
+//  | | |  | +---------> DISC 2: PERSISTENCE
+//  | | |  | | +-------> DISC 3: EXISTENCE
+//  | | |  | | | +-----> METAL GEAR ONLINE
+//  v v v  v v v v
+/*------------------*/
+/*  - O O (1 2 - N) */  0x00001846  // GV_StrCode("紙") NewPaper
+/*  - O O (1 - - N) */  0x000018e3  // GV_StrCode("雪") NewSnow
+/*  O O O (1 - - -) */  0x00001933  // GV_StrCode("蝶") NewButterfly
+/*  - O O (1 2 - N) */  0x00003d59
+/*  - O O (1 - - -) */  0x000063ab
+/*  - O O (1 2 - -) */  0x00009c13
+/*  - O O (1 2 - -) */  0x00019a53  // GV_StrCode("cos") NewGclCos
+/*  - O O (1 2 - -) */  0x0001d98e  // GV_StrCode("sin") NewGclSin
+/*  - O O (1 - - -) */  0x0002a797
+/*  - O O (1 - - -) */  0x0002c078
+/*  - - O (- - - N) */  0x0002e075
+/*  - O O (1 - - -) */  0x00030464  // GV_StrCode("メインメニュー設定")
+/*  - O O (1 - - -) */  0x00036a1d
+/*  - O O (1 - - -) */  0x000406a2
+/*  - - O (- 2 3 -) */  0x0004b093
+/*  - - O (1 2 - N) */  0x0004effa
+/*  O O O (1 2 3 N) */  0x00053da0  // NewGclVarClear
+/*  - O O (1 - - -) */  0x0005e0ab
+/*  O O O (1 2 - N) */  0x00061ade  // GV_StrCode("カメラ") NewCamera
+/*  - O O (1 - - -) */  0x00069104  // GV_StrCode("敵兵メモリー読み取り") ENEMEM_GclGet
+/*  - O O (1 2 - N) */  0x0006b8cb
+/*  - O O (1 2 - -) */  0x0006bdf6  // GV_StrCode("マーコール") NewMarkhor
+/*  - O O (1 2 - -) */  0x0006ee2c
+/*  - O O (1 - - -) */  0x0006fb39
+/*  - O O (1 2 - -) */  0x00070a7d
+/*  O O O (1 2 - N) */  0x0007cda7
+/*  O O O (1 - - -) */  0x00087298
+/*  O O O (1 2 - N) */  0x0008ed2e
+/*  - O O (1 2 - -) */  0x00094a4c
+/*  - - O (- - - N) */  0x0009a1a8
+/*  - O O (1 - - -) */  0x0009c882
+/*  O O O (1 2 - -) */  0x000a06c7
+/*  - O O (1 2 - -) */  0x000a3e0b  // GV_StrCode("ドア状態取得") COM_DoorGetLockStatus
+/*  - - O (1 2 - N) */  0x000b17f8  // GV_StrCode("平行カメラ") NewSphericalCamera
+/*  O O O (1 2 - -) */  0x000b56f4
+/*  - O O (1 2 - -) */  0x000bf5f2  // GV_StrCode("クリアリング設定") COM_SetClearingData
+/*  - O O (1 2 - -) */  0x000c4faf
+/*  - O O (1 2 - -) */  0x000c7ada
+/*  O O O (1 2 - N) */  0x000c7f0e
+/*  - O O (1 2 - -) */  0x000c942e
+/*  - O O (1 - - -) */  0x000cd3af  // GV_StrCode("スペシャルモード設定") COM_SetSpecialMode
+/*  - O O (1 2 - -) */  0x000d02fd  // GV_StrCode("鏡面モデル管理") NewMirrorControl
+/*  - O O (1 - - -) */  0x000d7c37
+/*  - O O (1 - - -) */  0x000d9578
+/*  - O O (1 - - -) */  0x000dcfb6
+/*  - O O (1 - - -) */  0x000dd485
+/*  - O O (1 - - -) */  0x000e0767
+/*  - O O (1 - - -) */  0x000e9f80
+/*  - - O (- - - N) */  0x000f3d40  // ComGetCurrentStage
+/*  - O O (1 2 - -) */  0x000f47ae
+/*  - - O (- - - N) */  0x000f6a54
+/*  O O O (1 2 3 N) */  0x000fa91c
+/*  - O O (1 2 - -) */  0x000fdc57
+/*  O O O (1 2 - -) */  0x00103a44
+/*  - O O (1 - - -) */  0x0010f943
+/*  - O O (1 - - -) */  0x0011488e
+/*  O O O (1 2 - N) */  0x0011f61d
+/*  - O O (1 - - -) */  0x00123141
+/*  - O O (1 2 - -) */  0x00127162
+/*  - O - (- - - -) */  0x00127f37
+/*  O O O (1 2 - -) */  0x00128946  // GV_StrCode("プレイヤー") NewPlayer
+/*  - O O (1 2 - -) */  0x0012bd53  // GV_StrCode("雨制御") NewRainControl
+/*  - O O (1 2 - -) */  0x0013010a
+/*  - O O (1 - - -) */  0x00138004
+/*  - O O (1 2 - -) */  0x00138a16
+/*  - O O (1 - - -) */  0x0013e297
+/*  - - O (- - - N) */  0x001433b7
+/*  - - O (- 2 - -) */  0x00144e5f
+/*  O O O (1 2 - N) */  0x00147784  // GV_StrCode("サバイバルビューワ治療モード") NewSurvivalCureModeScn
+/*  - O O (1 2 - -) */  0x0014b909
+/*  - O O (1 - - -) */  0x00157ba6
+/*  O O O (1 2 - -) */  0x0015d3da
+/*  - O O (1 2 - -) */  0x0015dd87
+/*  - O O (1 2 - -) */  0x0015fb8b
+/*  - O O (1 - - -) */  0x0017a281
+/*  O O O (1 2 - -) */  0x0018227c
+/*  - O - (- - - -) */  0x00182ad7
+/*  - O O (1 2 - -) */  0x00182db4
+/*  O O O (1 2 - N) */  0x00182f0b
+/*  O O O (1 2 - -) */  0x0018d40b  // GV_StrCode("字幕制御") NewJimakuControl
+/*  - - O (- - - N) */  0x00190342
+/*  - O O (1 2 - -) */  0x001922ff
+/*  - O O (1 - - -) */  0x00193292
+/*  - O O (1 - - -) */  0x0019608b
+/*  - O O (1 - - -) */  0x001993d9
+/*  - O O (1 2 - N) */  0x0019b364
+/*  - O O (1 2 - -) */  0x0019dc5f
+/*  - - O (- - 3 -) */  0x001a273a
+/*  - - O (- - - N) */  0x001a7e08
+/*  - O - (- - - -) */  0x001aae5f
+/*  O O O (1 2 - -) */  0x001af92a  // GV_StrCode("レーダー") NewRadar
+/*  - O O (1 2 - -) */  0x001ba50e
+/*  - O O (1 2 3 -) */  0x001c2370  // GV_StrCode("アイテムフェイスペイント設定") GM_COM_InventoryFacePaintEnable
+/*  - O O (1 - - -) */  0x001c5d31
+/*  - O O (1 - - -) */  0x001d65f8
+/*  - - O (- - - N) */  0x001e226c  // ComGetCurrentRule
+/*  - O O (1 - - -) */  0x001f119a  // GV_StrCode("エンディング") NewEnding
+/*  - - O (- - - N) */  0x001f1ae9
+/*  O O O (1 2 - N) */  0x0020377d
+/*  O O O (1 2 - -) */  0x002056f8
+/*  - O O (1 - - -) */  0x0020f5a1
+/*  - O O (1 2 - -) */  0x002156c2
+/*  - O O (1 2 - -) */  0x00232853
+/*  O O O (1 2 - -) */  0x00236330  // GV_StrCode("水面監視") NewCheckWaterLevel
+/*  - O O (1 2 - -) */  0x00240e13
+/*  - - O (1 2 - -) */  0x00242db9
+/*  - - O (- - - N) */  0x002431fb
+/*  - - O (- - - N) */  0x00246285
+/*  - - O (- - - N) */  0x0024b801
+/*  - O O (1 - - -) */  0x0025849f
+/*  O O O (1 2 3 N) */  0x0025e019
+/*  - O O (1 - - -) */  0x00264a32  // GV_StrCode("ソロー") NewSorrow
+/*  - - O (- - - N) */  0x0027b5ee
+/*  - O O (1 2 3 -) */  0x00283977
+/*  - O O (1 - - -) */  0x00289035
+/*  - - O (- - - N) */  0x0028a0fd
+/*  - O O (1 2 - N) */  0x00291919
+/*  - O O (1 2 - -) */  0x00294a42
+/*  O O O (1 2 - -) */  0x002a5803
+/*  - O O (1 2 - -) */  0x002a89a9
+/*  - - O (- - - N) */  0x002abfa6
+/*  - O O (- 2 - -) */  0x002ac7e3
+/*  - O O (1 2 - -) */  0x002ae72c  // GV_StrCode("ケロタン") NewKerotan
+/*  - O O (1 - - -) */  0x002af8ee
+/*  O O O (1 2 - N) */  0x002b2336
+/*  O O O (1 2 - N) */  0x002bbe1e
+/*  - O O (1 - - -) */  0x002c7dbf
+/*  - O O (1 2 - -) */  0x002cb94b
+/*  O O O (1 2 - -) */  0x002cd772
+/*  - O O (1 2 - -) */  0x002d5509
+/*  - O O (1 2 - -) */  0x002d8b5c
+/*  - O O (1 - - -) */  0x002dd63c
+/*  O O O (1 2 - -) */  0x002e9c03
+/*  - - O (- 2 - -) */  0x002f0a89
+/*  O - - (- - - -) */  0x002fec39
+/*  - O O (1 - - -) */  0x00300842
+/*  - O O (1 - - -) */  0x0030aa8c
+/*  - O O (1 2 - -) */  0x0030ca36
+/*  O O O (1 2 - -) */  0x0030ca90  // NewHQC
+/*  - O O (1 2 - -) */  0x003120ee
+/*  - O O (1 2 - -) */  0x00316839
+/*  - O O (1 2 - -) */  0x00317ba4
+/*  - O O (1 2 - -) */  0x003190fc
+/*  - O O (1 - - -) */  0x0031b090
+/*  - O O (1 2 - -) */  0x0031f1c3
+/*  - O O (1 2 - -) */  0x00325c8e  // GV_StrCode("atan") NewGclAtan
+/*  O O O (1 2 - N) */  0x00325ee3
+/*  - - O (- - - N) */  0x0032977d
+/*  O O O (1 - - -) */  0x0032fb70  // GV_StrCode("StreamStopAll") NewStreamStopAll
+/*  - O O (1 2 3 -) */  0x00334080
+/*  - O O (1 2 - -) */  0x00336e1b
+/*  - O O (- 2 - -) */  0x00339bf8
+/*  O O O (1 - - -) */  0x0033a20f  // GV_StrCode("demo") NewPolygonDemoStart
+/*  - O O (1 2 - -) */  0x003465ae
+/*  - O O (1 - - -) */  0x00349f5c
+/*  O O O (1 2 - -) */  0x0035508a
+/*  - - O (- - 3 -) */  0x00355d54
+/*  O O O (1 2 - N) */  0x0035a2cf  // GV_StrCode("マップ") NewSetMap
+/*  - - O (- - - N) */  0x00367d64
+/*  O O O (1 2 - -) */  0x0036b6b2
+/*  - - O (1 - - -) */  0x00370e86
+/*  - - O (- - - N) */  0x0037a451
+/*  - O O (1 2 - -) */  0x0037d96f
+/*  - O O (1 2 - -) */  0x0037e71b
+/*  - O O (1 - - -) */  0x003874a0
+/*  - O O (1 2 - -) */  0x00395ca2
+/*  - O O (1 - - -) */  0x003981ee
+/*  - O O (1 2 3 -) */  0x00398e32  // GV_StrCode("武器・アイテム所持数セーブ") GM_COM_InventorySave
+/*  - O O (1 - - -) */  0x0039dd1f
+/*  - O O (1 - - -) */  0x0039e451
+/*  - O O (1 - - -) */  0x0039e4eb
+/*  - - O (- - - N) */  0x003a3347
+/*  O O O (1 2 - N) */  0x003a9224  // GV_StrCode("rand") NewRand
+/*  - O O (1 2 - -) */  0x003b184b
+/*  - O O (1 - - -) */  0x003b9ed6
+/*  - O O (1 - - -) */  0x003baee1
+/*  - - O (- - - N) */  0x003c1027
+/*  - O O (1 2 - -) */  0x003c1a5c
+/*  - O O (1 2 - N) */  0x003c6528
+/*  - O O (1 2 - N) */  0x003c8494
+/*  - O O (1 - - -) */  0x003d7a83
+/*  - O O (1 2 - -) */  0x003d7f5f
+/*  - O O (1 2 3 N) */  0x003db09f
+/*  - O O (1 2 - -) */  0x003dfd0b  // GV_StrCode("エフェクトバウンド実行") UTL_EFT_ExecCallback
+/*  - O O (1 - - -) */  0x003e9879
+/*  O O O (1 2 3 N) */  0x003ec885  // GV_StrCode("武器・アイテム所持数追加") GM_COM_InventoryAddNum
+/*  - O O (1 - - -) */  0x003f1072
+/*  - O O (- 2 - -) */  0x003f30d7
+/*  - O O (1 2 - -) */  0x003f3b77
+/*  - O O (1 2 - -) */  0x003f3f97
+/*  - O O (1 2 - -) */  0x003f47bd
+/*  - O O (1 - - -) */  0x003f6dc0
+/*  - O O (1 - - -) */  0x003f7038
+/*  - O O (- 2 - -) */  0x004030d7
+/*  - O O (1 - - -) */  0x00407e28
+/*  - O O (- 2 - -) */  0x004130d7
+/*  - O O (1 - - -) */  0x00413f60
+/*  O O O (1 2 - -) */  0x004147a5  // GV_StrCode("ＳＥ字幕登録") GM_COM_AddSeJimaku
+/*  - O O (1 2 - -) */  0x0042181a  // GV_StrCode("エフェクトバウンド追加") UTL_EFT_AddBoundFromGCL
+/*  - O O (- 2 - -) */  0x004230d7
+/*  - O O (1 - - -) */  0x00424392
+/*  - O O (1 2 - -) */  0x00425441
+/*  - O O (1 2 - -) */  0x00426afb
+/*  - - O (- - - N) */  0x0043059f
+/*  - O O (1 - - -) */  0x0043635c
+/*  - O O (1 - - -) */  0x00437870
+/*  - O O (1 - - -) */  0x00439eb4
+/*  - O O (1 2 - N) */  0x0043bc3e
+/*  O O O (1 2 - N) */  0x0043f718  // GV_StrCode("カメラ設定") COM_SetCamera
+/*  - O O (1 - - -) */  0x00447870
+/*  - O O (1 2 - -) */  0x0044fda5
+/*  O O O (1 2 - -) */  0x00456267
+/*  - O O (1 - - -) */  0x00457870
+/*  - O O (1 2 - -) */  0x0045ca8d
+/*  - - O (- - - N) */  0x0045d09d
+/*  - O O (1 2 - -) */  0x00464066
+/*  - O O (1 2 - -) */  0x0046fcd2  // GV_StrCode("敵兵メモリー更新") ENEMEM_GclRenewMemory
+/*  O O O (1 2 - -) */  0x00478411
+/*  O O O (1 2 - -) */  0x00479c81
+/*  - O O (1 2 - -) */  0x0047c980
+/*  - O O (1 - - -) */  0x0047e5e1
+/*  - O O (1 2 - -) */  0x00480a35
+/*  - O O (1 - - -) */  0x0048ef2f
+/*  - - O (- - - N) */  0x0048f40e  // NewOnlineErrorCheck
+/*  - O O (1 - - -) */  0x0048fea7
+/*  - O O (1 2 - -) */  0x004953ff
+/*  - O - (- - - -) */  0x004956cb
+/*  O O O (1 2 - -) */  0x00495ef5  // GV_StrCode("プレイヤー強制モーション") PL_COM_SetForce
+/*  - O O (1 - - -) */  0x00497ac3
+/*  O O O (1 2 - -) */  0x00497be6  // GV_StrCode("無線状態") CodecStatus
+/*  - - O (- - - N) */  0x004984cf
+/*  O O O (1 2 - N) */  0x0049b880
+/*  - - O (1 2 - -) */  0x0049e772
+/*  O O O (1 2 - -) */  0x004a243a  // GV_StrCode("無線設定") NewCodec
+/*  O O O (1 2 - N) */  0x004ab3b2
+/*  O O O (1 2 - -) */  0x004ac6dc
+/*  - O O (1 - - -) */  0x004aeee6
+/*  - O O (1 2 - -) */  0x004b5fd9
+/*  - O O (1 - - -) */  0x004bbb60
+/*  - O O (1 - - -) */  0x004bf65a
+/*  - O O (1 - - -) */  0x004c4879
+/*  - - O (1 - - -) */  0x004caf18
+/*  - O O (1 2 - -) */  0x004d2cb4
+/*  - - O (1 2 - -) */  0x004dca90
+/*  - O O (1 2 - -) */  0x004e3a78
+/*  O O O (1 2 - -) */  0x004e61bf
+/*  - O O (1 2 - -) */  0x004e84a4
+/*  O O O (1 2 - -) */  0x004eeb4b  // GV_StrCode("プレイヤーエルード") PL_COM_SetElude
+/*  - O O (1 - - -) */  0x004f8a22
+/*  - O O (1 - - -) */  0x004fae63
+/*  O O O (1 2 - -) */  0x00503da9
+/*  - O O (1 - - -) */  0x00512854
+/*  - O O (1 2 - -) */  0x00519afa
+/*  - - O (1 2 - -) */  0x0051b0c9
+/*  - O O (1 - - -) */  0x0051dac1  // GV_StrCode("スクリーン") NewScreen (TV in Graniny Gorki Lab B1)
+/*  O O O (1 - - -) */  0x00527980
+/*  - O O (1 - - -) */  0x005290cd
+/*  O O O (1 2 - -) */  0x00537c0a  // GV_StrCode("カメラチェック無効") NewCameraCheckDisable
+/*  - O O (1 2 - -) */  0x0053973d
+/*  - - O (- - - N) */  0x0053bd7a
+/*  - O O (1 2 - -) */  0x0053cf3a
+/*  O O O (1 2 - -) */  0x0053dc0a  // GV_StrCode("カメラチェック有効") NewCameraCheckEnable
+/*  O O O (1 2 3 N) */  0x00542b2d  // GV_StrCode("foreach") NewForeach
+/*  - - O (- - - N) */  0x00546382
+/*  - O O (1 2 - -) */  0x005585fa
+/*  O O O (1 2 - -) */  0x0055b942  // GV_StrCode("ドア") NewDoor
+/*  - O O (1 2 - -) */  0x0055e068
+/*  - - O (- - - N) */  0x00560808
+/*  - O O (1 2 - -) */  0x00567092
+/*  - O O (1 2 - -) */  0x0056ab3a
+/*  O O O (1 2 - -) */  0x0056e234  // GV_StrCode("マップ接合") NewMapConnect
+/*  - O O (1 2 - -) */  0x0056e784
+/*  O O O (1 2 - N) */  0x0056ef97  // GV_StrCode("マップ設定") NewMapSet
+/*  - O O (1 - - -) */  0x00573139
+/*  O O O (1 2 3 -) */  0x00573507
+/*  - O O (1 - - -) */  0x0058191a
+/*  - O O (1 2 - -) */  0x00588da3
+/*  - O O (1 2 3 -) */  0x00598e28  // GV_StrCode("武器・アイテム所持数ロード") GM_COM_InventoryLoad
+/*  O O O (1 2 - -) */  0x0059ab1e
+/*  O O O (1 2 - N) */  0x0059ec5a
+/*  - O O (1 2 - -) */  0x005a5816
+/*  O O O (1 2 3 N) */  0x005a8c59
+/*  - O O (1 - - -) */  0x005a92a4
+/*  - O O (1 - - -) */  0x005ae655  // GV_StrCode("マップ表示") NewShowMap
+/*  - O O (1 2 3 N) */  0x005af36e  // GM_COM_InventoryWeaponSet
+/*  O O O (1 2 - N) */  0x005b316e  // GV_StrCode("varsave") NewSaveVariable
+/*  - O O (1 2 3 -) */  0x005b364b  // GV_StrCode("武器弾数") GM_COM_InventoryWeaponNum
+/*  - O O (1 - - -) */  0x005b3d4e
+/*  - O O (1 - - -) */  0x005b5e45
+/*  - O O (1 - - -) */  0x005b7832  // GV_StrCode("椅子") NewChair
+/*  O O O (1 2 - -) */  0x005bb791
+/*  - O O (1 2 - -) */  0x005bc599  // GV_StrCode("自動ドア") NewAutomaticDoor
+/*  - O O (1 - - -) */  0x005c0bae  // GV_StrCode("パッドデモ") NewPadDemoPlay
+/*  - O O (1 2 - -) */  0x005c65b0
+/*  - O O (1 2 - N) */  0x005cb38e
+/*  - O O (1 - - -) */  0x005d1667
+/*  - O O (1 2 - -) */  0x005d7e30
+/*  - O O (1 - - -) */  0x005e3345
+/*  O O O (1 2 - N) */  0x005e5a53
+/*  - O O (1 2 - -) */  0x005e826b
+/*  - O O (1 2 - -) */  0x005f5cf7
+/*  O O O (1 - - -) */  0x005f64a4
+/*  - O O (1 2 - -) */  0x005fd3c4
+/*  - O O (1 2 - -) */  0x005fe46d
+/*  - O O (1 2 - N) */  0x00605b52
+/*  - O O (1 - - -) */  0x00609a10
+/*  - O - (- - - -) */  0x0060d52e
+/*  - O O (1 2 - -) */  0x00614f27
+/*  - - O (- 2 - -) */  0x006184e7
+/*  - O O (1 2 - -) */  0x00618d6a
+/*  O O O (1 2 - -) */  0x0061d13b
+/*  - O O (1 - - -) */  0x0061f0ba
+/*  - O O (1 2 - -) */  0x006239b1
+/*  - O O (1 2 - N) */  0x006263f9  // GV_StrCode("エフェクトバウンド初期化") UTL_EFT_InitBound
+/*  - O O (1 - - -) */  0x00626785
+/*  O O O (1 2 - N) */  0x0062ff2e  // NewGrassMng
+/*  - O O (1 2 - -) */  0x006339b1
+/*  O O O (1 2 - -) */  0x00635875  // GV_StrCode("ゲームオーバー処理開始") GM_GameOverStartScn
+/*  O O O (1 2 3 N) */  0x0063c1d8
+/*  - O O (1 2 - -) */  0x0063cf9b
+/*  - O O (1 - - -) */  0x006408fc
+/*  - O O (1 2 - -) */  0x006422b0
+/*  - O O (1 2 - -) */  0x006439b1
+/*  - O O (1 - - -) */  0x00645113  // GV_StrCode("死体君") NewCorpGcl
+/*  - O O (1 2 - -) */  0x00647dff
+/*  - O O (1 2 - -) */  0x0064b3f4  // GV_StrCode("大佐")
+/*  O O O (1 2 - -) */  0x006539fc  // GV_StrCode("敵兵")
+/*  - O O (1 2 - -) */  0x00653bbf
+/*  - O O (1 - - -) */  0x0065b8b4
+/*  - O O (1 2 - -) */  0x00661b4a
+/*  - - O (- - - N) */  0x00661f68
+/*  - O - (- - - -) */  0x00663da5
+/*  - - O (- - - N) */  0x0066d654
+/*  - O O (1 - - -) */  0x0066e5d4
+/*  - O O (1 - - -) */  0x00678c46
+/*  - - O (- - - N) */  0x00679afb
+/*  - O O (1 - - -) */  0x0067a960
+/*  - O O (1 2 - -) */  0x00684209  // GV_StrCode("蜂壁") NewBeeWall
+/*  O O O (1 2 - N) */  0x00684bfa
+/*  O O O (1 2 - -) */  0x006856c1  // GV_StrCode("ゲームオーバー処理終了") GM_GameOverEndScn
+/*  - - O (1 2 - N) */  0x00686853  // NewSCBoundTrapChara
+/*  - O O (- 2 - -) */  0x00686b4d
+/*  - O O (1 - - -) */  0x0068cb9c  // GV_StrCode("パッド振動") NewPadVibrationScn
+/*  - O O (1 2 - -) */  0x00690245
+/*  O O O (1 2 - -) */  0x00690610  // GV_StrCode("シネマスクリーン") NewCinemaScreen
+/*  O O O (1 2 - N) */  0x0069b87e  // COM_PutStageModel_MeshControl
+/*  - O O (1 2 - -) */  0x0069eb6c
+/*  - O O (1 2 - -) */  0x006a3940
+/*  O O O (1 2 3 -) */  0x006a725a  // GV_StrCode("パッド操作") NewPadControl
+/*  - O O (1 2 - -) */  0x006aa0dc
+/*  O O O (1 2 3 N) */  0x006b237d  // GV_StrCode("assert") NewGclAssert
+/*  - O O (1 2 - -) */  0x006b25fd
+/*  - O O (1 2 - -) */  0x006bc9a5
+/*  - O O (1 - - -) */  0x006bdb60
+/*  - O O (1 2 - -) */  0x006c109d
+/*  - O O (1 - - -) */  0x006cb041
+/*  - O O (1 2 - -) */  0x006e520e
+/*  - O O (1 2 - -) */  0x006e6102
+/*  - O O (1 - - -) */  0x006e989d
+/*  - O O (1 - - -) */  0x006e989e
+/*  - - O (- - - N) */  0x006e9c2c
+/*  - O O (1 2 - -) */  0x006ea2a8
+/*  O O O (1 2 3 N) */  0x006f7d4d  // NewGameInit
+/*  O O O (1 2 - -) */  0x006f8307
+/*  - O O (1 - - -) */  0x00706450
+/*  - O O (1 2 - -) */  0x00708c6b
+/*  - O O (1 2 - -) */  0x0070b8e6
+/*  - O O (1 - - -) */  0x0070d322
+/*  - O O (1 - - -) */  0x0070f3aa
+/*  - O O (1 2 3 N) */  0x007128d0  // GV_StrCode("武器・アイテム名称設定") GM_COM_InventorySetNames
+/*  O O O (1 2 - N) */  0x00712f17
+/*  O O O (1 2 - N) */  0x0071e7d6  // NewSystemLightSet
+/*  - O O (1 - - -) */  0x0072007f
+/*  O O O (1 2 - -) */  0x00723f41
+/*  O O O (1 2 - N) */  0x007267b7
+/*  - O O (1 - - -) */  0x0072705f
+/*  O O O (1 2 - -) */  0x00729f2d
+/*  O O O (1 2 - -) */  0x0072f23c  // GV_StrCode("プットモーションモデル")
+/*  - O O (1 2 - -) */  0x00735ef7
+/*  O O O (1 2 3 N) */  0x00743c9f  // GV_StrCode("delay") NewDelay
+/*  - - O (- - - N) */  0x0074cb83  // NewDefeatedCameraGCL
+/*  O O O (1 2 3 N) */  0x0074e86b  // NewGclLangUpdate
+/*  - O O (1 - - -) */  0x007546ba
+/*  - O O (1 2 - -) */  0x007555e2
+/*  O O O (1 2 - -) */  0x007576da
+/*  O O O (1 2 3 -) */  0x00757d0a
+/*  - O O (1 2 - -) */  0x0075fed4
+/*  - O O (1 2 - -) */  0x007632dc
+/*  - O O (1 2 - -) */  0x00767f58
+/*  - O O (1 2 - -) */  0x0076d431
+/*  O - - (- - - -) */  0x0077318d
+/*  - O O (1 2 - -) */  0x00773af5
+/*  - O O (1 2 - -) */  0x0077ab68
+/*  - O O (1 2 - -) */  0x0077c520
+/*  - O O (1 2 - -) */  0x00783abd
+/*  - O O (1 - - -) */  0x00789c04
+/*  - O O (1 - - -) */  0x00790b97
+/*  - O O (1 2 - -) */  0x00795ac9
+/*  - O O (1 - - -) */  0x0079705d
+/*  - O O (1 2 - -) */  0x0079912b
+/*  O O O (1 2 - -) */  0x007a0761  // GV_StrCode("無線メモリー") NewCodecMemory
+/*  - O O (1 - - -) */  0x007a5d76
+/*  - O O (1 - - -) */  0x007a8432
+/*  - O O (1 - - -) */  0x007a86b8
+/*  O O O (1 2 - -) */  0x007aa13a  // GV_StrCode("Stream") NewStreamSet
+/*  - O O (1 - - -) */  0x007aee60
+/*  - O O (1 2 - -) */  0x007b2a7c
+/*  O O O (1 2 - N) */  0x007b4944  // GV_StrCode("カモフラ設定")
+/*  O O O (1 2 3 N) */  0x007bc389
+/*  O O O (1 2 - -) */  0x007c4d11  // GV_StrCode("汎用動物")
+/*  - O O (1 - - -) */  0x007c6960
+/*  O O O (1 2 - N) */  0x007cbbcf  // GV_StrCode("子画面")
+/*  - O O (1 2 - -) */  0x007d55de
+/*  - O O (1 - - -) */  0x007d7aec
+/*  - O O (1 - - -) */  0x007e2caf
+/*  - O O (1 2 - -) */  0x007e5115
+/*  O O O (1 2 - N) */  0x007e641f  // NewPutStageModelSet
+/*  - O O (1 - - -) */  0x007e750c
+/*  - O O (1 2 - -) */  0x007eedb2
+/*  - O O (1 2 - -) */  0x007f3c88  // GV_StrCode("カメラ視界チェック") NewViewCheckCommand
+/*  - O O (1 - - -) */  0x007f52a2
+/*  - - O (1 2 - -) */  0x007f6650
+/*  - O O (1 - - -) */  0x007ff1b0
+/*  O O O (1 2 - -) */  0x0080b977  // GV_StrCode("システムコールバック") NewSystemCallback
+/*  - O O (1 2 - -) */  0x008175a4
+/*  O O O (1 2 - -) */  0x0081f1ef  // GV_StrCode("SILVER_DISP") NewSilverDisp
+/*  - O O (1 - - -) */  0x0081fb77
+/*  - O O (1 - - -) */  0x00824a42
+/*  - O O (1 2 - -) */  0x00829346
+/*  - O O (1 - - -) */  0x0082a05e  // GV_StrCode("store_loadedvar") ComStoreLoadedVariable
+/*  - - O (- - - N) */  0x0082b327
+/*  - O O (1 2 - -) */  0x0082bdc0  // GV_StrCode("VecLen") NewGclVecLen
+/*  O O O (1 - - -) */  0x0082cb3e  // GV_StrCode("reboot") NewGclReboot
+/*  O O O (1 2 - N) */  0x0083102f
+/*  - - O (- - - N) */  0x00831ee1
+/*  - O O (1 2 - -) */  0x00843fea
+/*  O O O (1 2 - -) */  0x0084594d
+/*  - O O (1 2 - -) */  0x00849ba0  // GV_StrCode("プレイヤーライフ加算") PL_COM_LifeAdd
+/*  - O O (1 2 - -) */  0x0084aa82
+/*  - O O (1 2 - -) */  0x0085b70d
+/*  - O O (1 - - -) */  0x008673c6
+/*  - - O (- - 3 -) */  0x0086c63a
+/*  - O O (1 - - -) */  0x0086d1cf  // GV_StrCode("敵兵メモリーコピー") ENEMEM_GclCopy
+/*  - O O (1 - - -) */  0x00870aac
+/*  O O O (1 2 3 N) */  0x0087a1c0  // GV_StrCode("select") NewSelect
+/*  - - O (- - 3 -) */  0x0088117d
+/*  - O O (1 - - -) */  0x008855a7
+/*  - O O (1 2 - -) */  0x0088f9b0  // GV_StrCode("敵兵メモリーオールリセット") ENEMEM_GclAllReset
+/*  - O O (1 2 - -) */  0x00890539
+/*  - O O (1 2 - -) */  0x008961cd
+/*  - O O (1 2 - -) */  0x008961eb
+/*  O O O (1 2 3 -) */  0x0089a17e  // GV_StrCode("repeat") NewRepeat
+/*  - - O (- 2 - -) */  0x0089ab22
+/*  - O O (1 - - -) */  0x0089c7aa
+/*  - - O (- - 3 -) */  0x0089ed67
+/*  O O O (1 2 - N) */  0x008a02c7
+/*  - O O (1 2 - -) */  0x008a7b70  // GV_StrCode("フィアー") NewFear
+/*  - O O (1 2 - -) */  0x008a7b7a
+/*  - O O (1 2 - -) */  0x008aa572  // GV_StrCode("ロッカー") NewLocker
+/*  O O O (1 - - -) */  0x008b0ce2
+/*  - O O (1 2 - -) */  0x008b19f0  // GV_StrCode("プレイヤー無敵セット") NewPlayerSetInvincible
+/*  - O O (1 2 - -) */  0x008b1e74
+/*  - O O (- 2 - -) */  0x008b3466
+/*  - O O (1 - - -) */  0x008b4322
+/*  O O O (1 2 - -) */  0x008b5ace
+/*  - O O (1 2 3 -) */  0x008b6086  // GM_COM_PadCheck
+/*  - - O (- - - N) */  0x008b94e9
+/*  - O O (1 2 - -) */  0x008b976d  // GV_StrCode("ロッカー状態") NewLockerStatus
+/*  O O O (1 - - -) */  0x008ba20a  // GV_StrCode("ソコロフ") NewSokolov
+/*  - - O (- 2 - -) */  0x008c301c
+/*  - O O (1 2 - -) */  0x008d06cc
+/*  - O O (1 2 - -) */  0x008d4ec1
+/*  - O O (1 2 - -) */  0x008d5639
+/*  - O O (1 2 - -) */  0x008d92ed
+/*  - O O (1 2 - -) */  0x008dc8ae
+/*  O O O (1 2 3 -) */  0x008e298d  // GV_StrCode("デモキャンセルチェック") NewPadCancel
+/*  - - O (- - - N) */  0x008e7500
+/*  - O O (1 - - -) */  0x008f8e19
+/*  - O O (1 - - -) */  0x008fdada
+/*  - O O (1 - - -) */  0x009027e9
+/*  - O O (1 2 - -) */  0x00909f7f  // GV_StrCode("フューリー") NewFury
+/*  O O O (1 2 3 N) */  0x0091818c  // NewBGColorSet
+/*  - O O (1 - - -) */  0x009197cf
+/*  - - O (1 - - -) */  0x00919ade
+/*  - O O (1 2 - -) */  0x0092034e
+/*  - - O (- - - N) */  0x00921c90
+/*  - O O (1 2 3 N) */  0x0092a625  // GV_StrCode("プロダクトコード設定") ComSetProductCode
+/*  - O O (1 2 3 N) */  0x0092eb54  // GV_StrCode("getconfig") NewGetConfig
+/*  - O O (1 2 - -) */  0x00934cb2
+/*  - O O (1 - - -) */  0x009351d9
+/*  - O O (1 - - -) */  0x00936419
+/*  - O - (- - - -) */  0x00939b07
+/*  - O O (1 - - -) */  0x0093aab1
+/*  - O O (1 - - -) */  0x0093e44a  // GV_StrCode("スペシャルモード") NewSpecialMode
+/*  O O O (1 - - -) */  0x0093f33d  // GV_StrCode("ドアロック") COM_DoorLock
+/*  O O O (1 2 3 -) */  0x00944e11  // GV_StrCode("メニュー設定") NewSetMenuStatus
+/*  O O O (1 2 3 N) */  0x009474ff
+/*  - - O (1 2 - -) */  0x0095bc75
+/*  O O O (1 - - -) */  0x0095c0ca
+/*  O O O (1 2 - -) */  0x00962fbc
+/*  O O O (1 2 - N) */  0x009634b1
+/*  - - O (- - - N) */  0x009634f6
+/*  - O O (- 2 - -) */  0x0096dfdc
+/*  O O O (1 2 - -) */  0x0097451b
+/*  - O O (1 - - N) */  0x00978db6  // GV_StrCode("雪表示") NewSnowDisplay
+/*  O O O (1 2 - -) */  0x0097a3cf
+/*  - O O (1 - - -) */  0x00985c58
+/*  - O O (1 2 - -) */  0x0098b109
+/*  - O O (1 2 - -) */  0x0099f754
+/*  O O O (1 2 - N) */  0x009a0d0a  // GV_StrCode("エフェクト初期化") UTL_EFT_Initialize
+/*  - O O (1 2 - -) */  0x009a1040
+/*  - O O (1 2 3 -) */  0x009af657
+/*  - - O (- - - N) */  0x009b8923
+/*  O O O (1 2 3 N) */  0x009bc19a
+/*  - O O (1 - - -) */  0x009bc48f
+/*  - O O (1 - - -) */  0x009bc4ad
+/*  - O O (1 - - -) */  0x009ce52c
+/*  - O O (1 - - -) */  0x009d0339
+/*  - O O (1 2 - -) */  0x009d7b8e
+/*  - O O (1 - - -) */  0x009d9093
+/*  - O O (1 - - -) */  0x009dc687
+/*  O O O (1 2 - N) */  0x009e8ba6
+/*  - - O (- - - N) */  0x009e9407
+/*  O O O (1 2 - N) */  0x009f406f
+/*  - O O (1 - - -) */  0x009f4866
+/*  - O O (1 2 - -) */  0x009f4aa0
+/*  - O O (1 - - -) */  0x009ff2c6
+/*  - O O (1 2 - -) */  0x009ff6eb
+/*  - O O (- 2 - -) */  0x00a066ac
+/*  O O O (1 2 - N) */  0x00a0b247  // GV_StrCode("プレイヤーステータスＯＲ") PL_COM_GetPlayerStatusOr
+/*  - O O (1 2 - -) */  0x00a11fd7
+/*  - O O (1 2 - -) */  0x00a1a4fb
+/*  - O O (1 2 - -) */  0x00a1f82d
+/*  - O O (1 2 - -) */  0x00a202d2
+/*  - O O (1 2 - -) */  0x00a2125d
+/*  - O O (1 2 - -) */  0x00a21d45
+/*  - O O (- 2 - -) */  0x00a314f7
+/*  - O O (1 2 - -) */  0x00a314f8
+/*  O O O (1 2 - N) */  0x00a366ff  // GV_StrCode("スリットライト") NewSlitLight
+/*  - O O (1 - - -) */  0x00a3bf7b
+/*  - O O (1 - - -) */  0x00a3c689
+/*  - O O (1 2 - -) */  0x00a42bee
+/*  - O O (1 2 - -) */  0x00a47661
+/*  - O O (1 2 - -) */  0x00a4a2c3
+/*  O O O (1 2 - N) */  0x00a56fcf  // GV_StrCode("弾痕エフェクト") NewBulletMark
+/*  O O O (1 2 3 -) */  0x00a5b1ec  // GV_StrCode("while") NewGclWhile
+/*  - - O (- - - N) */  0x00a63bd9
+/*  - - O (- - - N) */  0x00a6b60b
+/*  - O O (1 - - -) */  0x00a72bc6
+/*  - O O (1 2 - -) */  0x00a7593d
+/*  - - O (- - - N) */  0x00a7f286
+/*  - O O (1 2 - -) */  0x00a833fe
+/*  - O O (1 2 3 -) */  0x00a85df0
+/*  - - O (- - - N) */  0x00a8e328
+/*  - - O (- - - N) */  0x00a8e8ac
+/*  O O O (1 2 - -) */  0x00a900fe  // GV_StrCode("カメラチェック") NewCameraCheck
+/*  - O O (1 - - -) */  0x00a934ea
+/*  - O O (1 - - -) */  0x00a97d6f  // GV_StrCode("両開きドア") NewMzTwindoor (Ponizovje Warehouse's exterior doors)
+/*  - O O (1 - - -) */  0x00a99275
+/*  O - - (- - - -) */  0x00a9b595
+/*  - O O (1 - - -) */  0x00aacac8
+/*  - O O (1 2 - -) */  0x00aaf706
+/*  O O O (1 - - -) */  0x00ab3f7c
+/*  - - O (- 2 - -) */  0x00ab55dc
+/*  O O O (1 2 3 N) */  0x00ab5a2a  // GV_StrCode("常駐リソース設定") NewResidentResourceSet
+/*  - - O (- - - N) */  0x00ab73fd
+/*  O O O (1 2 - -) */  0x00ab8ce6
+/*  - O O (1 2 - -) */  0x00abab99
+/*  - O O (1 2 - N) */  0x00abd4e4
+/*  - O O (1 2 - -) */  0x00ac4ee8  // GV_StrCode("ランダム初期化")
+/*  - O O (1 2 - -) */  0x00ac684a
+/*  - O O (1 2 - -) */  0x00ac82f9
+/*  - - O (- - 3 -) */  0x00acc699
+/*  - O O (1 - - -) */  0x00ad6f9c
+/*  - O O (1 - - -) */  0x00adc02a
+/*  - O O (1 - - -) */  0x00af1f08
+/*  - - O (- - - N) */  0x00af33b6
+/*  - O O (1 2 - -) */  0x00af44a8
+/*  - O O (1 2 - -) */  0x00b00c01
+/*  - O O (1 2 - N) */  0x00b101ec
+/*  - - O (- - - N) */  0x00b121a2
+/*  - - O (- 2 - -) */  0x00b13b94
+/*  - O O (1 2 - -) */  0x00b19a58
+/*  - O O (1 2 - -) */  0x00b2f7ee
+/*  - - O (- - - N) */  0x00b38a65
+/*  O O O (1 2 - -) */  0x00b3a94e
+/*  - O O (1 2 - -) */  0x00b3ba87
+/*  - O O (1 - - -) */  0x00b3f1b7
+/*  - O O (1 2 - -) */  0x00b4a39d
+/*  - O O (1 - - -) */  0x00b4d338
+/*  O O O (1 2 - -) */  0x00b57eca
+/*  - O O (1 - - -) */  0x00b58481
+/*  - O O (1 2 - -) */  0x00b61cc0
+/*  - O O (1 - - -) */  0x00b687e8
+/*  - O O (1 2 - -) */  0x00b6e94e
+/*  - O O (1 - - -) */  0x00b712e6
+/*  O O O (1 2 - -) */  0x00b74a98
+/*  - O O (1 2 - N) */  0x00b7f7d1
+/*  - O O (1 2 - -) */  0x00b916d4
+/*  - O O (1 2 - -) */  0x00b91a2d
+/*  - O O (1 2 - -) */  0x00b96482
+/*  - O O (1 - - -) */  0x00b97d41  // GV_StrCode("敵兵メモリーリセット") ENEMEM_GclReset
+/*  - - O (- - - N) */  0x00b9cd73
+/*  - O O (1 2 - -) */  0x00b9da1d
+/*  - O O (1 - - -) */  0x00b9e1f4
+/*  - O - (- - - -) */  0x00b9f944
+/*  O O O (1 2 - N) */  0x00ba3a38  // GV_StrCode("マップシステム") NewMapSystem
+/*  - O O (1 2 - -) */  0x00bae1be
+/*  - O O (1 - - -) */  0x00baf651
+/*  - - O (- - - N) */  0x00bce74e
+/*  O O O (1 2 3 N) */  0x00bcf6ff
+/*  - O O (1 2 - -) */  0x00bd400b  // GV_StrCode("影管理") NewShadowControl
+/*  O O O (1 2 - N) */  0x00bd8d95
+/*  O O O (1 - - -) */  0x00beb908
+/*  O O O (1 2 - -) */  0x00bf0504
+/*  - - O (1 2 3 N) */  0x00bf051f
+/*  - - O (- - - N) */  0x00bf76c9
+/*  - O O (1 2 - -) */  0x00c075b9
+/*  - - O (- - - N) */  0x00c08865
+/*  - O O (1 2 - -) */  0x00c090b1
+/*  - O O (1 - - -) */  0x00c19aa4
+/*  - O O (1 2 - -) */  0x00c1f2f3
+/*  O - - (- - - -) */  0x00c2d9fe
+/*  - O O (1 2 - -) */  0x00c392d3
+/*  O O O (1 - - -) */  0x00c3ec86  // GV_StrCode("ドアアンロック") COM_DoorUnlock
+/*  O O O (1 2 - -) */  0x00c3f409
+/*  O O O (1 2 - -) */  0x00c44d8b  // GV_StrCode("敵兵状態取得") COM_GetEnemyStatus
+/*  - O O (1 - - -) */  0x00c455c8
+/*  - O O (1 - - -) */  0x00c5162b  // GV_StrCode("武器・アイテムスロットクリア") GM_COM_InventorySlotClear
+/*  - O O (1 2 - -) */  0x00c51848
+/*  - O O (1 2 - -) */  0x00c53ae7
+/*  - O O (1 2 - N) */  0x00c53b05
+/*  - O O (1 2 - -) */  0x00c65d9f
+/*  - O O (1 2 - -) */  0x00c6fdfc
+/*  - O O (1 - - -) */  0x00c70c04
+/*  - O O (1 - - -) */  0x00c710c6
+/*  O O O (1 2 3 N) */  0x00c74f97  // GV_StrCode("配列セット") NewArraySet
+/*  O O O (1 2 - -) */  0x00c78563
+/*  O O O (1 - - -) */  0x00c7f9ca
+/*  O O O (1 2 - -) */  0x00c851b0
+/*  O O O (1 2 - N) */  0x00c885a5
+/*  - O O (1 2 - -) */  0x00c88764  // GV_StrCode("スリットライトフェード") NewSlitLightFade
+/*  - - O (- - - N) */  0x00c8e303
+/*  O O O (1 2 3 -) */  0x00c8e3fd  // GV_StrCode("フェード") NewFadeInOutScn
+/*  - - O (- - - N) */  0x00c8e80a
+/*  - O O (1 2 - N) */  0x00c8fb44
+/*  - O O (1 - - -) */  0x00c9af4c
+/*  O O O (1 2 - N) */  0x00c9bbe9
+/*  - O O (1 2 - -) */  0x00ca337e
+/*  - O O (1 2 - -) */  0x00ca3e5b
+/*  - O O (1 - - -) */  0x00ca91c4
+/*  - O O (1 - - -) */  0x00cafda9
+/*  - O O (1 - - -) */  0x00cb1834  // GV_StrCode("ジョニー") NewJohnny
+/*  - O O (1 2 - -) */  0x00cb3fd9
+/*  - O O (1 - - -) */  0x00cbfca6
+/*  - O O (1 - - -) */  0x00cc2e24
+/*  - O O (1 2 - -) */  0x00cc5a5a
+/*  O O O (1 2 - -) */  0x00cc9a2b
+/*  - - O (- - - N) */  0x00ccbefe
+/*  - O O (1 2 - -) */  0x00ccd7f9
+/*  O O O (1 2 3 N) */  0x00cd646f  // GM_InventoryDaemonStart
+/*  - O O (1 2 - -) */  0x00cda34c
+/*  - O O (1 2 - -) */  0x00cda34e
+/*  - O O (1 - - -) */  0x00cdd822  // GV_StrCode("鉄橋爆破") NewRailBridgeDemolition
+/*  - O O (1 2 - -) */  0x00cde39f
+/*  - O O (1 - - -) */  0x00ce2d79
+/*  O O O (1 2 - N) */  0x00cf9028
+/*  - O O (1 - - -) */  0x00d00676
+/*  - O O (1 - - -) */  0x00d05ba0
+/*  - O O (1 - - -) */  0x00d0cf49
+/*  - O O (1 - - -) */  0x00d0f729
+/*  - O O (1 - - -) */  0x00d0fb6d
+/*  - O O (1 2 - -) */  0x00d110ce  // GV_StrCode("オプションモード設定") COM_SetOptionMode
+/*  - O O (1 2 - -) */  0x00d17a99
+/*  - O O (1 2 - -) */  0x00d19e27
+/*  - O O (1 2 - -) */  0x00d25d5a
+/*  - O O (1 - - -) */  0x00d29bb4
+/*  - O O (1 2 - N) */  0x00d2bd87  // GV_StrCode("風制御") NewWindManager
+/*  O O O (1 2 - -) */  0x00d30863  // GV_StrCode("StreamStop") NewStreamStop
+/*  - O O (1 2 - -) */  0x00d4381c
+/*  - O O (1 2 - -) */  0x00d45cf1
+/*  - O O (1 2 - -) */  0x00d46f76
+/*  - O O (1 2 - -) */  0x00d4b51a
+/*  - - O (- - - N) */  0x00d4d8a5
+/*  - - O (- - - N) */  0x00d4ea76  // NewHeadUpDisplay
+/*  - O O (1 2 - -) */  0x00d517fe
+/*  O O O (1 2 - -) */  0x00d5545b  // GV_StrCode("右スティックカメラ設定") COM_SetCameraRightStick
+/*  - O O (1 - - -) */  0x00d5cb81
+/*  - O O (1 - - -) */  0x00d61bf6
+/*  - O O (1 2 - -) */  0x00d65266
+/*  - O O (1 2 - -) */  0x00d6fd05
+/*  - O O (1 - - -) */  0x00d73a9c
+/*  - O O (1 2 - -) */  0x00d7b646  // GV_StrCode("オプションモード") COM_OptionMode
+/*  - O O (1 2 - -) */  0x00d8361e
+/*  - O O (1 - - -) */  0x00d8714a
+/*  O O O (1 2 - N) */  0x00d8cb74
+/*  - O O (1 - - -) */  0x00d8d32f
+/*  O O O (1 2 - N) */  0x00d8fd67
+/*  - O O (1 - - N) */  0x00d9046e
+/*  - O O (1 2 - -) */  0x00d98b39
+/*  - O O (1 - - -) */  0x00d9b7de
+/*  - O O (1 2 - -) */  0x00da2917
+/*  - O O (1 - - -) */  0x00da9244
+/*  O O O (1 2 - -) */  0x00da97fb  // GV_StrCode("トラップ切り替え") GM_COM_TrapSwitchCommand
+/*  - - O (- - 3 -) */  0x00daad6b
+/*  - O O (1 2 - -) */  0x00dac400
+/*  - O O (1 - - -) */  0x00daed21
+/*  O O O (1 2 3 N) */  0x00daf423
+/*  - - O (- - - N) */  0x00db4ee7
+/*  - O O (1 - - -) */  0x00dbb521
+/*  - - O (- - - N) */  0x00dc2db5
+/*  O O O (1 2 3 N) */  0x00dc83c5  // GV_StrCode("ロードサウンドパック") GM_LoadPack
+/*  - O O (1 - - -) */  0x00dd173e
+/*  - - O (- 2 - -) */  0x00dd5eb6
+/*  - - O (- 2 - -) */  0x00dd5eb7
+/*  O O O (1 2 - N) */  0x00dde914  // NewFogSet
+/*  O O O (1 2 3 N) */  0x00de07c0  // GV_StrCode("フォント初期化") NewFontInit
+/*  - O O (1 - - -) */  0x00de2c60
+/*  - O O (1 - - -) */  0x00de545a
+/*  - O O (1 2 - -) */  0x00deb2a3
+/*  O O O (1 2 - -) */  0x00dec9e1
+/*  - O O (1 - - -) */  0x00decc26
+/*  - O O (1 2 - -) */  0x00dee2e0
+/*  - O O (1 2 - -) */  0x00df1d9c
+/*  O O O (1 2 - -) */  0x00df4cae  // GV_StrCode("アイテムボックス") NewItemBox
+/*  - O O (1 2 - -) */  0x00e002ea
+/*  O O O (1 2 - -) */  0x00e08648
+/*  O O O (1 2 - -) */  0x00e0dbba  // GV_StrCode("２Ｄスプライト表示") New2DSprite
+/*  - O O (1 2 - -) */  0x00e0f9c7
+/*  - O O (1 2 - -) */  0x00e22b51
+/*  O O O (1 - - -) */  0x00e2808c
+/*  O O O (1 2 - -) */  0x00e29adb  // GV_StrCode("シナリオデモ開始") NewStartScenarioDemo
+/*  - O O (1 - - -) */  0x00e387af
+/*  - O O (1 2 - -) */  0x00e44f0c
+/*  - O O (1 - - -) */  0x00e4750f  // GV_StrCode("VecResize") NewGclResizeVector
+/*  - - O (- - - N) */  0x00e4b84a
+/*  - O O (1 - - -) */  0x00e5619d
+/*  - O O (1 - - -) */  0x00e5dfd7
+/*  O O O (1 2 - N) */  0x00e5fd50
+/*  - O O (1 2 - -) */  0x00e764b2
+/*  - O O (1 2 3 N) */  0x00e76d74  // NewGclVariableMove
+/*  - O O (1 2 - -) */  0x00e78c6d
+/*  - O O (1 - - -) */  0x00e7939b
+/*  O O O (1 2 - -) */  0x00e79927  // GV_StrCode("シナリオデモ終了") NewEndScenarioDemo
+/*  - - O (- 2 - N) */  0x00e7a1d7
+/*  - O O (1 - - -) */  0x00e81436
+/*  O O O (1 2 - -) */  0x00e82679
+/*  - O O (1 2 - -) */  0x00e84f76
+/*  - O O (1 - - -) */  0x00e923a5  // GV_StrCode("プレイヤーステータスＡＮＤ") PL_COM_GetPlayerStatusAnd
+/*  - O O (1 - - -) */  0x00e93330
+/*  O O O (1 2 - -) */  0x00e96d82  // GV_StrCode("無線システム") NewCodecDaemon
+/*  - - O (1 2 - -) */  0x00e99d79
+/*  - - O (- - - N) */  0x00e9cacf
+/*  - - O (1 2 - -) */  0x00e9fd79
+/*  - O O (1 2 - -) */  0x00ea1854
+/*  O O O (1 2 - -) */  0x00eacdac
+/*  - - O (- - - N) */  0x00eaf7bb
+/*  - O O (1 2 - -) */  0x00eb0f77
+/*  - O O (1 2 - -) */  0x00eb2429
+/*  - O - (- - - -) */  0x00eb660a
+/*  O O O (1 2 - -) */  0x00eb72e4
+/*  - O O (1 2 - -) */  0x00eb837a
+/*  - O O (1 - - -) */  0x00eb98e0  // GV_StrCode("ブラーエフェクト") NewBlur
+/*  - O O (1 - - -) */  0x00ec3235
+/*  O O O (1 2 3 -) */  0x00ec341f
+/*  - O O (1 - - -) */  0x00ec94ca
+/*  O O O (1 2 - -) */  0x00ed0fa0
+/*  - O O (1 - - -) */  0x00ed1c87
+/*  - O O (1 2 - -) */  0x00edbf7a
+/*  - O O (1 - - -) */  0x00edd516
+/*  - O O (1 2 - -) */  0x00edda6d
+/*  - - O (1 2 3 -) */  0x00ee47ad
+/*  - O O (1 2 - -) */  0x00ef16a0
+/*  O O O (1 2 - -) */  0x00ef8aaf
+/*  - - O (1 2 3 -) */  0x00f02397
+/*  - O O (1 2 - N) */  0x00f10849
+/*  - - O (- - 3 -) */  0x00f1745e
+/*  O O O (1 2 - -) */  0x00f19dce
+/*  - O O (1 - - -) */  0x00f2dfcd  // GV_StrCode("load_restart") NewLoadRestart
+/*  - O O (1 2 - -) */  0x00f32f4e
+/*  - - O (- - - N) */  0x00f3658f
+/*  - - O (1 2 - -) */  0x00f4cdf7
+/*  - O O (1 2 - -) */  0x00f526ea  // GV_StrCode("ペイン") NewPain
+/*  - O O (1 2 - -) */  0x00f53bd3  // GV_StrCode("プレイヤースタミナ加算") PL_COM_StaminaAdd
+/*  O O O (1 2 - -) */  0x00f552a3
+/*  - O O (1 2 - -) */  0x00f5ade7
+/*  - O O (1 2 - -) */  0x00f63a97
+/*  - O O (1 - - -) */  0x00f66375
+/*  - - O (- - - N) */  0x00f69343
+/*  - O O (1 2 - -) */  0x00f6a218
+/*  - O O (1 - - -) */  0x00f6ef99  // GV_StrCode("メインメニュー") NewMainMenuScn
+/*  - - O (- - - N) */  0x00f74d93
+/*  - - O (- - - N) */  0x00f75d58
+/*  - O O (1 - - -) */  0x00f7a440
+/*  - O O (1 2 - -) */  0x00f817d3  // GV_StrCode("プレイヤースタミナ減算") PL_COM_StaminaDec
+/*  - O O (1 - - -) */  0x00f8675e
+/*  - O O (1 2 - -) */  0x00f88982
+/*  - O O (1 2 - -) */  0x00f8e4bc
+/*  - O O (1 2 - -) */  0x00f8fbb2
+/*  - - O (- - - N) */  0x00faa832
+/*  - O O (1 2 - -) */  0x00fac9cf
+/*  - O O (1 2 - -) */  0x00fafbcd  // GV_StrCode("ステージ環境天候変更") GM_COM_SetEnvStage_SetWeather
+/*  O O O (1 2 - -) */  0x00fb50d6
+/*  - O O (1 - - -) */  0x00fb8044
+/*  O O O (1 2 - -) */  0x00fbbdba
+/*  O O O (1 2 - -) */  0x00fbeb7f  // GV_StrCode("ゲームオーバーチェック") GM_COM_IsGameOver
+/*  - O O (1 - - -) */  0x00fc9315
+/*  - - O (- - - N) */  0x00fca54f
+/*  - O O (1 2 - -) */  0x00fd6b3f  // GV_StrCode("アイテム数") GM_COM_InventoryItemNum
+/*  - O O (1 2 - -) */  0x00fd6c92
+/*  - O O (1 - - -) */  0x00fddbab
+/*  - O O (1 - - -) */  0x00fe6730  // GV_StrCode("sound_test") NewSoundTest
+/*  - O O (1 2 - -) */  0x00fe950a
+/*  - O O (1 - - -) */  0x00ff40ce
+/*  O O O (1 2 - N) */  0x00ff46e5
+/*  - - O (- - - N) */  0x00ff7af1
+/*  - O O (1 2 - -) */  0x00ff8e39
+/*  O O O (1 2 - N) */  0x00ffbe20
+/*  - O O (1 2 3 -) */  0x00ffbece  // GV_StrCode("MOVIE再生") NewMpegPssMovieStr
+/*  - O O (1 2 - -) */  0x00ffecfd
 
 /*--- Polygon Demo Charas ---*/
-#define CHARA_01000000          0x01000000
-#define CHARA_01000001          0x01000001
-#define CHARA_01000002          0x01000002
-#define CHARA_01000003          0x01000003
-#define CHARA_01000004          0x01000004
-#define CHARA_01000005          0x01000005
-#define CHARA_01000006          0x01000006
-#define CHARA_01000007          0x01000007
-#define CHARA_01000008          0x01000008
-#define CHARA_01000009          0x01000009
-#define CHARA_0100000a          0x0100000a
-#define CHARA_0100000b          0x0100000b
-#define CHARA_0100000c          0x0100000c
-#define CHARA_0100000d          0x0100000d
-#define CHARA_01000501          0x01000501
-#define CHARA_01000502          0x01000502
-#define CHARA_01000503          0x01000503
-#define CHARA_01000504          0x01000504
-#define CHARA_01000505          0x01000505
-#define CHARA_01000506          0x01000506
-#define CHARA_01000507          0x01000507
-#define CHARA_01000508          0x01000508
-#define CHARA_01000800          0x01000800
-#define CHARA_01000801          0x01000801
-#define CHARA_01000802          0x01000802
-#define CHARA_01000804          0x01000804
-#define CHARA_01000805          0x01000805
-#define CHARA_01000806          0x01000806
-#define CHARA_01000807          0x01000807
-#define CHARA_01000808          0x01000808
-#define CHARA_01000809          0x01000809
-#define CHARA_0100080a          0x0100080a
-#define CHARA_0100080b          0x0100080b
-#define CHARA_0100080d          0x0100080d
-#define CHARA_01001000          0x01001000
-#define CHARA_01001001          0x01001001
-#define CHARA_01001002          0x01001002
-#define CHARA_01001003          0x01001003
-#define CHARA_01001004          0x01001004
-#define CHARA_01001005          0x01001005
-#define CHARA_01001006          0x01001006
-#define CHARA_01001007          0x01001007
-#define CHARA_01001008          0x01001008
-#define CHARA_01001009          0x01001009
-#define CHARA_0100100a          0x0100100a
-#define CHARA_0100100b          0x0100100b
-#define CHARA_0100100c          0x0100100c
-#define CHARA_0100100e          0x0100100e
-#define CHARA_0100100f          0x0100100f
-#define CHARA_01001010          0x01001010
-#define CHARA_01001011          0x01001011
-#define CHARA_01001012          0x01001012
-#define CHARA_01001013          0x01001013
-#define CHARA_01001014          0x01001014
-#define CHARA_01001015          0x01001015
-#define CHARA_01001016          0x01001016
-#define CHARA_01001017          0x01001017
-#define CHARA_01001018          0x01001018
-#define CHARA_01001019          0x01001019
-#define CHARA_0100101a          0x0100101a
-#define CHARA_0100101b          0x0100101b
-#define CHARA_0100101c          0x0100101c
-#define CHARA_0100101d          0x0100101d
-#define CHARA_0100101e          0x0100101e
-#define CHARA_0100101f          0x0100101f
-#define CHARA_01001020          0x01001020
-#define CHARA_01001021          0x01001021
-#define CHARA_01001022          0x01001022
-#define CHARA_01001023          0x01001023
-#define CHARA_01001024          0x01001024
-#define CHARA_01001025          0x01001025
-#define CHARA_01001026          0x01001026
-#define CHARA_01001027          0x01001027
-#define CHARA_01001028          0x01001028
-#define CHARA_01001201          0x01001201
-#define CHARA_01001202          0x01001202
-#define CHARA_01001203          0x01001203
-#define CHARA_01001204          0x01001204
-#define CHARA_01001205          0x01001205
-#define CHARA_01001206          0x01001206
-#define CHARA_01001501          0x01001501
-#define CHARA_01001502          0x01001502
-#define CHARA_01001503          0x01001503
-#define CHARA_01001504          0x01001504
-#define CHARA_01001505          0x01001505
-#define CHARA_01001506          0x01001506
-#define CHARA_01001507          0x01001507
-#define CHARA_01001508          0x01001508
-#define CHARA_01001509          0x01001509
-#define CHARA_0100150a          0x0100150a
-#define CHARA_0100150b          0x0100150b
-#define CHARA_0100150c          0x0100150c
-#define CHARA_0100150d          0x0100150d
-#define CHARA_0100150e          0x0100150e
-#define CHARA_0100150f          0x0100150f
-#define CHARA_01001510          0x01001510
-#define CHARA_01001511          0x01001511
-#define CHARA_01001512          0x01001512
-#define CHARA_01001513          0x01001513
-#define CHARA_01001514          0x01001514
-#define CHARA_01001515          0x01001515
-#define CHARA_01001516          0x01001516
-#define CHARA_01001518          0x01001518
-#define CHARA_01001519          0x01001519
-#define CHARA_0100151a          0x0100151a
-#define CHARA_0100151b          0x0100151b
-#define CHARA_0100151c          0x0100151c
-#define CHARA_0100151d          0x0100151d
-#define CHARA_0100151e          0x0100151e
-#define CHARA_0100151f          0x0100151f
-#define CHARA_01001520          0x01001520
-#define CHARA_01001521          0x01001521
-#define CHARA_01001522          0x01001522
-#define CHARA_01001523          0x01001523
-#define CHARA_01001524          0x01001524
-#define CHARA_01001525          0x01001525
-#define CHARA_01001526          0x01001526
-#define CHARA_01001527          0x01001527
-#define CHARA_01001528          0x01001528
-#define CHARA_01001529          0x01001529
-#define CHARA_0100152a          0x0100152a
-#define CHARA_0100152b          0x0100152b
-#define CHARA_0100152c          0x0100152c
-#define CHARA_0100152d          0x0100152d
-#define CHARA_0100152e          0x0100152e
-#define CHARA_0100152f          0x0100152f
-#define CHARA_01001530          0x01001530
-#define CHARA_01001531          0x01001531
-#define CHARA_01001533          0x01001533
-#define CHARA_01001534          0x01001534
-#define CHARA_01001535          0x01001535
-#define CHARA_01001536          0x01001536
-#define CHARA_01001537          0x01001537
-#define CHARA_01001538          0x01001538
-#define CHARA_01001539          0x01001539
-#define CHARA_0100153a          0x0100153a
-#define CHARA_0100153b          0x0100153b
-#define CHARA_0100153d          0x0100153d
-#define CHARA_0100153e          0x0100153e
-#define CHARA_0100153f          0x0100153f
-#define CHARA_01001540          0x01001540
-#define CHARA_01001541          0x01001541
-#define CHARA_01001542          0x01001542
-#define CHARA_01001543          0x01001543
-#define CHARA_01001544          0x01001544
-#define CHARA_01001545          0x01001545
-#define CHARA_01001613          0x01001613
-#define CHARA_01001800          0x01001800
-#define CHARA_01001801          0x01001801
-#define CHARA_01001802          0x01001802
-#define CHARA_01001803          0x01001803
-#define CHARA_01001804          0x01001804
-#define CHARA_01001805          0x01001805
-#define CHARA_01001806          0x01001806
-#define CHARA_01001807          0x01001807
-#define CHARA_01001808          0x01001808
-#define CHARA_01001809          0x01001809
-#define CHARA_0100180a          0x0100180a
-#define CHARA_0100180b          0x0100180b
-#define CHARA_0100180c          0x0100180c
-#define CHARA_0100180d          0x0100180d
-#define CHARA_0100180e          0x0100180e
-#define CHARA_0100180f          0x0100180f
-#define CHARA_01001811          0x01001811
-#define CHARA_01002000          0x01002000  // NewEffectCallEmit_TGS2005_2000Launch (?)
-#define CHARA_01002001          0x01002001
-#define CHARA_01002002          0x01002002
-#define CHARA_01002003          0x01002003
-#define CHARA_01002004          0x01002004
-#define CHARA_01002006          0x01002006
-#define CHARA_01002007          0x01002007
-#define CHARA_0100200a          0x0100200a
-#define CHARA_0100200c          0x0100200c
-#define CHARA_0100200e          0x0100200e
-#define CHARA_0100200f          0x0100200f
-#define CHARA_01002010          0x01002010
-#define CHARA_01002011          0x01002011
-#define CHARA_01002012          0x01002012
-#define CHARA_01002013          0x01002013
-#define CHARA_01002014          0x01002014
-#define CHARA_01002015          0x01002015
-#define CHARA_01002016          0x01002016
-#define CHARA_01002204          0x01002204
-#define CHARA_01002501          0x01002501
-#define CHARA_01002502          0x01002502
-#define CHARA_01002503          0x01002503
-#define CHARA_01002504          0x01002504
-#define CHARA_01002505          0x01002505
-#define CHARA_01002506          0x01002506  // NewCommonParticle_Demo_2506Launch
-#define CHARA_01002507          0x01002507
-#define CHARA_01002508          0x01002508
-#define CHARA_01002509          0x01002509
-#define CHARA_01002510          0x01002510
-#define CHARA_01002511          0x01002511
-#define CHARA_01002512          0x01002512
-#define CHARA_01002513          0x01002513
-#define CHARA_01002514          0x01002514
-#define CHARA_01002515          0x01002515
-#define CHARA_01002516          0x01002516
-#define CHARA_01002517          0x01002517
-#define CHARA_01002518          0x01002518
-#define CHARA_01002519          0x01002519
-#define CHARA_0100251a          0x0100251a
-#define CHARA_0100251b          0x0100251b
-#define CHARA_0100251c          0x0100251c
-#define CHARA_0100251d          0x0100251d
-#define CHARA_0100251e          0x0100251e
-#define CHARA_0100251f          0x0100251f
-#define CHARA_01002520          0x01002520
-#define CHARA_01002521          0x01002521
-#define CHARA_01002522          0x01002522
-#define CHARA_01002523          0x01002523
-#define CHARA_01002524          0x01002524
-#define CHARA_01002526          0x01002526
-#define CHARA_01002527          0x01002527
-#define CHARA_01002528          0x01002528
-#define CHARA_01002529          0x01002529
-#define CHARA_0100252a          0x0100252a
-#define CHARA_0100252c          0x0100252c
-#define CHARA_0100252d          0x0100252d
-#define CHARA_0100252e          0x0100252e
-#define CHARA_0100252f          0x0100252f
-#define CHARA_01002530          0x01002530
-#define CHARA_01002800          0x01002800
-#define CHARA_01002801          0x01002801
-#define CHARA_01002802          0x01002802
-#define CHARA_01002804          0x01002804
-#define CHARA_01002806          0x01002806
-#define CHARA_01002807          0x01002807
-#define CHARA_01002808          0x01002808
-#define CHARA_01002809          0x01002809
-#define CHARA_0100280a          0x0100280a
-#define CHARA_0100280b          0x0100280b
-#define CHARA_0100280c          0x0100280c
-#define CHARA_0100280d          0x0100280d
-#define CHARA_0100280e          0x0100280e
-#define CHARA_0100280f          0x0100280f
-#define CHARA_01002810          0x01002810
-#define CHARA_01002811          0x01002811
-#define CHARA_01002812          0x01002812
-#define CHARA_01002813          0x01002813
-#define CHARA_01002815          0x01002815
-#define CHARA_01002816          0x01002816
-#define CHARA_01002817          0x01002817
-#define CHARA_01002818          0x01002818
-#define CHARA_01002819          0x01002819
-#define CHARA_0100281a          0x0100281a
-#define CHARA_01003d00          0x01003d00
-#define CHARA_0100f500          0x0100f500
-#define CHARA_0100f501          0x0100f501
-#define CHARA_0100f502          0x0100f502
-#define CHARA_0100f503          0x0100f503
-#define CHARA_0100f504          0x0100f504
-#define CHARA_0100f505          0x0100f505
-#define CHARA_0100ff01          0x0100ff01
-#define CHARA_0100ff03          0x0100ff03
-#define CHARA_0100ff05          0x0100ff05  // NewDemoEffectInitialize_ff05Launch
-#define CHARA_0100ff08          0x0100ff08  // NewShadowRange_DemoWrap_ff08Launch
-#define CHARA_0100ff09          0x0100ff09  // NewFogAnimDemo_ff09Launch
-#define CHARA_0100ff0a          0x0100ff0a
-#define CHARA_0100ff0b          0x0100ff0b
-#define CHARA_0100ff0c          0x0100ff0c
-#define CHARA_0100ff0d          0x0100ff0d  // NewEffectMeshVisInv_ff0dLaunch
-#define CHARA_0100ff0e          0x0100ff0e  // NewExposureControl_DemoWrap_ff0eLaunch
-#define CHARA_0100ff0f          0x0100ff0f  // NewMGS3Glare_DemoWrap_ff0fLaunch
-#define CHARA_0100ff10          0x0100ff10
-#define CHARA_0100ff11          0x0100ff11  // NewDepthOfField_MGS3Compatible_ff11Launch
-#define CHARA_0100ff13          0x0100ff13
-#define CHARA_0100ff14          0x0100ff14
-#define CHARA_0100ff16          0x0100ff16
-#define CHARA_0100ff17          0x0100ff17
-#define CHARA_0100fff2          0x0100fff2  // GlobalEffect_SetEnvRange_fff2Launch
-#define CHARA_0100fff3          0x0100fff3  // DM_ChangeAmbient_fff3Launch
-#define CHARA_0100fff4          0x0100fff4  // DM_ChangeParallel_fff4Launch
-#define CHARA_0100fff5          0x0100fff5
-#define CHARA_0110ff12          0x0110ff12
-#define CHARA_0140ff04          0x0140ff04
-#define CHARA_01f0f506          0x01f0f506
+/*  O O O (1 - - -) */  0x01000000
+/*  O O O (1 2 - -) */  0x01000001
+/*  O O O (1 - - -) */  0x01000002
+/*  O O O (1 - - -) */  0x01000003
+/*  O O O (1 - - -) */  0x01000004
+/*  O O O (1 - - -) */  0x01000005
+/*  O O O (1 - - -) */  0x01000006
+/*  O O O (1 - - -) */  0x01000007
+/*  O O O (1 - - -) */  0x01000008
+/*  O O O (1 - - -) */  0x01000009
+/*  O O O (1 - - -) */  0x0100000a
+/*  - O O (1 - - -) */  0x0100000b
+/*  - O O (1 - - -) */  0x0100000c
+/*  O O O (1 - - -) */  0x0100000d
+/*  - O O (1 - - -) */  0x01000501
+/*  - O O (1 - - -) */  0x01000502
+/*  O O O (1 - - -) */  0x01000503
+/*  - O O (1 - - -) */  0x01000504
+/*  - O O (1 - - -) */  0x01000505
+/*  - O O (1 - - -) */  0x01000506
+/*  - O O (1 - - -) */  0x01000507
+/*  - O O (1 - - -) */  0x01000508
+/*  O O O (1 - - -) */  0x01000800
+/*  O O O (1 - - -) */  0x01000801
+/*  O O O (1 - - -) */  0x01000802
+/*  - O O (1 - - -) */  0x01000804
+/*  - O O (1 - - -) */  0x01000805
+/*  - O O (1 - - -) */  0x01000806
+/*  - O O (1 - - -) */  0x01000807
+/*  - O O (1 - - -) */  0x01000808
+/*  - O O (1 - - -) */  0x01000809
+/*  - O O (1 - - -) */  0x0100080a
+/*  - O O (1 - - -) */  0x0100080b
+/*  - O O (1 - - -) */  0x0100080d
+/*  O O O (1 - - -) */  0x01001000
+/*  O O O (1 - - -) */  0x01001001
+/*  - O O (1 - - -) */  0x01001002
+/*  - O O (1 - - -) */  0x01001003
+/*  O O O (1 - - -) */  0x01001004
+/*  O O O (1 - - -) */  0x01001005
+/*  O O O (1 - - -) */  0x01001006
+/*  O O O (1 - - -) */  0x01001007
+/*  O O O (1 - - -) */  0x01001008
+/*  O O O (1 - - -) */  0x01001009
+/*  O O O (1 - - -) */  0x0100100a
+/*  O O O (1 - - -) */  0x0100100b
+/*  - O O (1 - - -) */  0x0100100c
+/*  O O O (1 - - -) */  0x0100100e
+/*  O O O (1 - - -) */  0x0100100f
+/*  O O O (1 - - -) */  0x01001010
+/*  - O O (1 - - -) */  0x01001011
+/*  - O O (1 - - -) */  0x01001012
+/*  - O O (1 - - -) */  0x01001013
+/*  - O O (1 - - -) */  0x01001014
+/*  O O O (1 - - -) */  0x01001015
+/*  O O O (1 - - -) */  0x01001016
+/*  O O O (1 - - -) */  0x01001017
+/*  - O O (1 - - -) */  0x01001018
+/*  - O O (1 - - -) */  0x01001019
+/*  - O O (1 - - -) */  0x0100101a
+/*  - O O (1 - - -) */  0x0100101b
+/*  - O O (1 - - -) */  0x0100101c
+/*  O O O (1 - - -) */  0x0100101d
+/*  - O O (1 - - -) */  0x0100101e
+/*  O O O (1 - - -) */  0x0100101f
+/*  O O O (1 - - -) */  0x01001020
+/*  O O O (1 - - -) */  0x01001021
+/*  - O O (1 - - -) */  0x01001022
+/*  O O O (1 - - -) */  0x01001023
+/*  O O O (1 - - -) */  0x01001024
+/*  - O O (1 - - -) */  0x01001025
+/*  - O O (1 - - -) */  0x01001026
+/*  - O O (1 - - -) */  0x01001027
+/*  - O O (1 - - -) */  0x01001028
+/*  - O O (1 - - -) */  0x01001201
+/*  - O O (1 - - -) */  0x01001202
+/*  - O O (1 - - -) */  0x01001203
+/*  - O O (1 - - -) */  0x01001204
+/*  - O O (1 - - -) */  0x01001205
+/*  - O O (1 - - -) */  0x01001206
+/*  - O O (1 - - -) */  0x01001501
+/*  - O O (1 - - -) */  0x01001502
+/*  - O O (1 - - -) */  0x01001503
+/*  - O O (1 - - -) */  0x01001504
+/*  - O O (1 - - -) */  0x01001505
+/*  - O O (1 - - -) */  0x01001506
+/*  - O O (1 - - -) */  0x01001507
+/*  - O O (1 - - -) */  0x01001508
+/*  - O O (1 - - -) */  0x01001509
+/*  - O O (1 - - -) */  0x0100150a
+/*  - O O (1 - - -) */  0x0100150b
+/*  - O O (1 - - -) */  0x0100150c
+/*  - O O (1 - - -) */  0x0100150d
+/*  - O O (1 - - -) */  0x0100150e
+/*  - O O (1 - - -) */  0x0100150f
+/*  - O O (1 - - -) */  0x01001510
+/*  - O O (1 - - -) */  0x01001511
+/*  - O O (1 - - -) */  0x01001512
+/*  - O O (1 - - -) */  0x01001513
+/*  - O O (1 - - -) */  0x01001514
+/*  - O O (1 - - -) */  0x01001515
+/*  - O O (1 - - -) */  0x01001516
+/*  - O O (1 - - -) */  0x01001518
+/*  - O O (1 - - -) */  0x01001519
+/*  - O O (1 - - -) */  0x0100151a
+/*  - O O (1 - - -) */  0x0100151b
+/*  - O O (1 - - -) */  0x0100151c
+/*  - O O (1 - - -) */  0x0100151d
+/*  - O O (1 - - -) */  0x0100151e
+/*  - O O (1 - - -) */  0x0100151f
+/*  - O O (1 - - -) */  0x01001520
+/*  - O O (1 - - -) */  0x01001521
+/*  - O O (1 - - -) */  0x01001522
+/*  - O O (1 - - -) */  0x01001523
+/*  - O O (1 - - -) */  0x01001524
+/*  - O O (1 - - -) */  0x01001525
+/*  - O O (1 - - -) */  0x01001526
+/*  - O O (1 - - -) */  0x01001527
+/*  - O O (1 - - -) */  0x01001528
+/*  - O O (1 - - -) */  0x01001529
+/*  - O O (1 - - -) */  0x0100152a
+/*  - O O (1 - - -) */  0x0100152b
+/*  - O O (1 - - -) */  0x0100152c
+/*  - O O (1 - - -) */  0x0100152d
+/*  - O O (1 - - -) */  0x0100152e
+/*  - O O (1 - - -) */  0x0100152f
+/*  - O O (1 - - -) */  0x01001530
+/*  - O O (1 - - -) */  0x01001531
+/*  - O O (1 - - -) */  0x01001533
+/*  - O O (1 - - -) */  0x01001534
+/*  - O O (1 - - -) */  0x01001535
+/*  - O O (1 - - -) */  0x01001536
+/*  - O O (1 - - -) */  0x01001537
+/*  - O O (1 - - -) */  0x01001538
+/*  - O O (1 - - -) */  0x01001539
+/*  - O O (1 - - -) */  0x0100153a
+/*  - O O (1 - - -) */  0x0100153b
+/*  - O O (1 - - -) */  0x0100153d
+/*  - O O (1 - - -) */  0x0100153e
+/*  - O O (1 - - -) */  0x0100153f
+/*  - O O (1 - - -) */  0x01001540
+/*  - O O (1 - - -) */  0x01001541
+/*  - O O (1 - - -) */  0x01001542
+/*  - O O (1 - - -) */  0x01001543
+/*  - O O (1 - - -) */  0x01001544
+/*  - O O (1 - - -) */  0x01001545
+/*  - O O (1 - - -) */  0x01001613
+/*  - O O (1 - - -) */  0x01001800
+/*  - O O (1 - - -) */  0x01001801
+/*  - O O (1 - - -) */  0x01001802
+/*  O O O (1 - - -) */  0x01001803
+/*  - O O (1 - - -) */  0x01001804
+/*  - O O (1 - - -) */  0x01001805
+/*  - O O (1 - - -) */  0x01001806
+/*  - O O (1 - - -) */  0x01001807
+/*  - O O (1 - - -) */  0x01001808
+/*  - O O (1 - - -) */  0x01001809
+/*  - O O (1 - - -) */  0x0100180a
+/*  - O O (1 - - -) */  0x0100180b
+/*  - O O (1 - - -) */  0x0100180c
+/*  - O O (1 - - -) */  0x0100180d
+/*  - O O (1 - - -) */  0x0100180e
+/*  - O O (1 - - -) */  0x0100180f
+/*  - O O (1 - - -) */  0x01001811
+/*  - O O (1 - - -) */  0x01002000  // NewEffectCallEmit_TGS2005_2000Launch (?)
+/*  - O O (1 - - -) */  0x01002001
+/*  O O O (1 - - -) */  0x01002002
+/*  O O O (1 - - -) */  0x01002003
+/*  O O O (1 - - -) */  0x01002004
+/*  O O O (1 - - -) */  0x01002006
+/*  O O O (1 - - -) */  0x01002007
+/*  - O O (1 - - -) */  0x0100200a
+/*  O O O (1 - - -) */  0x0100200c
+/*  - O O (1 - - -) */  0x0100200e
+/*  O O O (1 - - -) */  0x0100200f
+/*  - O O (1 - - -) */  0x01002010
+/*  - O O (1 - - -) */  0x01002011
+/*  - O O (1 - - -) */  0x01002012
+/*  - O O (1 - - -) */  0x01002013
+/*  - O O (1 - - -) */  0x01002014
+/*  - O O (1 - - -) */  0x01002015
+/*  - O O (1 - - -) */  0x01002016
+/*  - O O (1 - - -) */  0x01002204
+/*  - O O (1 - - -) */  0x01002501
+/*  - O O (1 - - -) */  0x01002502
+/*  - O O (1 - - -) */  0x01002503
+/*  - O O (1 - - -) */  0x01002504
+/*  - O O (1 - - -) */  0x01002505
+/*  O O O (1 - - -) */  0x01002506  // NewCommonParticle_Demo_2506Launch
+/*  O O O (1 - - -) */  0x01002507
+/*  - O O (1 - - -) */  0x01002508
+/*  - O O (1 - - -) */  0x01002509
+/*  - O O (1 - - -) */  0x01002510
+/*  - O O (1 - - -) */  0x01002511
+/*  - O O (1 - - -) */  0x01002512
+/*  - O O (1 - - -) */  0x01002513
+/*  - O O (1 - - -) */  0x01002514
+/*  - O O (1 - - -) */  0x01002515
+/*  - O O (1 - - -) */  0x01002516
+/*  - O O (1 - - -) */  0x01002517
+/*  - O O (1 - - -) */  0x01002518
+/*  - O O (1 - - -) */  0x01002519
+/*  - O O (1 - - -) */  0x0100251a
+/*  - O O (1 - - -) */  0x0100251b
+/*  - O O (1 - - -) */  0x0100251c
+/*  - O O (1 - - -) */  0x0100251d
+/*  - O O (1 - - -) */  0x0100251e
+/*  - O O (1 - - -) */  0x0100251f
+/*  - O O (1 - - -) */  0x01002520
+/*  - O O (1 - - -) */  0x01002521
+/*  - O O (1 - - -) */  0x01002522
+/*  - O O (1 - - -) */  0x01002523
+/*  - O O (1 - - -) */  0x01002524
+/*  - O O (1 - - -) */  0x01002526
+/*  - O O (1 - - -) */  0x01002527
+/*  - O O (1 - - -) */  0x01002528
+/*  - O O (1 - - -) */  0x01002529
+/*  - O O (1 - - -) */  0x0100252a
+/*  - O O (1 - - -) */  0x0100252c
+/*  - O O (1 - - -) */  0x0100252d
+/*  - O O (1 - - -) */  0x0100252e
+/*  - O O (1 - - -) */  0x0100252f
+/*  - O O (1 - - -) */  0x01002530
+/*  O O O (1 - - -) */  0x01002800
+/*  - O O (1 - - -) */  0x01002801
+/*  - O O (1 - - -) */  0x01002802
+/*  - O O (1 - - -) */  0x01002804
+/*  - O O (1 - - -) */  0x01002806
+/*  - O O (1 - - -) */  0x01002807
+/*  - O O (1 - - -) */  0x01002808
+/*  - O O (1 - - -) */  0x01002809
+/*  - O O (1 - - -) */  0x0100280a
+/*  - O O (1 - - -) */  0x0100280b
+/*  - O O (1 - - -) */  0x0100280c
+/*  - O O (1 - - -) */  0x0100280d
+/*  - O O (1 - - -) */  0x0100280e
+/*  - O O (1 - - -) */  0x0100280f
+/*  - O O (1 - - -) */  0x01002810
+/*  - O O (1 - - -) */  0x01002811
+/*  - O O (1 - - -) */  0x01002812
+/*  - O O (1 - - -) */  0x01002813
+/*  - O O (1 - - -) */  0x01002815
+/*  - O O (1 - - -) */  0x01002816
+/*  - O O (1 - - -) */  0x01002817
+/*  - O O (1 - - -) */  0x01002818
+/*  - O O (1 - - -) */  0x01002819
+/*  - O O (1 - - -) */  0x0100281a
+/*  - O O (1 - - -) */  0x01003d00
+/*  - O O (1 - - -) */  0x0100f500
+/*  - O O (1 - - -) */  0x0100f501
+/*  - O O (1 - - -) */  0x0100f502
+/*  - O O (1 - - -) */  0x0100f503
+/*  - O O (1 - - -) */  0x0100f504
+/*  - O O (1 - - -) */  0x0100f505
+/*  O O O (1 - - -) */  0x0100ff01
+/*  O O O (1 - - -) */  0x0100ff03
+/*  O O O (1 2 - -) */  0x0100ff05  // NewDemoEffectInitialize_ff05Launch
+/*  O O O (1 - - -) */  0x0100ff08  // NewShadowRange_DemoWrap_ff08Launch
+/*  O O O (1 - - -) */  0x0100ff09  // NewFogAnimDemo_ff09Launch
+/*  O O O (1 - - -) */  0x0100ff0a
+/*  O O O (1 - - -) */  0x0100ff0b
+/*  O O O (1 - - -) */  0x0100ff0c
+/*  - O O (1 2 - -) */  0x0100ff0d  // NewEffectMeshVisInv_ff0dLaunch
+/*  O O O (1 2 - -) */  0x0100ff0e  // NewExposureControl_DemoWrap_ff0eLaunch
+/*  O O O (1 - - -) */  0x0100ff0f  // NewMGS3Glare_DemoWrap_ff0fLaunch
+/*  O O O (1 - - -) */  0x0100ff10
+/*  - O O (1 - - -) */  0x0100ff11  // NewDepthOfField_MGS3Compatible_ff11Launch
+/*  - O O (1 - - -) */  0x0100ff13
+/*  O O O (1 - - -) */  0x0100ff14
+/*  - O O (1 - - -) */  0x0100ff16
+/*  - O O (1 - - -) */  0x0100ff17
+/*  O O O (1 2 - -) */  0x0100fff2  // GlobalEffect_SetEnvRange_fff2Launch
+/*  O O O (1 2 - -) */  0x0100fff3  // DM_ChangeAmbient_fff3Launch
+/*  O O O (1 - - -) */  0x0100fff4  // DM_ChangeParallel_fff4Launch
+/*  O O O (1 - - -) */  0x0100fff5
+/*  O O O (1 - - -) */  0x0110ff12
+/*  - O O (1 - - -) */  0x0140ff04
+/*  - O O (1 - - -) */  0x01f0f506
 
 /*--- 0x02 Charas ---*/
-#define CHARA_0203737f          0x0203737f
-#define CHARA_0204443e          0x0204443e
-#define CHARA_022134b7          0x022134b7
-#define CHARA_02269716          0x02269716
-#define CHARA_02456e88          0x02456e88
-#define CHARA_02675751          0x02675751
-#define CHARA_0267973f          0x0267973f
-#define CHARA_026b7d08          0x026b7d08
-#define CHARA_027bd9dd          0x027bd9dd
-#define CHARA_027f461f          0x027f461f
-#define CHARA_027f4620          0x027f4620
-#define CHARA_027f4621          0x027f4621
-#define CHARA_027f4622          0x027f4622
-#define CHARA_027fb217          0x027fb217
-#define CHARA_0281d9dd          0x0281d9dd
-#define CHARA_028a9405          0x028a9405
-#define CHARA_02914e5e          0x02914e5e
-#define CHARA_02914e5f          0x02914e5f
-#define CHARA_02994e5e          0x02994e5e
-#define CHARA_02994e5f          0x02994e5f
-#define CHARA_02994e60          0x02994e60
-#define CHARA_029bd9de          0x029bd9de
-#define CHARA_02bb757f          0x02bb757f
-#define CHARA_02c2489d          0x02c2489d
-#define CHARA_02c2489e          0x02c2489e
-#define CHARA_02c2489f          0x02c2489f
-#define CHARA_02df898d          0x02df898d
-#define CHARA_02e4dd9e          0x02e4dd9e
-#define CHARA_02f25bf9          0x02f25bf9
-#define CHARA_02fc4a1c          0x02fc4a1c
-#define CHARA_02fd6fd5          0x02fd6fd5
-#define CHARA_02ff181e          0x02ff181e
-#define CHARA_02ff3ddc          0x02ff3ddc
-#define CHARA_02ff3ddd          0x02ff3ddd
+/*  O O O (1 2 - N) */  0x0203737f
+/*  O O O (1 2 - N) */  0x0204443e
+/*  - O O (1 2 - N) */  0x022134b7
+/*  - O O (1 2 - -) */  0x02269716
+/*  - O O (1 2 - -) */  0x02456e88
+/*  - O O (- 2 - -) */  0x02675751
+/*  - O O (1 2 - -) */  0x0267973f
+/*  O O O (1 2 - N) */  0x026b7d08
+/*  - O O (1 2 - N) */  0x027bd9dd
+/*  O O O (1 2 - N) */  0x027f461f
+/*  O O O (1 2 - N) */  0x027f4620
+/*  O O O (1 2 - N) */  0x027f4621
+/*  O O O (1 2 - N) */  0x027f4622
+/*  - O O (1 2 - -) */  0x027fb217
+/*  O O O (1 2 - N) */  0x0281d9dd
+/*  O O O (1 2 - -) */  0x028a9405
+/*  O O O (1 2 - N) */  0x02914e5e
+/*  - O O (1 2 - N) */  0x02914e5f
+/*  - O O (1 2 - -) */  0x02994e5e
+/*  - O O (1 2 - N) */  0x02994e5f
+/*  - O O (1 2 - N) */  0x02994e60
+/*  - O O (1 2 - N) */  0x029bd9de
+/*  O O O (1 2 - N) */  0x02bb757f
+/*  O O O (1 2 - N) */  0x02c2489d
+/*  O O O (1 2 - N) */  0x02c2489e
+/*  O O O (1 2 - N) */  0x02c2489f
+/*  O O O (1 2 - N) */  0x02df898d
+/*  - O O (1 2 - N) */  0x02e4dd9e
+/*  O O O (1 2 - N) */  0x02f25bf9
+/*  O O O (1 2 - N) */  0x02fc4a1c
+/*  O O O (1 2 - N) */  0x02fd6fd5
+/*  - O O (1 - - N) */  0x02ff181e
+/*  O O O (1 2 - N) */  0x02ff3ddc
+/*  O O O (1 2 - N) */  0x02ff3ddd
 
+#endif // 0
 #endif // {{{ END OF FILE }}}
