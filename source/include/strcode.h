@@ -40,7 +40,7 @@
 /*  - O O (1 2 - N) */  0x00001846  // GV_StrCode("紙") NewYMPaper
 /*  - O O (1 - - N) */  0x000018e3  // GV_StrCode("雪") NewSnow
 /*  O O O (1 - - -) */  0x00001933  // GV_StrCode("蝶") NewButterFly
-/*  - O O (1 2 - N) */  0x00003d59
+/*  - O O (1 2 - N) */  0x00003d59  // GV_StrCode("ステージ環境time") COM_GetStageEnvironmentTime
 /*  - O O (1 - - -) */  0x000063ab
 /*  - O O (1 2 - -) */  0x00009c13  // NewRiverbBase_Gcl
 /*  - O O (1 2 - -) */  0x00019a53  // GV_StrCode("cos") NewGclCos
@@ -51,7 +51,7 @@
 /*  - O O (1 - - -) */  0x00030464  // GV_StrCode("メインメニュー設定") COM_SetMainMenu
 /*  - O O (1 - - -) */  0x00036a1d  // NewOCE_211
 /*  - O O (1 - - -) */  0x000406a2
-/*  - - O (- 2 3 -) */  0x0004b093
+/*  - - O (- 2 3 -) */  0x0004b093  // GV_StrCode("メニューマン開始") COM_StartMenuMan
 /*  - - O (1 2 - N) */  0x0004effa
 /*  O O O (1 2 3 N) */  0x00053da0  // GV_StrCode("変数初期化") NewGclVarClear
 /*  - O O (1 - - -) */  0x0005e0ab  // GV_StrCode("雨波紋マネージャー") NewRainWaveManager
@@ -71,7 +71,7 @@
 /*  O O O (1 2 - -) */  0x000a06c7  // GV_StrCode("ユニットコマンダー") NewUnitCommander
 /*  - O O (1 2 - -) */  0x000a3e0b  // GV_StrCode("ドア状態取得") COM_DoorGetLockStatus
 /*  - - O (1 2 - N) */  0x000b17f8  // GV_StrCode("平行カメラ") NewSphericalCamera
-/*  O O O (1 2 - -) */  0x000b56f4
+/*  O O O (1 2 - -) */  0x000b56f4  // GV_StrCode("仮死チェック") PL_COM_GetPlayerStatusFakeDeath
 /*  - O O (1 2 - -) */  0x000bf5f2  // GV_StrCode("クリアリング設定") COM_SetClearingData
 /*  - O O (1 2 - -) */  0x000c4faf
 /*  - O O (1 2 - -) */  0x000c7ada  // NewRouteEnemy
@@ -79,7 +79,7 @@
 /*  - O O (1 2 - -) */  0x000c942e
 /*  - O O (1 - - -) */  0x000cd3af  // GV_StrCode("スペシャルモード設定") COM_SetSpecialMode
 /*  - O O (1 2 - -) */  0x000d02fd  // GV_StrCode("鏡面モデル管理") NewMirrorControl
-/*  - O O (1 - - -) */  0x000d7c37
+/*  - O O (1 - - -) */  0x000d7c37  // GV_StrCode("敵兵ルート変更") COM_ChangeEnemyRoute
 /*  - O O (1 - - -) */  0x000d9578
 /*  - O O (1 - - -) */  0x000dcfb6
 /*  - O O (1 - - -) */  0x000dd485  // GV_StrCode("電撃鉄条網") NewStageWireBlitz
@@ -113,8 +113,8 @@
 /*  - O O (1 2 - -) */  0x0015fb8b
 /*  - O O (1 - - -) */  0x0017a281
 /*  O O O (1 2 - -) */  0x0018227c
-/*  - O - (- - - -) */  0x00182ad7
-/*  - O O (1 2 - -) */  0x00182db4
+/*  - O - (- - - -) */  0x00182ad7  // GV_StrCode("カムフラダウンロード設定") COM_ConfigureCamouflageDownload
+/*  - O O (1 2 - -) */  0x00182db4  // GV_StrCode("サイドカーイベント音声管理コマンド") COM_ControlSidecarEventVox
 /*  O O O (1 2 - N) */  0x00182f0b
 /*  O O O (1 2 - -) */  0x0018d40b  // GV_StrCode("字幕制御") NewJimakuControl
 /*  - - O (- - - N) */  0x00190342
@@ -126,30 +126,30 @@
 /*  - O O (1 2 - -) */  0x0019dc5f
 /*  - - O (- - 3 -) */  0x001a273a  // GV_StrCode("タイトルＤＩＳＣ３") NewTitleDisc3
 /*  - - O (- - - N) */  0x001a7e08
-/*  - O - (- - - -) */  0x001aae5f
+/*  - O - (- - - -) */  0x001aae5f  // GV_StrCode("StreamStatus") NewStreamStatus
 /*  O O O (1 2 - -) */  0x001af92a  // GV_StrCode("レーダー") NewRadar
 /*  - O O (1 2 - -) */  0x001ba50e
 /*  - O O (1 2 3 -) */  0x001c2370  // GV_StrCode("アイテムフェイスペイント設定") GM_COM_InventoryFacePaintEnable
 /*  - O O (1 - - -) */  0x001c5d31
 /*  - O O (1 - - -) */  0x001d65f8  // GV_StrCode("鳴子トラップ") NewWiredClapper
-/*  - - O (- - - N) */  0x001e226c  // ComGetCurrentRule
+/*  - - O (- - - N) */  0x001e226c  // GV_StrCode("現在ルール取得") COM_GetCurrentRule
 /*  - O O (1 - - -) */  0x001f119a  // GV_StrCode("エンディング") NewEnding
 /*  - - O (- - - N) */  0x001f1ae9  // GV_StrCode("オンライン２Ｄマップ") NewOnline2DMap
 /*  O O O (1 2 - N) */  0x0020377d
 /*  O O O (1 2 - -) */  0x002056f8
 /*  - O O (1 - - -) */  0x0020f5a1
 /*  - O O (1 2 - -) */  0x002156c2
-/*  - O O (1 2 - -) */  0x00232853  // NewBrkTargetBox
+/*  - O O (1 2 - -) */  0x00232853  // GV_StrCode("汎用ターゲットボックス") NewBrkTargetBox
 /*  O O O (1 2 - -) */  0x00236330  // GV_StrCode("水面監視") NewChackWaterSurface_Gcl
 /*  - O O (1 2 - -) */  0x00240e13
-/*  - - O (1 2 - -) */  0x00242db9
+/*  - - O (1 2 - -) */  0x00242db9  // GV_StrCode("平行カメラターン設定") COM_SetParallelCameraTurn
 /*  - - O (- - - N) */  0x002431fb
 /*  - - O (- - - N) */  0x00246285
 /*  - - O (- - - N) */  0x0024b801
 /*  - O O (1 - - -) */  0x0025849f  // NewWaterFallSmoke_s151a
 /*  O O O (1 2 3 N) */  0x0025e019  // GV_StrCode("ＢＧＭストリーム設定") COM_BgmManagerSetStreamPos
 /*  - O O (1 - - -) */  0x00264a32  // GV_StrCode("ソロー") NewBossSorrow
-/*  - - O (- - - N) */  0x0027b5ee
+/*  - - O (- - - N) */  0x0027b5ee  // GV_StrCode("オンラインメニューリソース") COM_SetOnlineMenuResources
 /*  - O O (1 2 3 -) */  0x00283977  // GV_StrCode("片目主観") NewYMFPVOneEye
 /*  - O O (1 - - -) */  0x00289035
 /*  - - O (- - - N) */  0x0028a0fd
@@ -160,8 +160,8 @@
 /*  - - O (- - - N) */  0x002abfa6
 /*  - O O (- 2 - -) */  0x002ac7e3  // GV_StrCode("ピポサル") NewPipoSaru
 /*  - O O (1 2 - -) */  0x002ae72c  // GV_StrCode("ケロタン") NewYMKerotan
-/*  - O O (1 - - -) */  0x002af8ee
-/*  O O O (1 2 - N) */  0x002b2336  // NewModelUVAnime_Gcl
+/*  - O O (1 - - -) */  0x002af8ee  // GetBananaUnlockResult [Checks SvM save progress at start of SE new game for banana camo & monkey mask unlocks]
+/*  O O O (1 2 - N) */  0x002b2336  // GV_StrCode("汎用モデルＵＶアニメーション") NewModelUVAnime_Gcl
 /*  O O O (1 2 - N) */  0x002bbe1e
 /*  - O O (1 - - -) */  0x002c7dbf
 /*  - O O (1 2 - -) */  0x002cb94b
@@ -178,7 +178,7 @@
 /*  O O O (1 2 - -) */  0x0030ca90  // GV_StrCode("ＨＱコマンダー") NewHeadQuarterCommander
 /*  - O O (1 2 - -) */  0x003120ee
 /*  - O O (1 2 - -) */  0x00316839
-/*  - O O (1 2 - -) */  0x00317ba4
+/*  - O O (1 2 - -) */  0x00317ba4  // GV_StrCode("汎用壊れ物非表示") COM_HideGenericBreakable
 /*  - O O (1 2 - -) */  0x003190fc  // GV_StrCode("ＮＰＣザ・ボス") NewNPCTheBoss
 /*  - O O (1 - - -) */  0x0031b090  // GV_StrCode("ジャックゲージ") NewJackGauge
 /*  - O O (1 2 - -) */  0x0031f1c3
@@ -193,7 +193,7 @@
 /*  - O O (1 2 - -) */  0x003465ae  // GV_StrCode("サイドカー搭乗ＥＶＡ") NewSidecarEvaSet
 /*  - O O (1 - - -) */  0x00349f5c
 /*  O O O (1 2 - -) */  0x0035508a  // GV_StrCode("川の音") NewRiverSound_Gcl
-/*  - - O (- - 3 -) */  0x00355d54
+/*  - - O (- - 3 -) */  0x00355d54  // COM_RequestMovieStop
 /*  O O O (1 2 - N) */  0x0035a2cf  // GV_StrCode("マップ") NewSetMap
 /*  - - O (- - - N) */  0x00367d64
 /*  O O O (1 2 - -) */  0x0036b6b2  // NewSandFlowMan
@@ -214,7 +214,7 @@
 /*  - O O (1 - - -) */  0x003b9ed6
 /*  - O O (1 - - -) */  0x003baee1
 /*  - - O (- - - N) */  0x003c1027  // GV_StrCode("ボイスチャット") NewVoiceChat
-/*  - O O (1 2 - -) */  0x003c1a5c  // NewFlowerDust
+/*  - O O (1 2 - -) */  0x003c1a5c  // GV_StrCode("カメラ花びら") NewFlowerDust
 /*  - O O (1 2 - N) */  0x003c6528
 /*  - O O (1 2 - N) */  0x003c8494
 /*  - O O (1 - - -) */  0x003d7a83  // GV_StrCode("シアタースクリーン") NewTheaterScreen
@@ -233,7 +233,7 @@
 /*  - O O (- 2 - -) */  0x004030d7
 /*  - O O (1 - - -) */  0x00407e28
 /*  - O O (- 2 - -) */  0x004130d7
-/*  - O O (1 - - -) */  0x00413f60
+/*  - O O (1 - - -) */  0x00413f60  // GV_StrCode("カムフラキーディスク") NewCamouflageKeyDisc
 /*  O O O (1 2 - -) */  0x004147a5  // GV_StrCode("ＳＥ字幕登録") GM_COM_AddSeJimaku
 /*  - O O (1 2 - -) */  0x0042181a  // GV_StrCode("エフェクトバウンド追加") UTL_EFT_AddBoundFromGCL
 /*  - O O (- 2 - -) */  0x004230d7
@@ -244,7 +244,7 @@
 /*  - O O (1 - - -) */  0x0043635c  // NewYMNailedMan
 /*  - O O (1 - - -) */  0x00437870
 /*  - O O (1 - - -) */  0x00439eb4  // NewRiverCharaWater_Man_Demo
-/*  - O O (1 2 - N) */  0x0043bc3e
+/*  - O O (1 2 - N) */  0x0043bc3e  // GV_StrCode("パーソナルクリア") COM_ClearPersonalData
 /*  O O O (1 2 - N) */  0x0043f718  // GV_StrCode("カメラ設定") COM_SetCamera
 /*  - O O (1 - - -) */  0x00447870
 /*  - O O (1 2 - -) */  0x0044fda5
@@ -257,13 +257,13 @@
 /*  O O O (1 2 - -) */  0x00478411
 /*  O O O (1 2 - -) */  0x00479c81
 /*  - O O (1 2 - -) */  0x0047c980
-/*  - O O (1 - - -) */  0x0047e5e1  // NewFireAfterExplosion_s191a
+/*  - O O (1 - - -) */  0x0047e5e1  // GV_StrCode("ステージ火災") NewFireAfterExplosion_s191a
 /*  - O O (1 2 - -) */  0x00480a35  // NewArrowManager
-/*  - O O (1 - - -) */  0x0048ef2f  // NewWalkEva
+/*  - O O (1 - - -) */  0x0048ef2f  // GV_StrCode("徒歩エヴァ") NewWalkEva
 /*  - - O (- - - N) */  0x0048f40e  // GV_StrCode("オンラインエラーチェック") NewOnlineErrorCheck
 /*  - O O (1 - - -) */  0x0048fea7  // GV_StrCode("死体状態") NewCorpseStatus
-/*  - O O (1 2 - -) */  0x004953ff
-/*  - O - (- - - -) */  0x004956cb
+/*  - O O (1 2 - -) */  0x004953ff  // GV_StrCode("窓ガラス表示") COM_ShowWindowGlass
+/*  - O - (- - - -) */  0x004956cb  // GV_StrCode("カムフラダウンロード") NewCamoDown
 /*  O O O (1 2 - -) */  0x00495ef5  // GV_StrCode("プレイヤー強制モーション") PL_COM_SetForce
 /*  - O O (1 - - -) */  0x00497ac3  // GV_StrCode("滝の水流") NewWaterFallWater_Gcl
 /*  O O O (1 2 - -) */  0x00497be6  // GV_StrCode("無線状態") CodecStatus
@@ -278,7 +278,7 @@
 /*  - O O (1 - - -) */  0x004bbb60
 /*  - O O (1 - - -) */  0x004bf65a
 /*  - O O (1 - - -) */  0x004c4879  // GV_StrCode("サーチスポットライト") NewSearchSpotLight
-/*  - - O (1 - - -) */  0x004caf18
+/*  - - O (1 - - -) */  0x004caf18  // GV_StrCode("オフラインカムフラダウンロード設定") COM_SetOfflineCamouflageDownload
 /*  - O O (1 2 - -) */  0x004d2cb4
 /*  - - O (1 2 - -) */  0x004dca90
 /*  - O O (1 2 - -) */  0x004e3a78
@@ -297,21 +297,21 @@
 /*  O O O (1 2 - -) */  0x00537c0a  // GV_StrCode("カメラチェック無効") NewCameraCheckDisable
 /*  - O O (1 2 - -) */  0x0053973d  // NewWaterFallDrop_Gcl
 /*  - - O (- - - N) */  0x0053bd7a
-/*  - O O (1 2 - -) */  0x0053cf3a
+/*  - O O (1 2 - -) */  0x0053cf3a  // GV_StrCode("徒歩エヴァスタミナ加算") COM_AddWalkEvaStamina
 /*  O O O (1 2 - -) */  0x0053dc0a  // GV_StrCode("カメラチェック有効") NewCameraCheckEnable
 /*  O O O (1 2 3 N) */  0x00542b2d  // GV_StrCode("foreach") NewForeach
 /*  - - O (- - - N) */  0x00546382  // GV_StrCode("オンライン設置ダンボール") NewOnlineStageCBox
 /*  - O O (1 2 - -) */  0x005585fa  // NewRippleGlobal
 /*  O O O (1 2 - -) */  0x0055b942  // GV_StrCode("ドア") NewDoor
 /*  - O O (1 2 - -) */  0x0055e068
-/*  - - O (- - - N) */  0x00560808
+/*  - - O (- - - N) */  0x00560808  // GV_StrCode("オンライン音声マネージャ") NewNetVoxManager
 /*  - O O (1 2 - -) */  0x00567092
-/*  - O O (1 2 - -) */  0x0056ab3a
+/*  - O O (1 2 - -) */  0x0056ab3a  // GV_StrCode("徒歩エヴァスタミナ減算") COM_SubtractWalkEvaStamina
 /*  O O O (1 2 - -) */  0x0056e234  // GV_StrCode("マップ接合") NewMapConnect
 /*  - O O (1 2 - -) */  0x0056e784
 /*  O O O (1 2 - N) */  0x0056ef97  // GV_StrCode("マップ設定") COM_MapAbout
 /*  - O O (1 - - -) */  0x00573139  // GV_StrCode("自動ドアパネル") NewPanelGcl
-/*  O O O (1 2 3 -) */  0x00573507
+/*  O O O (1 2 3 -) */  0x00573507  // GV_StrCode("サバビューマップ") COM_SetSurvivalViewerMap
 /*  - O O (1 - - -) */  0x0058191a
 /*  - O O (1 2 - -) */  0x00588da3  // GV_StrCode("ＢＧＭ終了") COM_BgmEnd
 /*  - O O (1 2 3 -) */  0x00598e28  // GV_StrCode("武器・アイテム所持数ロード") GM_COM_InventoryLoad
@@ -331,7 +331,7 @@
 /*  - O O (1 2 - -) */  0x005bc599  // GV_StrCode("自動ドア") NewSlideDoor
 /*  - O O (1 - - -) */  0x005c0bae  // GV_StrCode("パッドデモ") NewPadDemoPlay
 /*  - O O (1 2 - -) */  0x005c65b0  // NewWaterFallBodySplash_Man
-/*  - O O (1 2 - N) */  0x005cb38e  // NewPutObjects
+/*  - O O (1 2 - N) */  0x005cb38e  // GV_StrCode("オブジェクト一括君") NewPutObjects
 /*  - O O (1 - - -) */  0x005d1667
 /*  - O O (1 2 - -) */  0x005d7e30
 /*  - O O (1 - - -) */  0x005e3345
@@ -341,9 +341,9 @@
 /*  O O O (1 - - -) */  0x005f64a4  // GV_StrCode("ワニマネージャー") NewAlligatorMng
 /*  - O O (1 2 - -) */  0x005fd3c4  // NewCheckUnderWater
 /*  - O O (1 2 - -) */  0x005fe46d
-/*  - O O (1 2 - N) */  0x00605b52
+/*  - O O (1 2 - N) */  0x00605b52  // GV_StrCode("汎用モデルＵＶアニメーション非表示") COM_HideGenericModelUVAnimation
 /*  - O O (1 - - -) */  0x00609a10
-/*  - O - (- - - -) */  0x0060d52e
+/*  - O - (- - - -) */  0x0060d52e  // GV_StrCode("StreamStart") NewStreamStart
 /*  - O O (1 2 - -) */  0x00614f27
 /*  - - O (- 2 - -) */  0x006184e7
 /*  - O O (1 2 - -) */  0x00618d6a
@@ -355,13 +355,13 @@
 /*  O O O (1 2 - N) */  0x0062ff2e  // GV_StrCode("下草管理") NewGrassMng
 /*  - O O (1 2 - -) */  0x006339b1
 /*  O O O (1 2 - -) */  0x00635875  // GV_StrCode("ゲームオーバー処理開始") GM_GameOverStartScn
-/*  O O O (1 2 3 N) */  0x0063c1d8
+/*  O O O (1 2 3 N) */  0x0063c1d8  // COM_LoadEquipmentIcons
 /*  - O O (1 2 - -) */  0x0063cf9b  // GV_StrCode("川魚") NewFish
 /*  - O O (1 - - -) */  0x006408fc
-/*  - O O (1 2 - -) */  0x006422b0
+/*  - O O (1 2 - -) */  0x006422b0  // GV_StrCode("サバビュームービー") COM_SetSurvivalViewerMovie
 /*  - O O (1 2 - -) */  0x006439b1
 /*  - O O (1 - - -) */  0x00645113  // GV_StrCode("死体君") NewEnemyCorpFromGcl
-/*  - O O (1 2 - -) */  0x00647dff  // NewShagoMissileSet
+/*  - O O (1 2 - -) */  0x00647dff  // GV_StrCode("シャゴミサイル発射君") NewShagoMissileSet
 /*  - O O (1 2 - -) */  0x0064b3f4  // GV_StrCode("大佐") NewBossThunder
 /*  O O O (1 2 - -) */  0x006539fc  // GV_StrCode("敵兵") NewEnemy
 /*  - O O (1 2 - -) */  0x00653bbf
@@ -371,9 +371,9 @@
 /*  - O - (- - - -) */  0x00663da5
 /*  - - O (- - - N) */  0x0066d654  // GV_StrCode("オンライン雑誌マネージャ") NewOnlineBookMan
 /*  - O O (1 - - -) */  0x0066e5d4
-/*  - O O (1 - - -) */  0x00678c46
-/*  - - O (- - - N) */  0x00679afb
-/*  - O O (1 - - -) */  0x0067a960
+/*  - O O (1 - - -) */  0x00678c46  // GV_StrCode("メモカロードゲーム設定") COM_SetMemoryCardLoadGame
+/*  - - O (- - - N) */  0x00679afb  // GV_StrCode("オンラインアイテム出現") COM_SpawnOnlineItem
+/*  - O O (1 - - -) */  0x0067a960  // GV_StrCode("カムフラキーディスク設定") COM_SetCamouflageKeyDisc
 /*  - O O (1 2 - -) */  0x00684209  // GV_StrCode("蜂壁") NewBeeWall
 /*  O O O (1 2 - N) */  0x00684bfa  // GV_StrCode("スタミナ設定") PL_COM_StaminaSet
 /*  O O O (1 2 - -) */  0x006856c1  // GV_StrCode("ゲームオーバー処理終了") GM_GameOverEndScn
@@ -382,8 +382,8 @@
 /*  - O O (1 - - -) */  0x0068cb9c  // GV_StrCode("パッド振動") NewPadVibrationScn
 /*  - O O (1 2 - -) */  0x00690245
 /*  O O O (1 2 - -) */  0x00690610  // GV_StrCode("シネマスクリーン") NewCinemaScreenSet
-/*  O O O (1 2 - N) */  0x0069b87e  // COM_PutStageModel_MeshControl
-/*  - O O (1 2 - -) */  0x0069eb6c
+/*  O O O (1 2 - N) */  0x0069b87e  // GV_StrCode("ステージモデル設置メッシュ表示設定") COM_PutStageModel_MeshControl
+/*  - O O (1 2 - -) */  0x0069eb6c  // GV_StrCode("マップ即時接合変更") COM_ChangeMapConnectionImmediate
 /*  - O O (1 2 - -) */  0x006a3940
 /*  O O O (1 2 3 -) */  0x006a725a  // GV_StrCode("パッド操作") GM_COM_PadControl
 /*  - O O (1 2 - -) */  0x006aa0dc
@@ -404,14 +404,14 @@
 /*  - O O (1 - - -) */  0x00706450
 /*  - O O (1 2 - -) */  0x00708c6b  // NewSandSmoke_s023a_Man
 /*  - O O (1 2 - -) */  0x0070b8e6
-/*  - O O (1 - - -) */  0x0070d322
+/*  - O O (1 - - -) */  0x0070d322  // GV_StrCode("Ｃ３の保存") COM_SaveC3
 /*  - O O (1 - - -) */  0x0070f3aa
 /*  - O O (1 2 3 N) */  0x007128d0  // GV_StrCode("武器・アイテム名称設定") GM_COM_InventorySetNames
 /*  O O O (1 2 - N) */  0x00712f17
 /*  O O O (1 2 - N) */  0x0071e7d6  // GV_StrCode("ライト設定") NewSystemLightSet
 /*  - O O (1 - - -) */  0x0072007f
 /*  O O O (1 2 - -) */  0x00723f41  // GV_StrCode("川の流れ管理") NewRiverbStreamMng_Gcl
-/*  O O O (1 2 - N) */  0x007267b7  // NewBrkTransform
+/*  O O O (1 2 - N) */  0x007267b7  // GV_StrCode("汎用壊れ物") NewBrkTransform
 /*  - O O (1 - - -) */  0x0072705f  // NewDemoMpeg
 /*  O O O (1 2 - -) */  0x00729f2d  // GV_StrCode("ゲームオーバー設定") GM_COM_SetGameOver
 /*  O O O (1 2 - -) */  0x0072f23c  // GV_StrCode("プットモーションモデル") NewPutMotionModel
@@ -427,7 +427,7 @@
 /*  - O O (1 2 - -) */  0x007632dc  // GV_StrCode("サイドカーイベント音声管理") NewSidecarEventVoxManagerSet
 /*  - O O (1 2 - -) */  0x00767f58
 /*  - O O (1 2 - -) */  0x0076d431  // NewUnderWaterEffect
-/*  O - - (- - - -) */  0x0077318d
+/*  O - - (- - - -) */  0x0077318d  // GV_StrCode("現在時刻取得") NewGclGetRTC
 /*  - O O (1 2 - -) */  0x00773af5  // GV_StrCode("シナリオ爆発") NewBlast_Gcl
 /*  - O O (1 2 - -) */  0x0077ab68
 /*  - O O (1 2 - -) */  0x0077c520  // NewRiverSplashflow_Gcl
@@ -455,11 +455,11 @@
 /*  - O O (1 2 - -) */  0x007e5115
 /*  O O O (1 2 - N) */  0x007e641f  // GV_StrCode("ステージモデル設置") NewPutStageModelSet
 /*  - O O (1 - - -) */  0x007e750c  // NewSpiritPhotoMng
-/*  - O O (1 2 - -) */  0x007eedb2
+/*  - O O (1 2 - -) */  0x007eedb2  // GV_StrCode("メモカセーブ確認設定") COM_SetMemoryCardSaveConfirm
 /*  - O O (1 2 - -) */  0x007f3c88  // GV_StrCode("カメラ視界チェック") NewViewCheckCommand
 /*  - O O (1 - - -) */  0x007f52a2
 /*  - - O (1 2 - -) */  0x007f6650
-/*  - O O (1 - - -) */  0x007ff1b0  // NewTheEnd_Wheel
+/*  - O O (1 - - -) */  0x007ff1b0  // GV_StrCode("ジエンド用車椅子") NewTheEnd_Wheel
 /*  O O O (1 2 - -) */  0x0080b977  // GV_StrCode("システムコールバック") NewSystemCallback
 /*  - O O (1 2 - -) */  0x008175a4
 /*  O O O (1 2 - -) */  0x0081f1ef  // GV_StrCode("SILVER_DISP") NewSilverDisp
@@ -470,10 +470,10 @@
 /*  - - O (- - - N) */  0x0082b327  // NewOnlineInspectCamera
 /*  - O O (1 2 - -) */  0x0082bdc0  // GV_StrCode("VecLen") NewGclVecLen
 /*  O O O (1 - - -) */  0x0082cb3e  // GV_StrCode("reboot") NewGclReboot
-/*  O O O (1 2 - N) */  0x0083102f  // GM_COM_SetEnvStage
+/*  O O O (1 2 - N) */  0x0083102f  // GV_StrCode("ステージ環境設定君") GM_COM_SetEnvStage
 /*  - - O (- - - N) */  0x00831ee1
 /*  - O O (1 2 - -) */  0x00843fea  // NewStreamShagohodSet
-/*  O O O (1 2 - -) */  0x0084594d
+/*  O O O (1 2 - -) */  0x0084594d  // GV_StrCode("エフェクト水面") COM_SetWaterSurfaceEffect
 /*  - O O (1 2 - -) */  0x00849ba0  // GV_StrCode("プレイヤーライフ加算") PL_COM_LifeAdd
 /*  - O O (1 2 - -) */  0x0084aa82
 /*  - O O (1 2 - -) */  0x0085b70d
@@ -506,7 +506,7 @@
 /*  - - O (- - - N) */  0x008b94e9  // GV_StrCode("オンラインクレイモアマネージャ") NewOnlineClaymoreMan
 /*  - O O (1 2 - -) */  0x008b976d  // GV_StrCode("ロッカー状態") NewLockerStatus
 /*  O O O (1 - - -) */  0x008ba20a  // GV_StrCode("ソコロフ") NewSokolov
-/*  - - O (- 2 - -) */  0x008c301c
+/*  - - O (- 2 - -) */  0x008c301c  // GV_StrCode("メインメニューＤＩＳＣ２設定") COM_SetDisc2MainMenu
 /*  - O O (1 2 - -) */  0x008d06cc
 /*  - O O (1 2 - -) */  0x008d4ec1
 /*  - O O (1 2 - -) */  0x008d5639
@@ -520,7 +520,7 @@
 /*  - O O (1 2 - -) */  0x00909f7f  // GV_StrCode("フューリー") NewFury
 /*  O O O (1 2 3 N) */  0x0091818c  // GV_StrCode("背景色設定") NewBGColorSet
 /*  - O O (1 - - -) */  0x009197cf
-/*  - - O (1 - - -) */  0x00919ade  // NewOfflineCamouf
+/*  - - O (1 - - -) */  0x00919ade  // GV_StrCode("オフラインカムフラダウンロード") NewOfflineCamouf
 /*  - O O (1 2 - -) */  0x0092034e
 /*  - - O (- - - N) */  0x00921c90
 /*  - O O (1 2 3 N) */  0x0092a625  // GV_StrCode("プロダクトコード設定") ComSetProductCode
@@ -540,7 +540,7 @@
 /*  O O O (1 2 - N) */  0x009634b1
 /*  - - O (- - - N) */  0x009634f6
 /*  - O O (- 2 - -) */  0x0096dfdc  // GV_StrCode("サルメニュー") NewSaruMenu [Monkey]
-/*  O O O (1 2 - -) */  0x0097451b
+/*  O O O (1 2 - -) */  0x0097451b  // GV_StrCode("サバビューモデル") COM_SetSurvivalViewerModel
 /*  - O O (1 - - N) */  0x00978db6  // GV_StrCode("雪表示") NewSnowDisplay
 /*  O O O (1 2 - -) */  0x0097a3cf
 /*  - O O (1 - - -) */  0x00985c58
@@ -548,16 +548,16 @@
 /*  - O O (1 2 - -) */  0x0099f754  // GV_StrCode("メモカ設定") COM_SetMemoryCard
 /*  O O O (1 2 - N) */  0x009a0d0a  // GV_StrCode("エフェクト初期化") UTL_EFT_Initialize
 /*  - O O (1 2 - -) */  0x009a1040
-/*  - O O (1 2 3 -) */  0x009af657
+/*  - O O (1 2 3 -) */  0x009af657  // GV_StrCode("Ｃ３のクリアー") COM_ClearC3
 /*  - - O (- - - N) */  0x009b8923
-/*  O O O (1 2 3 N) */  0x009bc19a
+/*  O O O (1 2 3 N) */  0x009bc19a  // GV_StrCode("音声エフェクト設定") COM_SetVoxEffect
 /*  - O O (1 - - -) */  0x009bc48f
 /*  - O O (1 - - -) */  0x009bc4ad
 /*  - O O (1 - - -) */  0x009ce52c  // GV_StrCode("巡回犬") NewDog3
 /*  - O O (1 - - -) */  0x009d0339  // GV_StrCode("メッセージ待ち") NewWaitMessage
 /*  - O O (1 2 - -) */  0x009d7b8e
 /*  - O O (1 - - -) */  0x009d9093
-/*  - O O (1 - - -) */  0x009dc687
+/*  - O O (1 - - -) */  0x009dc687  // GV_StrCode("雪非表示") COM_HideSnow
 /*  O O O (1 2 - N) */  0x009e8ba6  // GV_StrCode("オブジェクト出現君") ShowObjSimple
 /*  - - O (- - - N) */  0x009e9407
 /*  O O O (1 2 - N) */  0x009f406f  // NewTreesMng4
@@ -600,7 +600,7 @@
 /*  - O O (1 - - -) */  0x00aacac8  // GV_StrCode("ムササビ") NewYMMusasabi [Flying squirrel]
 /*  - O O (1 2 - -) */  0x00aaf706
 /*  O O O (1 - - -) */  0x00ab3f7c  // GV_StrCode("川の水飛沫") NewRiverSplash_Gcl
-/*  - - O (- 2 - -) */  0x00ab55dc
+/*  - - O (- 2 - -) */  0x00ab55dc  // GV_StrCode("シークレットシアターモード") COM_EnableSecretTheaterMode
 /*  O O O (1 2 3 N) */  0x00ab5a2a  // GV_StrCode("常駐リソース設定") NewResidentResourceSet
 /*  - - O (- - - N) */  0x00ab73fd
 /*  O O O (1 2 - -) */  0x00ab8ce6  // NewRiverbBaseMultiTexPrim_Gcl
@@ -631,7 +631,7 @@
 /*  - O O (1 - - -) */  0x00b58481  // GV_StrCode("メモカセーブ確認") NewSaveBreak
 /*  - O O (1 2 - -) */  0x00b61cc0  // GV_StrCode("シャゴ戦カメラ") NewShagoBattleCameraSet
 /*  - O O (1 - - -) */  0x00b687e8
-/*  - O O (1 2 - -) */  0x00b6e94e
+/*  - O O (1 2 - -) */  0x00b6e94e  // GV_StrCode("窓ガラス非表示") COM_HideWindowGlass
 /*  - O O (1 - - -) */  0x00b712e6
 /*  O O O (1 2 - -) */  0x00b74a98
 /*  - O O (1 2 - N) */  0x00b7f7d1  // GV_StrCode("観葉植物") NewYMFoliagePlant
@@ -647,13 +647,13 @@
 /*  - O O (1 2 - -) */  0x00bae1be  // GV_StrCode("デモシアタープレート") NewTheaterPlate
 /*  - O O (1 - - -) */  0x00baf651  // GV_StrCode("ＳＥ停止") GM_Sd3DPlayStop
 /*  - - O (- - - N) */  0x00bce74e  // NewNetworkBrkWindowAll
-/*  O O O (1 2 3 N) */  0x00bcf6ff
+/*  O O O (1 2 3 N) */  0x00bcf6ff  // GV_StrCode("３Ｄ音響音声設定") COM_Set3DVoiceParameters
 /*  - O O (1 2 - -) */  0x00bd400b  // GV_StrCode("影管理") NewShadowControl
 /*  O O O (1 2 - N) */  0x00bd8d95  // NewSetCollision
 /*  O O O (1 - - -) */  0x00beb908  // NewRiverSplash2_Gcl
 /*  O O O (1 2 - -) */  0x00bf0504  // GV_StrCode("木漏れ日投影") NewSunlightProjectionObjectSet
 /*  - - O (1 2 3 N) */  0x00bf051f
-/*  - - O (- - - N) */  0x00bf76c9  // NewOnlineItemChara2
+/*  - - O (- - - N) */  0x00bf76c9  // GV_StrCode("オンライン奪取アイテム") NewOnlineItemChara2
 /*  - O O (1 2 - -) */  0x00c075b9  // GV_StrCode("グレネードトラップ") NewWiredGrn
 /*  - - O (- - - N) */  0x00c08865
 /*  - O O (1 2 - -) */  0x00c090b1  // GV_StrCode("標準振り子トラップ") NewWiredPendulum_DefParam
@@ -670,14 +670,14 @@
 /*  - O O (1 2 - -) */  0x00c53ae7
 /*  - O O (1 2 - N) */  0x00c53b05
 /*  - O O (1 2 - -) */  0x00c65d9f  // NewWeaponDshk_Gcl
-/*  - O O (1 2 - -) */  0x00c6fdfc
+/*  - O O (1 2 - -) */  0x00c6fdfc  // GV_StrCode("パーソナル管理") COM_InitPersonalRegistry
 /*  - O O (1 - - -) */  0x00c70c04
 /*  - O O (1 - - -) */  0x00c710c6  // GV_StrCode("プレイヤー梯子") PL_COM_Ladder
 /*  O O O (1 2 3 N) */  0x00c74f97  // GV_StrCode("配列セット") NewArraySet
 /*  O O O (1 2 - -) */  0x00c78563
 /*  O O O (1 - - -) */  0x00c7f9ca
 /*  O O O (1 2 - -) */  0x00c851b0
-/*  O O O (1 2 - N) */  0x00c885a5
+/*  O O O (1 2 - N) */  0x00c885a5  // GV_StrCode("マップマテリアル設定") COM_SetMapMaterial
 /*  - O O (1 2 - -) */  0x00c88764  // GV_StrCode("スリットライトフェード") NewSlitLightFade
 /*  - - O (- - - N) */  0x00c8e303  // NewOnlineGameSupervisor
 /*  O O O (1 2 3 -) */  0x00c8e3fd  // GV_StrCode("フェード") NewFadeInOutSet
@@ -686,7 +686,7 @@
 /*  - O O (1 - - -) */  0x00c9af4c  // GV_StrCode("ハゲタカコマンダー") NewHagetakaMng [Vulture]
 /*  O O O (1 2 - N) */  0x00c9bbe9  // NewSetExchangeSeCode
 /*  - O O (1 2 - -) */  0x00ca337e  // GV_StrCode("自然地形落とし穴") NewPitfall_Nature
-/*  - O O (1 2 - -) */  0x00ca3e5b
+/*  - O O (1 2 - -) */  0x00ca3e5b  // GV_StrCode("汎用モデルＵＶアニメーション表示") COM_ShowGenericModelUVAnimation
 /*  - O O (1 - - -) */  0x00ca91c4
 /*  - O O (1 - - -) */  0x00cafda9  // NewAppuiBase_NoMortar
 /*  - O O (1 - - -) */  0x00cb1834  // GV_StrCode("ジョニー") NewJohnny
@@ -704,10 +704,10 @@
 /*  - O O (1 2 - -) */  0x00cde39f
 /*  - O O (1 - - -) */  0x00ce2d79  // GV_StrCode("滑走路シャゴホッド") NewRunwayShagohodSet
 /*  O O O (1 2 - N) */  0x00cf9028
-/*  - O O (1 - - -) */  0x00d00676
+/*  - O O (1 - - -) */  0x00d00676  // GV_StrCode("プレイヤー梯子設定") PL_COM_SetLadder
 /*  - O O (1 - - -) */  0x00d05ba0
 /*  - O O (1 - - -) */  0x00d0cf49
-/*  - O O (1 - - -) */  0x00d0f729
+/*  - O O (1 - - -) */  0x00d0f729  // GV_StrCode("メタルギアアシッドリンク設定") COM_SetMetalGearAcidLink
 /*  - O O (1 - - -) */  0x00d0fb6d
 /*  - O O (1 2 - -) */  0x00d110ce  // GV_StrCode("オプションモード設定") COM_SetOptionMode
 /*  - O O (1 2 - -) */  0x00d17a99
@@ -725,7 +725,7 @@
 /*  - O O (1 2 - -) */  0x00d517fe  // GV_StrCode("ボーナスアイテム取得画面") NewBonusItemScreen
 /*  O O O (1 2 - -) */  0x00d5545b  // GV_StrCode("右スティックカメラ設定") COM_SetCameraRightStick
 /*  - O O (1 - - -) */  0x00d5cb81  // NewBrkEffectPlugin_BrokenBattery
-/*  - O O (1 - - -) */  0x00d61bf6
+/*  - O O (1 - - -) */  0x00d61bf6  // GV_StrCode("メタルギアアシッドリンク") NewMetalGearAcidLink
 /*  - O O (1 2 - -) */  0x00d65266  // GV_StrCode("振り子トラップ2") NewWiredPendulum2
 /*  - O O (1 2 - -) */  0x00d6fd05
 /*  - O O (1 - - -) */  0x00d73a9c
@@ -741,7 +741,7 @@
 /*  - O O (1 2 - -) */  0x00da2917
 /*  - O O (1 - - -) */  0x00da9244  // NewGlarnin
 /*  O O O (1 2 - -) */  0x00da97fb  // GV_StrCode("トラップ切り替え") GM_COM_TrapSwitchCommand
-/*  - - O (- - 3 -) */  0x00daad6b  // NewD3Display
+/*  - - O (- - 3 -) */  0x00daad6b  // GV_StrCode("ＤＩＳＣ３ディスプレイ") NewD3Display [Disc 3 menu screen]
 /*  - O O (1 2 - -) */  0x00dac400
 /*  - O O (1 - - -) */  0x00daed21
 /*  O O O (1 2 3 N) */  0x00daf423
@@ -756,14 +756,14 @@
 /*  O O O (1 2 3 N) */  0x00de07c0  // GV_StrCode("フォント初期化") NewFontInit
 /*  - O O (1 - - -) */  0x00de2c60
 /*  - O O (1 - - -) */  0x00de545a  // GV_StrCode("犬コマンダー") NewDogMng
-/*  - O O (1 2 - -) */  0x00deb2a3
+/*  - O O (1 2 - -) */  0x00deb2a3  // GV_StrCode("汎用壊れ物表示") COM_ShowGenericBreakable
 /*  O O O (1 2 - -) */  0x00dec9e1  // NewFragmentsGame
 /*  - O O (1 - - -) */  0x00decc26  // NewKnockEnemy
 /*  - O O (1 2 - -) */  0x00dee2e0
 /*  - O O (1 2 - -) */  0x00df1d9c
 /*  O O O (1 2 - -) */  0x00df4cae  // GV_StrCode("アイテムボックス") NewItemBox
 /*  - O O (1 2 - -) */  0x00e002ea
-/*  O O O (1 2 - -) */  0x00e08648  // NewCharaViewer
+/*  O O O (1 2 - -) */  0x00e08648  // GV_StrCode("サバビュー") NewCharaViewer
 /*  O O O (1 2 - -) */  0x00e0dbba  // GV_StrCode("２Ｄスプライト表示") NewYM2DSprite
 /*  - O O (1 2 - -) */  0x00e0f9c7
 /*  - O O (1 2 - -) */  0x00e22b51
@@ -772,13 +772,13 @@
 /*  - O O (1 - - -) */  0x00e387af
 /*  - O O (1 2 - -) */  0x00e44f0c
 /*  - O O (1 - - -) */  0x00e4750f  // GV_StrCode("VecResize") NewGclResizeVector
-/*  - - O (- - - N) */  0x00e4b84a
+/*  - - O (- - - N) */  0x00e4b84a  // GV_StrCode("オンラインプレイヤー") NewNetworkPlayer
 /*  - O O (1 - - -) */  0x00e5619d
 /*  - O O (1 - - -) */  0x00e5dfd7
 /*  O O O (1 2 - N) */  0x00e5fd50  // GV_StrCode("麻酔弾マネージャ") NewAnestheticManager
 /*  - O O (1 2 - -) */  0x00e764b2
 /*  - O O (1 2 3 N) */  0x00e76d74  // GV_StrCode("解析封じ変数移動") NewGclVariableMove
-/*  - O O (1 2 - -) */  0x00e78c6d
+/*  - O O (1 2 - -) */  0x00e78c6d  // GV_StrCode("メモカセーブゲーム設定") COM_SetMemoryCardSaveGame
 /*  - O O (1 - - -) */  0x00e7939b
 /*  O O O (1 2 - -) */  0x00e79927  // GV_StrCode("シナリオデモ終了") GM_COM_ScenarioDemoEnd
 /*  - - O (- 2 - N) */  0x00e7a1d7
@@ -796,7 +796,7 @@
 /*  - - O (- - - N) */  0x00eaf7bb
 /*  - O O (1 2 - -) */  0x00eb0f77
 /*  - O O (1 2 - -) */  0x00eb2429
-/*  - O - (- - - -) */  0x00eb660a  // NewPadExec
+/*  - O - (- - - -) */  0x00eb660a  // GV_StrCode("パッドプロック") NewPadExec
 /*  O O O (1 2 - -) */  0x00eb72e4  // GV_StrCode("ドラム缶") NewYMDrum
 /*  - O O (1 2 - -) */  0x00eb837a
 /*  - O O (1 - - -) */  0x00eb98e0  // GV_StrCode("ブラーエフェクト") NewBlur
@@ -810,11 +810,11 @@
 /*  - O O (1 2 - -) */  0x00edda6d
 /*  - - O (1 2 3 -) */  0x00ee47ad  // GV_StrCode("起動モード取得") COM_GetStartupMode
 /*  - O O (1 2 - -) */  0x00ef16a0
-/*  O O O (1 2 - -) */  0x00ef8aaf
+/*  O O O (1 2 - -) */  0x00ef8aaf  // GV_StrCode("サバビュー字幕") COM_SetSurvivalViewerText
 /*  - - O (1 2 3 -) */  0x00f02397  // GV_StrCode("起動モード設定") COM_SetStartupMode
 /*  - O O (1 2 - N) */  0x00f10849  // NewBrkEffectPlugin_SmallGlass
 /*  - - O (- - 3 -) */  0x00f1745e
-/*  O O O (1 2 - -) */  0x00f19dce  // COM_SetCharaView
+/*  O O O (1 2 - -) */  0x00f19dce  // GV_StrCode("サバビュー設定") COM_SetCharaView
 /*  - O O (1 - - -) */  0x00f2dfcd  // GV_StrCode("load_restart") NewLoadRestart
 /*  - O O (1 2 - -) */  0x00f32f4e
 /*  - - O (- - - N) */  0x00f3658f
@@ -822,7 +822,7 @@
 /*  - O O (1 2 - -) */  0x00f526ea  // GV_StrCode("ペイン") NewBossPain
 /*  - O O (1 2 - -) */  0x00f53bd3  // GV_StrCode("プレイヤースタミナ加算") PL_COM_StaminaAdd
 /*  O O O (1 2 - -) */  0x00f552a3  // GV_StrCode("蜂の巣") NewHornet
-/*  - O O (1 2 - -) */  0x00f5ade7
+/*  - O O (1 2 - -) */  0x00f5ade7  // GV_StrCode("ステージ環境weather") COM_GetStageEnvironmentWeather
 /*  - O O (1 2 - -) */  0x00f63a97
 /*  - O O (1 - - -) */  0x00f66375
 /*  - - O (- - - N) */  0x00f69343  // GV_StrCode("オンラインダミープレイヤー") NewNetworkDummyPlayer
@@ -883,7 +883,7 @@
 /*  - O O (1 - - -) */  0x01000508
 /*  O O O (1 - - -) */  0x01000800
 /*  O O O (1 - - -) */  0x01000801
-/*  O O O (1 - - -) */  0x01000802
+/*  O O O (1 - - -) */  0x01000802  // NewLA2Texture_Demo_0802Launch
 /*  - O O (1 - - -) */  0x01000804
 /*  - O O (1 - - -) */  0x01000805
 /*  - O O (1 - - -) */  0x01000806
